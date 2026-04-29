@@ -8,3 +8,5 @@ venv/
 ENV/
 db.sqlite3
 *.pyc
+notes.md
+.idea/
