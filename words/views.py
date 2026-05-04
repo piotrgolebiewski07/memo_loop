@@ -1,9 +1,14 @@
 from django.http import HttpResponse
+from django.shortcuts import render
 from words.models import Word
 
 
 def index(request):
-    words = Word.objects.order_by("?")[0]
+    word = Word.objects.order_by("?")[0]
 
-    return HttpResponse(words.text_pl)
+    return render(
+        request,
+        "words/index.html",
+        {"word": word}
+    )
 

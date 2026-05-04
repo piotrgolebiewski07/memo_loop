@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title>Fiszki</title>
+    </head>
+
+    <body>
+        <h1>Tłumaczenie słówek</h1>
+
+        {{ word.text_pl }}
+
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="answer">
+            <button type="submit">Sprawdź</button>
+        </form>
+    </body>
+</html>
