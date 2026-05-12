@@ -10,8 +10,15 @@
 
         <form method="post">
             {% csrf_token %}
+            <input type="hidden" name="word_id" value="{{ word.id }}">
             <input type="text" name="answer">
-            <button type="submit">Sprawdź</button>
+
+            <button type="submit">
+                Sprawdź
+            </button>
         </form>
+
+        {{ result }}
+
     </body>
 </html>
