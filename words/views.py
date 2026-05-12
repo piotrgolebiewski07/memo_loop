@@ -16,12 +16,17 @@ def index(request):
         if word.text_en.lower() == answer.lower():
             result = "Dobrze"
         else:
-            result = "Błąd"
+            result = f"Błąd. Poprawna odpowiedź: {word.text_en}"
+
+        word_new = Word.objects.order_by("?").first()
+
+        while word_new.id == word.id and Word.objects.count() > 1:
+            word_new = Word.objects.order_by("?").first()
+
+        word = word_new
 
     else:
         word = Word.objects.order_by("?").first()
-
-    word = Word.objects.order_by("?").first()
 
     return render(
         request,
