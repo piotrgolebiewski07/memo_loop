@@ -19,9 +19,6 @@ def index(request):
 
         else:
 
-            num_attempts += 1
-            request.session["num_attempts"] = num_attempts
-
             word_id = request.POST.get("word_id")
             word = Word.objects.get(id=word_id)
 
@@ -29,6 +26,8 @@ def index(request):
 
             if word.text_en.lower() == answer.lower():
                 result = "Dobrze"
+                num_attempts += 1
+                request.session["num_attempts"] = num_attempts
             else:
                 result = f"Błąd. Poprawna odpowiedź: {word.text_en}"
 
