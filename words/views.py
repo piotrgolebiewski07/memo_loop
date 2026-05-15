@@ -54,7 +54,7 @@ def index(request):
 
     return render(
         request,
-        "words/index.html",
+        "words/study.html",
         {
             "word": word,
             "result": result,
@@ -62,3 +62,11 @@ def index(request):
             'wrong_answers': wrong_answers,
         }
     )
+
+
+def home(request):
+    return render(
+        request,
+        "words/home.html",
+        )
+

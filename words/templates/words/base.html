@@ -1,0 +1,61 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Memo loop</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2">
+</head>
+
+<body style="background-color: #ffffff;">
+
+<nav class="navbar navbar-expand-lg navbar-dark px-3">
+    <div class="container">
+        <div class="navbar-nav align-items-center">
+            <a class="nav-link text-dark" href="/">Strona główna</a>
+            <a class="nav-link text-dark" href="/categories">Wybierz kategorię</a>
+            <a class="nav-link text-dark" href="/study">Nauka słowek</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container text-center py-5"
+     style="
+        background-image: url('{% static 'images/background.jpg' %}');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        max-width: 1200px;
+        margin: auto;
+     ">
+
+     <div style="
+        background: rgba(0,0,0,0.4);
+        max-width: 800px;
+        margin: auto;
+        padding: 30px;
+     ">
+        <h1 class="display-3 fw-bold text-white">
+            FiszkoMat
+        </h1>
+
+        <p class="lead text-white">
+            Ucz się słówek skuteczniej
+        </p>
+
+        <a href="/study/" class="btn btn-light btn-lg mt-3">
+            Rozpocznij naukę
+        </a>
+    </div>
+
+</div>
+
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>
