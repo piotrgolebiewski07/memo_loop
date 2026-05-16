@@ -8,82 +8,50 @@
     <title>Memo loop</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=6">
 </head>
 
 <body style="background-color: #ffffff;">
 
-<nav class="navbar navbar-expand-lg bg-white py-2 shadow">
-    <div class="container">
+    <nav class="navbar navbar-expand-lg bg-white py-2 shadow">
+        <div class="container">
 
-        <!-- Logo -->
-        <a class="navbar-brand fw-bold fs-3" href="/">
-            FiszkoMat
-        </a>
-
-        <!-- Menu -->
-        <div class="d-flex gap-4 align-items-center">
-
-            <a class="nav-link menu-link text-dark" href="/">
-                Strona główna
-            </a>
-            <a class="nav-link menu-link text-dark" href="/categories">
-                Kategorie
+            <!-- Logo -->
+            <a class="navbar-brand fw-bold fs-3" href="/">
+                FiszkoMat
             </a>
 
-            <a class="nav-link menu-link text-dark" href="/study">
-                Nauka
-            </a>
+            <!-- Menu -->
+            <div class="d-flex gap-4 align-items-center">
+
+                <a class="nav-link menu-link text-dark" href="/">
+                    Strona główna
+                </a>
+                <a class="nav-link menu-link text-dark" href="/categories">
+                    Kategorie
+                </a>
+
+                <a class="nav-link menu-link text-dark" href="/study">
+                    Nauka
+                </a>
+
+            </div>
+
+            <!-- Auth -->
+            <div class="d-flex gap-3 align-items-center">
+
+                <a class="nav-link text-dark" href="">
+                    Logowanie
+                </a>
+
+                <a class="btn btn-dark px-4 rounded-pill auth-btn" href="">
+                    Rejestracja
+                </a>
+
+            </div>
 
         </div>
-
-        <!-- Auth -->
-        <div class="d-flex gap-3 align-items-center">
-
-            <a class="nav-link text-dark" href="">
-                Logowanie
-            </a>
-
-            <a class="btn btn-dark px-4 rounded-pill auth-btn" href="">
-                Rejestracja
-            </a>
-
-        </div>
-
-    </div>
-</nav>
-
-<div class="container text-center py-5"
-     style="
-        background-image: url('{% static 'images/background.jpg' %}');
-        background-size: contain;
-        background-position: center;
-        background-repeat: no-repeat;
-        max-width: 1200px;
-        margin: auto;
-     ">
-
-     <div style="
-        background: rgba(0,0,0,0.4);
-        max-width: 800px;
-        margin: auto;
-        padding: 30px;
-     ">
-        <h1 class="display-3 fw-bold text-white">
-            FiszkoMat
-        </h1>
-
-        <p class="lead text-white">
-            Ucz się słówek skuteczniej
-        </p>
-
-        <a href="/study/" class="btn btn-light btn-lg mt-3">
-            Rozpocznij naukę
-        </a>
-    </div>
-
-</div>
-
+    </nav>
 
 {% block content %}
 {% endblock %}

@@ -1,5 +1,43 @@
 {% extends "words/base.html" %}
 
+{% load static %}
+
 {% block content %}
+
+<div class="container text-center py-5">
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col">
+                    <img
+                        src="{% static 'images/england2.jpg' %}"
+                        class="img-fluid"
+                        alt="England"
+                    >
+
+                </div>
+
+                <div class="col">
+
+                    <div class="hero-text">
+                        Fiszki pomagają uczyć się szybciej. <br />
+                        Wystarczy kilka minut dziennie.
+                    </div>
+
+                    <div class="hero-subtext">
+                        <ul class="hero-list">
+                            <li>uczysz się regularnie bez presji</li>
+                            <li>zapamiętujesz szybciej dzięki powtórkom</li>
+                            <li>rozwijasz słownictwo każdego dnia</li>
+                            <li>przygotujesz się do egzaminów i rozmów</li>
+                            <li>kilka minut dziennie daje realne efekty</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
