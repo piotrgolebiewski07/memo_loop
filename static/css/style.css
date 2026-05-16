@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Smooch+Sans:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap');
 
+/* ====================
+   NAVBAR
+==================== */
+
 .navbar-brand {
     font-family: 'Caveat', cursive;
 }
@@ -22,21 +26,14 @@
 
 .menu-link::after {
     content: "";
-
     position: absolute;
-
     bottom: -5px;
-
     left: 50%;
     transform: translateX(-50%);
-
     width: 0;
     height: 3px;
-
     background-color: #d95f02;
-
     border-radius: 10px;
-
     transition: 0.3s;
 }
 
@@ -46,4 +43,36 @@
 
 .menu-link:hover {
     color: #d95f02 !important;
+}
+
+/* ====================
+   HERO SECTION
+==================== */
+
+.hero-text {
+    font-size: 2.0rem;
+    margin-top: 40px;
+    margin-bottom: 50px;
+}
+
+.hero-subtext {
+    font-size: 1.2rem;
+    color: #6c757d;
+}
+
+.hero-list {
+    list-style: none;
+    margin-left: 40px;
+    text-align: left;
+}
+
+.hero-list li {
+    margin-bottom: 20px;
+}
+
+.hero-list li::before {
+    content: "✓";
+    color: #d95f02;
+    font-weight: bold;
+    margin-right: 10px;
 }
