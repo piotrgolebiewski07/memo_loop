@@ -1,6 +1,7 @@
+<!DOCTYPE html>
+
 {% load static %}
 
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,13 +13,43 @@
 
 <body style="background-color: #ffffff;">
 
-<nav class="navbar navbar-expand-lg navbar-dark px-3">
+<nav class="navbar navbar-expand-lg bg-white py-2 shadow">
     <div class="container">
-        <div class="navbar-nav align-items-center">
-            <a class="nav-link text-dark" href="/">Strona główna</a>
-            <a class="nav-link text-dark" href="/categories">Wybierz kategorię</a>
-            <a class="nav-link text-dark" href="/study">Nauka słowek</a>
+
+        <!-- Logo -->
+        <a class="navbar-brand fw-bold fs-3" href="/">
+            FiszkoMat
+        </a>
+
+        <!-- Menu -->
+        <div class="d-flex gap-4 align-items-center">
+
+            <a class="nav-link menu-link text-dark" href="/">
+                Strona główna
+            </a>
+            <a class="nav-link menu-link text-dark" href="/categories">
+                Kategorie
+            </a>
+
+            <a class="nav-link menu-link text-dark" href="/study">
+                Nauka
+            </a>
+
         </div>
+
+        <!-- Auth -->
+        <div class="d-flex gap-3 align-items-center">
+
+            <a class="nav-link text-dark" href="">
+                Logowanie
+            </a>
+
+            <a class="btn btn-dark px-4 rounded-pill auth-btn" href="">
+                Rejestracja
+            </a>
+
+        </div>
+
     </div>
 </nav>
 

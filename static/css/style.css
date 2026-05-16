@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Smooch+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap');
+
+.navbar-brand {
+    font-family: 'Caveat', cursive;
+}
+
+.nav-link {
+    font-family: 'Smooch Sans', sans-serif;
+    font-size: 1.3rem;
+}
+
+.auth-btn {
+    font-family: 'Smooch Sans', sans-serif;
+    font-size: 1.3rem;
+}
+
+.menu-link {
+    position: relative;
+    transition: 0.3s;
+}
+
+.menu-link::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: -5px;
+
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 0;
+    height: 3px;
+
+    background-color: #d95f02;
+
+    border-radius: 10px;
+
+    transition: 0.3s;
+}
+
+.menu-link:hover::after {
+    width: 100%;
+}
+
+.menu-link:hover {
+    color: #d95f02 !important;
+}
