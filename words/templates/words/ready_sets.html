@@ -2,16 +2,18 @@
 {% load static %}
 {% block content %}
 
-<div class="container text-center py-5">
 
+<div class="container py-5">
     <div class="row align-items-center">
-
         <div class="col">
+            <div class="text-center">
                 <img
                     src="{% static 'images/zestaw1.jpg' %}"
                     class="img-fluid"
-                    alt="fiszki-1"
+                    style="max-width: 200px;"
+                    alt="England"
                 >
+            </div>
         </div>
 
         <div class="col">
@@ -25,51 +27,76 @@
         </div>
 
         <div class="col">
+            <div class="text-center">
                 <img
                     src="{% static 'images/zestaw2.jpg' %}"
                     class="img-fluid"
-                    alt="fiszki-2"
+                    style="max-width: 200px;"
+                    alt="England"
                 >
+            </div>
         </div>
     </div>
 </div>
 
-<div class="container py-5">
+<div>
+    <!-- PODRÓŻE -->
 
-    <div class="row g-4">
+    <div class="sets-section">
+        <h2 class="sets-title text-center">
+            Podróże
+        </h2>
 
-        <div class="col-md-4">
+        <div class="ready-sets-grid">
+
             <div class="ready-set-card">
-                <h4>Podróże</h4>
-                <p>Słówka przydatne podczas wyjazdów i wakacji.</p>
-                <a href="#" class="btn btn-dark rounded-pill px-4">
-                    Rozpocznij
-                </a>
+                <h6>Na lotnisku (12)</h6>
             </div>
-        </div>
 
-        <div class="col-md-4">
+
+
             <div class="ready-set-card">
-                <h4>IT</h4>
-                <p>Podstawowe słownictwo technologiczne i programistyczne.</p>
-                <a href="#" class="btn btn-dark rounded-pill px-4">
-                    Rozpocznij
-                </a>
+                <h6>W hotelu (10)</h6>
             </div>
-        </div>
 
-        <div class="col-md-4">
+
+
             <div class="ready-set-card">
-                <h4>Biznes</h4>
-                <p>Słówka pomocne w pracy, mailach i spotkaniach.</p>
-                <a href="#" class="btn btn-dark rounded-pill px-4">
-                    Rozpocznij
-                </a>
+                <h6>Restauracja (20)</h6>
             </div>
-        </div>
 
+        </div>
     </div>
 
-</div>
+    <!-- IT -->
 
+    <div class="sets-section">
+
+        <h2 class="sets-title text-center">
+            IT
+        </h2>
+
+        <div class="ready-sets-grid">
+            <div class="ready-set-card">
+                <h6>Python Basics (18)</h6>
+            </div>
+
+            <div class="ready-set-card">
+                <h6>Git i GitHub (14)</h6>
+            </div>
+
+            <div class="ready-set-card">
+                <h6>HTML i CSS (16)</h6>
+            </div>
+
+            <div class="ready-set-card">
+                <h6>SQL Podstawy (12)</h6>
+            </div>
+
+            <div class="ready-set-card">
+                <h6>SQL Zaawansowany (16)</h6>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
