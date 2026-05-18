@@ -1,0 +1,37 @@
+{% extends "words/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container text-center py-5">
+
+    <div class="row align-items-center">
+
+        <div class="col">
+                <img
+                    src="{% static 'images/zestaw1.jpg' %}"
+                    class="img-fluid"
+                    alt="fiszki-1"
+                >
+        </div>
+
+        <div class="col">
+            <h1 class="section-title">
+                Gotowe zestawy
+            </h1>
+
+            <p class="ready-sets-intro">
+                Wybierz kategorię słówek dopasowaną do swoich zainteresowań i rozpocznij naukę od razu bez tworzenia własnych zestawów.
+            </p>
+        </div>
+
+        <div class="col">
+                <img
+                    src="{% static 'images/zestaw2.jpg' %}"
+                    class="img-fluid"
+                    alt="fiszki-2"
+                >
+        </div>
+
+</div>
+
+{% endblock %}
