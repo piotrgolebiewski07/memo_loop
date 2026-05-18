@@ -23,4 +23,5 @@ urlpatterns = [
     path('', views.home),
     path("study/", include("words.urls")),
     path('admin/', admin.site.urls),
+    path('ready-sets/', views.ready_sets),
 ]

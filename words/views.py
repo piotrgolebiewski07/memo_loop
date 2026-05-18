@@ -70,3 +70,9 @@ def home(request):
         "words/home.html",
         )
 
+
+def ready_sets(request):
+    return render(
+        request,
+        "words/ready_sets.html",
+    )
