@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from words.models import Word
+from .models import WordSet
 
 
 def index(request):
@@ -72,7 +73,12 @@ def home(request):
 
 
 def ready_sets(request):
+    word_sets = WordSet.objects.all()
+
     return render(
         request,
         "words/ready_sets.html",
+        {
+            "word_sets": word_sets,
+        }
     )
