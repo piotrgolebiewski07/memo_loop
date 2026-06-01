@@ -48,26 +48,14 @@
         </h2>
 
         <div class="ready-sets-grid">
-
-            <div class="ready-set-card">
-                <h6>
-                    {{ word_sets.0.name }}
-                    ({{ word_sets.0.words.count }})
-                </h6>
-            </div>
-
-
-
-            <div class="ready-set-card">
-                <h6>W hotelu (10)</h6>
-            </div>
-
-
-
-            <div class="ready-set-card">
-                <h6>Restauracja (20)</h6>
-            </div>
-
+            {% for word_set in word_sets %}
+                <a href="/study/{{ word_set.slug }}/" class="ready-set-card text-decoration-none text-dark">
+                    <h6>
+                        {{ word_set.name }}
+                        ({{ word_set.words.count }})
+                    </h6>
+                </a>
+            {% endfor %}
         </div>
     </div>
 
