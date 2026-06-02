@@ -92,29 +92,40 @@ def study_set(request, slug):
     word_set = WordSet.objects.get(slug=slug)
 
     if request.method == "POST":
-        word_id = request.POST.get("word_id")
-        word = Word.objects.get(id=word_id)
 
-        answer = request.POST.get("answer")
+        if "end_session" in request.POST:
+            if "correct_answers" in request.session:
+                del request.session["correct_answers"]
+            if "wrong_answers" in request.session:
+                del request.session["wrong_answers"]
 
-        if word.text_en.lower() == answer.lower():
-            result = "Dobrze"
-            correct_answers += 1
-            request.session["correct_answers"] = correct_answers
+            correct_answers, wrong_answers = 0, 0
+            result = ""
+            word = word_set.words.order_by("?").first()
+
         else:
-            result = f"Błąd. Poprawna odpowiedź: {word.text_en}"
-            wrong_answers += 1
-            request.session["wrong_answers"] = wrong_answers
+            word_id = request.POST.get("word_id")
+            word = Word.objects.get(id=word_id)
 
-        word_new = word_set.words.order_by("?").first()
+            answer = request.POST.get("answer")
 
-        while word_new.id == word.id and word_set.words.count() > 1:
+            if word.text_en.lower() == answer.lower():
+                result = "Dobrze"
+                correct_answers += 1
+                request.session["correct_answers"] = correct_answers
+            else:
+                result = f"Błąd. Poprawna odpowiedź: {word.text_en}"
+                wrong_answers += 1
+                request.session["wrong_answers"] = wrong_answers
+
             word_new = word_set.words.order_by("?").first()
 
-        word = word_new
+            while word_new.id == word.id and word_set.words.count() > 1:
+                word_new = word_set.words.order_by("?").first()
+
+            word = word_new
 
     else:
-
         if "correct_answers" in request.session:
             del request.session["correct_answers"]
         if "wrong_answers" in request.session:
@@ -122,6 +133,13 @@ def study_set(request, slug):
 
         correct_answers, wrong_answers = 0, 0
         word = word_set.words.order_by("?").first()
+
+    total_answers = correct_answers + wrong_answers
+
+    if total_answers > 0:
+        success_rate = round((correct_answers / total_answers) * 100)
+    else:
+        success_rate = 0
 
     return render(
         request,
@@ -132,5 +150,6 @@ def study_set(request, slug):
             "correct_answers": correct_answers,
             "wrong_answers": wrong_answers,
             "word_set": word_set,
+            "success_rate": success_rate,
         }
     )

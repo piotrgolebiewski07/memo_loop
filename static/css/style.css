@@ -193,3 +193,8 @@
     border-color: #d8cdbf;
     color: #5a4b3e;
 }
+
+.stats-image {
+    border-radius: 20px;
+    opacity: 0.9;
+}
