@@ -131,5 +131,6 @@ def study_set(request, slug):
             "result": result,
             "correct_answers": correct_answers,
             "wrong_answers": wrong_answers,
+            "word_set": word_set,
         }
     )
