@@ -160,3 +160,41 @@
     max-width: 900px;
     margin: 0 auto;
 }
+
+/* ====================
+   STUDY SECTION
+==================== */
+
+.study-btn {
+    background-color: #f6b27c;
+    border-color: #f6b27c;
+    color: #4a2f1b;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.20);
+    min-width: 220px;
+    font-size: 1rem;
+}
+
+.study-btn:hover {
+    background-color: #f8c49a;
+    border-color: #f8c49a;
+    color: #4a2f1b;
+}
+
+.end-btn {
+    min-width: 220px;
+    font-size: 1rem;
+    background-color: #f3ede7;
+    border-color: #e5ddd5;
+    color: #6b5a4a;
+}
+
+.end-btn:hover {
+    background-color: #ebe2d9;
+    border-color: #d8cdbf;
+    color: #5a4b3e;
+}
+
+.stats-image {
+    border-radius: 20px;
+    opacity: 0.9;
+}

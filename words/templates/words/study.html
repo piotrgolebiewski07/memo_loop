@@ -1,31 +1,90 @@
-<html>
-    <head>
-        <title>Fiszki</title>
-    </head>
+{% extends "words/base.html" %}
+{% load static %}
+{% block content %}
 
-    <body>
-        <h1>Tłumaczenie słówek</h1>
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold">
+            {{ word_set.name }}
+        </h1>
 
-        {{ word.text_pl }}
+    </div>
 
-        <form method="post">
+    <div class="card shadow text-center mx-auto mb-4" style="max-width: 600px;">
+        <div class="card-body py-5">
+            <h2>
+                {{ word.text_pl }}
+            </h2>
+        </div>
+    </div>
+
+    <div class="mx-auto" style="max-width: 600px">
+        <form method="post" autocomplete="off">
             {% csrf_token %}
             <input type="hidden" name="word_id" value="{{ word.id }}">
-            <input type="text" name="answer">
+            <input
+                type="text"
+                name="answer"
+                class="form-control form-control-lg mb-3"
+                placeholder="odpowiedź"
+                autofocus
+            >
 
-            <button type="submit">
-                Sprawdź
-            </button>
+            <div class="text-center d-flex justify-content-center gap-3 mt-5">
+                <button
+                    type="submit"
+                    class="btn study-btn btn-lg px-5 rounded-pill">
+                    Sprawdzam
+                </button>
 
-            <button type="submit" name="end_session">
-                Zakończ
-            </button>
+                <button
+                    type="submit"
+                    class="btn end-btn btn-lg px-5 rounded-pill"
+                    name="end_session">
+                    Rozpocznij od nowa
+                </button>
+            </div>
         </form>
 
-        {{ result }}
-        <br />
-        Poprawne: {{ correct_answers }}
-        Błędne: {{ wrong_answers }}
+        <div class="text-center mt-4">
+            <h5>{{ result }}</h5>
+        </div>
+    </div>
 
-    </body>
-</html>
+    <div class="container mt-5 pt-5" style="max-width: 700px">
+        <div class="row align-items-center justify-content-center g-5">
+            <div class="col-auto">
+                <div class="mx-auto" style="min-width: 250px;">
+                    <h4 class="mb-4">
+                        Statystyki:
+                    </h4>
+
+                    <div class="d-flex justify-content-between mb-1">
+                        <span>Poprawne odpowiedzi:</span>
+                        {{ correct_answers }}
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-1">
+                        <span>Błędne odpowiedzi:</span>
+                        {{ wrong_answers }}
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-1">
+                        <span>Skuteczność:</span>
+                        {{ success_rate }}%
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-auto">
+                <img
+                    src="{% static 'images/stats.jpg' %}"
+                    class="img-fluid stats-image"
+                    style="max-width: 180px;"
+                    alt="Statystyki nauki">
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
