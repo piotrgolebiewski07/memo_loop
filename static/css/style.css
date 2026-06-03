@@ -195,6 +195,26 @@
 }
 
 .stats-image {
-    border-radius: 20px;
-    opacity: 0.9;
+    opacity: 0.8;
+}
+
+.study-title {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.study-word {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.study-stats-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.feedback-text {
+    min-height: 28px;
+    font-size: 1.2rem;
+    color: #6c757d;
 }

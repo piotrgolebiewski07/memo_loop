@@ -86,6 +86,7 @@ def ready_sets(request):
 
 def study_set(request, slug):
     result = ""
+    result_class = ""
     correct_answers = request.session.get("correct_answers", 0)
     wrong_answers = request.session.get("wrong_answers", 0)
 
@@ -110,11 +111,13 @@ def study_set(request, slug):
             answer = request.POST.get("answer")
 
             if word.text_en.lower() == answer.lower():
-                result = "Dobrze"
+                result = "SUPER!"
+                result_class = "success"
                 correct_answers += 1
                 request.session["correct_answers"] = correct_answers
             else:
-                result = f"Błąd. Poprawna odpowiedź: {word.text_en}"
+                result = f"{word.text_en}"
+                result_class = "danger"
                 wrong_answers += 1
                 request.session["wrong_answers"] = wrong_answers
 
@@ -151,5 +154,6 @@ def study_set(request, slug):
             "wrong_answers": wrong_answers,
             "word_set": word_set,
             "success_rate": success_rate,
+            "result_class": result_class,
         }
     )
