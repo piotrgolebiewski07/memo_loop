@@ -1,0 +1,25 @@
+{% extends "words/base.html" %}
+{% block content %}
+<div class="container py-5" style="max-width: 600px;">
+    <h1 class="section-title">
+        Nowy zestaw
+    </h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <input
+            type="text"
+            name="name"
+            class="form-control form-control-lg mb-4"
+            placeholder="Nazwa zestawu"
+        >
+
+        <div class="text-center">
+            <button type="submit" class="btn study-btn btn-lg px-5 rounded-pill">
+                Utwórz zestaw
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

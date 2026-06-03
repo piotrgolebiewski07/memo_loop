@@ -1,0 +1,18 @@
+{% extends "words/base.html" %}
+{% block content %}
+
+<div class="container py-5 text-center">
+    <h1>{{ word_set.name }}</h1>
+    <a href="#" class="btn study-btn btn-lg px-5 rounded-pill">
+        + Dodaj słowko
+    </a>
+
+    <div class="mt-5">
+        <h4>Słówka</h4>
+
+        <p>Brak słowek w zestawie</p>
+    </div>
+    <p>Liczba słówek: {{ word_set.words.count }}</p>
+</div>
+
+{% endblock %}

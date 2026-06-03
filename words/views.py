@@ -163,3 +163,31 @@ def study_set(request, slug):
             "result_class": result_class,
         }
     )
+
+
+def my_sets(request):
+
+    return render(
+        request,
+        "words/my_sets.html",
+    )
+
+
+def create_set(request):
+    return render(
+        request,
+        "words/create_set.html",
+    )
+
+
+def my_set_detail(request, slug):
+    word_set = WordSet.objects.get(slug=slug)
+
+    return render(
+        request,
+        "words/my_set_detail.html",
+        {
+            "word_set": word_set,
+        }
+    )
+
