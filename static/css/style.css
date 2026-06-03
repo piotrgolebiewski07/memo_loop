@@ -170,7 +170,7 @@
     border-color: #f6b27c;
     color: #4a2f1b;
     box-shadow: 0 2px 8px rgba(0,0,0,0.20);
-    min-width: 220px;
+    min-width: 180px;
     font-size: 1rem;
 }
 
@@ -181,11 +181,12 @@
 }
 
 .end-btn {
-    min-width: 220px;
+    min-width: 180px;
     font-size: 1rem;
     background-color: #f3ede7;
     border-color: #e5ddd5;
     color: #6b5a4a;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.20);
 }
 
 .end-btn:hover {
