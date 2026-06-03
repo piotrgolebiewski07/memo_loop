@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from words.models import Word
 from .models import WordSet
 
@@ -93,6 +93,12 @@ def study_set(request, slug):
     word_set = WordSet.objects.get(slug=slug)
 
     if request.method == "POST":
+
+        if "end_study" in request.POST:
+            request.session.pop("correct_answers", None)
+            request.session.pop("wrong_answers", None)
+
+            return redirect("/ready-sets/")
 
         if "end_session" in request.POST:
             if "correct_answers" in request.session:
