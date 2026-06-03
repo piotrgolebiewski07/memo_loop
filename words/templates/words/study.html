@@ -4,15 +4,15 @@
 
 <div class="container py-5">
     <div class="text-center mb-5">
-        <h1 class="fw-bold">
+        <h2 class="study-title">
             {{ word_set.name }}
-        </h1>
+        </h2>
 
     </div>
 
     <div class="card shadow text-center mx-auto mb-4" style="max-width: 600px;">
         <div class="card-body py-5">
-            <h2>
+            <h2 class="study-word">
                 {{ word.text_pl }}
             </h2>
         </div>
@@ -25,12 +25,16 @@
             <input
                 type="text"
                 name="answer"
-                class="form-control form-control-lg mb-3"
+                class="form-control form-control-lg mb-1"
                 placeholder="odpowiedź"
                 autofocus
             >
 
-            <div class="text-center d-flex justify-content-center gap-3 mt-5">
+            <p class="feedback-text text-center">
+                {{ result }}
+            </p>
+
+            <div class="text-center d-flex justify-content-center gap-3 mt-4">
                 <button
                     type="submit"
                     class="btn study-btn btn-lg px-5 rounded-pill">
@@ -46,12 +50,10 @@
             </div>
         </form>
 
-        <div class="text-center mt-4">
-            <h5>{{ result }}</h5>
-        </div>
+
     </div>
 
-    <div class="container mt-5 pt-5" style="max-width: 700px">
+    <div class="container mt-5" style="max-width: 700px">
         <div class="row align-items-center justify-content-center g-5">
             <div class="col-auto">
                 <div class="mx-auto" style="min-width: 250px;">
@@ -78,9 +80,9 @@
 
             <div class="col-auto">
                 <img
-                    src="{% static 'images/stats.jpg' %}"
+                    src="{% static 'images/stats_1.jpg' %}"
                     class="img-fluid stats-image"
-                    style="max-width: 180px;"
+                    style="max-width: 200px;"
                     alt="Statystyki nauki">
             </div>
 
