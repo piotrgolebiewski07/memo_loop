@@ -183,6 +183,19 @@ def create_set(request):
 def my_set_detail(request, slug):
     word_set = WordSet.objects.get(slug=slug)
 
+    if request.method == "POST":
+        text_pl = request.POST.get("text_pl")
+        text_en = request.POST.get("text_en")
+
+        Word.objects.create(
+            text_pl=text_pl,
+            text_en=text_en,
+            word_set=word_set,
+            level=1
+        )
+
+        return redirect(f"/my-sets/{word_set.slug}/")
+
     return render(
         request,
         "words/my_set_detail.html",
