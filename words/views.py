@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.utils.text import slugify
+
 from words.models import Word
 from .models import WordSet
 
@@ -166,14 +168,30 @@ def study_set(request, slug):
 
 
 def my_sets(request):
+    word_sets = WordSet.objects.all()
+
 
     return render(
         request,
         "words/my_sets.html",
+        {
+            "word_sets": word_sets,
+        }
     )
 
 
 def create_set(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        slug = slugify(name)
+
+        word_set = WordSet.objects.create(
+            name=name,
+            slug=slug,
+        )
+
+        return redirect(f"/my-sets/{word_set.slug}/")
+
     return render(
         request,
         "words/create_set.html",
