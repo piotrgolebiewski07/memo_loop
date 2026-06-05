@@ -24,4 +24,7 @@ urlpatterns = [
     path("study/", include("words.urls")),
     path('admin/', admin.site.urls),
     path('ready-sets/', views.ready_sets),
+    path('my-sets/', views.my_sets),
+    path('my-sets/create/', views.create_set),
+    path('my-sets/<slug:slug>/', views.my_set_detail),
 ]

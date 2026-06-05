@@ -1,0 +1,30 @@
+{% extends "words/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5 text-center">
+    <h1 class="section-title">
+        Moje zestawy
+    </h1>
+
+    <p class="ready-sets-intro">
+        Tu będą moje zestawy
+    </p>
+
+    <a href="/my-sets/create/" class="btn study-btn btn-lg px-5 rounded-pill">
+        + Nowy zestaw
+    </a>
+</div>
+<div class="mt-5">
+    {% for word_set in word_sets %}
+        <a href="/my-sets/{{ word_set.slug }}/" class="ready-set-card text-decoration-none text-dark d-block mb-3">
+            <h6>
+                {{ word_set.name }}
+                ({{ word_set.words.count }})
+            </h6>
+        </a>
+    {% empty %}
+    <p>Nie masz jeszcze żadnych zestawów</p>
+    {% endfor %}
+</div>
+{% endblock %}

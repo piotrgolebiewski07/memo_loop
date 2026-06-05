@@ -1,0 +1,43 @@
+{% extends "words/base.html" %}
+{% block content %}
+
+<div class="container py-5 text-center">
+    <h1>{{ word_set.name }}</h1>
+
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+
+        <input
+            type="text"
+            name="text_pl"
+            class="form-control mb-3"
+            placeholder="Polskie słowo"
+        >
+
+        <input
+            type="text"
+            name="text_en"
+            class="form-control mb-3"
+            placeholder="Angielskie słowo"
+        >
+
+        <button
+            type="submit"
+            class="btn study-btn rounded-pill">
+            Dodaj
+        </button>
+    </form>
+
+    <div class="mt-5">
+        <h4>Słówka</h4>
+
+        {% for word in word_set.words.all %}
+            <p>{{ word.text_pl }} - {{ word.text_en }}</p>
+        {% empty %}
+            <p>Brak słowek w zestawie</p>
+        {% endfor %}
+    </div>
+    <p>Liczba słówek: {{ word_set.words.count }}</p>
+</div>
+
+{% endblock %}
