@@ -75,7 +75,7 @@ def home(request):
 
 
 def ready_sets(request):
-    word_sets = WordSet.objects.all()
+    word_sets = WordSet.objects.filter(is_public=True)
 
     return render(
         request,
@@ -168,8 +168,7 @@ def study_set(request, slug):
 
 
 def my_sets(request):
-    word_sets = WordSet.objects.all()
-
+    word_sets = WordSet.objects.filter(is_public=False)
 
     return render(
         request,
