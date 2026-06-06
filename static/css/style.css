@@ -219,3 +219,22 @@
     font-size: 1.2rem;
     color: #6c757d;
 }
+
+/* ====================
+   MY SETS SECTION
+==================== */
+
+.my-set-action-btn {
+    min-width: 110px;
+    font-size: 1rem;
+    background-color: #f3ede7;
+    border-color: #e5ddd5;
+    color: #6b5a4a;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.20);
+}
+
+.my-set-action-btn:hover {
+    background-color: #ebe2d9;
+    border-color: #d8cdbf;
+    color: #5a4b3e;
+}
