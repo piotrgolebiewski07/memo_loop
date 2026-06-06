@@ -7,24 +7,33 @@
         Moje zestawy
     </h1>
 
-    <p class="ready-sets-intro">
-        Tu będą moje zestawy
-    </p>
-
     <a href="/my-sets/create/" class="btn study-btn btn-lg px-5 rounded-pill">
         + Nowy zestaw
     </a>
 </div>
-<div class="mt-5">
+<div class="container mt-3" style="max-width: 700px;">
     {% for word_set in word_sets %}
-        <a href="/my-sets/{{ word_set.slug }}/" class="ready-set-card text-decoration-none text-dark d-block mb-3">
-            <h6>
-                {{ word_set.name }}
-                ({{ word_set.words.count }})
-            </h6>
-        </a>
-    {% empty %}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="mb-0">
+            {{ word_set.name }} ({{ word_set.words.count }})
+        </h6>
+
+        <div class="d-flex justify-content-center gap-4">
+            <a href="/study/{{ word_set.slug }}/" class="btn my-set-action-btn btn-sm rounded-pill">
+                Ucz się
+            </a>
+
+            <a href="/my-sets/{{ word_set.slug }}/" class="btn my-set-action-btn btn-sm rounded-pill">
+                Edytuj
+            </a>
+
+            <button class="btn my-set-action-btn btn-sm rounded-pill">
+                Usuń
+            </button>
+        </div>
+    </div>
+{% empty %}
     <p>Nie masz jeszcze żadnych zestawów</p>
-    {% endfor %}
+{% endfor %}
 </div>
 {% endblock %}
