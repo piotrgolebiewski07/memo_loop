@@ -168,6 +168,14 @@ def study_set(request, slug):
 
 
 def my_sets(request):
+    if request.method == "POST":
+        delete_set_id = request.POST.get("delete_set_id")
+
+        if delete_set_id:
+            WordSet.objects.get(id=delete_set_id, is_public=False).delete()
+
+        return redirect("/my-sets/")
+
     word_sets = WordSet.objects.filter(is_public=False)
 
     return render(

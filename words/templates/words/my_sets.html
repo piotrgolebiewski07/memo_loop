@@ -26,10 +26,17 @@
             <a href="/my-sets/{{ word_set.slug }}/" class="btn my-set-action-btn btn-sm rounded-pill">
                 Edytuj
             </a>
+            <form method="post" style="display:inline;">
+                {% csrf_token %}
+                <input type="hidden" name="delete_set_id" value="{{ word_set.id }}">
 
-            <button class="btn my-set-action-btn btn-sm rounded-pill">
-                Usuń
-            </button>
+                <button
+                    type="submit"
+                    class="btn my-set-action-btn btn-sm rounded-pill"
+                    onclick="return confirm('Czy na pewno chcesz usunąć ten zestaw?');">
+                    Usuń
+                </button>
+            </form>
         </div>
     </div>
 {% empty %}
