@@ -225,16 +225,30 @@
 ==================== */
 
 .my-set-action-btn {
-    min-width: 110px;
-    font-size: 1rem;
-    background-color: #f3ede7;
-    border-color: #e5ddd5;
-    color: #6b5a4a;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.20);
+    width: 130px;
+    padding: 1px 0px;
+    font-size: 0.9rem;
+    background-color: #e8eef8;
+    border-color: #d5e0f3;
+    color: #244a7c;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.10);
 }
 
 .my-set-action-btn:hover {
-    background-color: #ebe2d9;
-    border-color: #d8cdbf;
-    color: #5a4b3e;
+    background-color: #dbe6f7;
+    border-color: #c5d5f0;
+    color: #1f3f69;
 }
+
+.my-sets-intro {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #6c757d;
+}
+
+.my-set-name {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
