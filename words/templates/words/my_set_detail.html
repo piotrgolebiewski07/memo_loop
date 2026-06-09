@@ -24,20 +24,28 @@
         <button
             type="submit"
             class="btn study-btn rounded-pill">
-            Dodaj
+            Dodaj słowo
         </button>
-    </form>
+
+        <a href="/my-sets/" class="btn end-btn btn-lg rounded-pill">
+            Wróć do: Moje zestawy
+        </a>
+     </form>
 
     <div class="mt-5">
         <h4>Słówka</h4>
-
-        {% for word in word_set.words.all %}
-            <p>{{ word.text_pl }} - {{ word.text_en }}</p>
-        {% empty %}
-            <p>Brak słowek w zestawie</p>
-        {% endfor %}
+        <div class="mt-1">
+            Liczba słówek: {{ word_set.words.count }}
+        </div>
+        <div class="mt-5">
+            {% for word in word_set.words.all %}
+                <p>{{ word.text_pl }} - {{ word.text_en }}</p>
+            {% empty %}
+                <p>Brak słowek w zestawie</p>
+            {% endfor %}
+        </div>
     </div>
-    <p>Liczba słówek: {{ word_set.words.count }}</p>
+
 </div>
 
 {% endblock %}
