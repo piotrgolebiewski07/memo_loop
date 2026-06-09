@@ -186,7 +186,7 @@
     background-color: #f3ede7;
     border-color: #e5ddd5;
     color: #6b5a4a;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.20);
+    box-shadow: 3px 3px 8px rgba(0,0,0,0.40);
 }
 
 .end-btn:hover {
@@ -252,3 +252,7 @@
     letter-spacing: 0.5px;
 }
 
+.big-checkbox {
+    transform: scale(1.5);
+    margin-right: 10px;
+}

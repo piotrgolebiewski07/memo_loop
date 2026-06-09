@@ -1,10 +1,10 @@
 {% extends "words/base.html" %}
 {% block content %}
 
-<div class="container py-5 text-center">
+<div class="container py-5 text-center" style="max-width: 500px;">
     <h1>{{ word_set.name }}</h1>
 
-    <form method="post" class="mt-4">
+    <form method="post" class="mt-4" autocomplete="off">
         {% csrf_token %}
 
         <input
@@ -12,6 +12,7 @@
             name="text_pl"
             class="form-control mb-3"
             placeholder="Polskie słowo"
+            autofocus
         >
 
         <input
@@ -23,7 +24,7 @@
 
         <button
             type="submit"
-            class="btn study-btn rounded-pill">
+            class="btn study-btn rounded-pill me-3">
             Dodaj słowo
         </button>
 
@@ -37,13 +38,41 @@
         <div class="mt-1">
             Liczba słówek: {{ word_set.words.count }}
         </div>
-        <div class="mt-5">
-            {% for word in word_set.words.all %}
-                <p>{{ word.text_pl }} - {{ word.text_en }}</p>
-            {% empty %}
-                <p>Brak słowek w zestawie</p>
-            {% endfor %}
-        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="mt-4 mx-auto text-center" style="max-width: 600px;">
+                {% for word in word_set.words.all %}
+                    <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+
+                        <div class="d-flex align-items-center gap-3">
+                            <input
+                                type="checkbox"
+                                name="selected_words"
+                                value="{{ word.id }}"
+                                class="big-checkbox"
+                            >
+
+                            <div>
+                                <strong>{{ word.text_pl }}</strong>
+                                <span class="text-muted">— {{ word.text_en }}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                {% empty %}
+                    <p>Brak słówek w zestawie</p>
+                {% endfor %}
+            </div>
+
+            <button
+                type="submit"
+                name="delete_words"
+                class="btn end-btn mt-4 rounded-pill">
+                Usuń zaznaczone
+            </button>
+
+        </form>
     </div>
 
 </div>

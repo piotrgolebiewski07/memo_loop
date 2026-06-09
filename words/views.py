@@ -212,6 +212,13 @@ def my_set_detail(request, slug):
     word_set = WordSet.objects.get(slug=slug)
 
     if request.method == "POST":
+
+        if "delete_words" in request.POST:
+            selected_words = request.POST.getlist("selected_words")
+            Word.objects.filter(id__in=selected_words, word_set=word_set).delete()
+
+            return redirect(f"/my-sets/{word_set.slug}/")
+
         text_pl = request.POST.get("text_pl")
         text_en = request.POST.get("text_en")
 
