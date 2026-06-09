@@ -100,7 +100,10 @@ def study_set(request, slug):
             request.session.pop("correct_answers", None)
             request.session.pop("wrong_answers", None)
 
-            return redirect("/ready-sets/")
+            if word_set.is_public:
+                return redirect("/ready-sets/")
+
+            return redirect("/my-sets/")
 
         if "end_session" in request.POST:
             if "correct_answers" in request.session:
