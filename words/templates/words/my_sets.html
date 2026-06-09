@@ -2,28 +2,62 @@
 {% load static %}
 
 {% block content %}
-<div class="container py-5 text-center">
-    <h1 class="section-title">
-        Moje zestawy
-    </h1>
 
-    <a href="/my-sets/create/" class="btn study-btn btn-lg px-5 rounded-pill">
-        + Nowy zestaw
-    </a>
+<div class="container py-5 text-center" style="max-width: 1000px;">
+    <div class="row align-items-center g-5">
+         <div class="col d-flex flex-column justify-content-center">
+            <h1 class="section-title">
+                Moje zestawy
+            </h1>
+
+            <p class="my-sets-intro">
+                Twórz własne zestawy słówek dopasowane do swoich potrzeb.
+                Dodawaj nowe słowa, organizuj naukę <br />
+                i wracaj do materiału w dowolnym momencie.
+            </p>
+
+             <ul class="hero-list" style="color: #6c757d; margin-bottom: 0px;">
+                 <li>Ucz się tego, czego naprawdę potrzebujesz.</li>
+             </ul>
+
+            <div class="mt-4">
+                <a href="/my-sets/create/" class="btn study-btn btn-lg px-5 rounded-pill">
+                    + Nowy zestaw
+                </a>
+            </div>
+         </div>
+
+        <div class="col">
+            <div class="text-center">
+                <img
+                    src="{% static 'images/moje_zestawy.jpg' %}"
+                    class="img-fluid rounded-3 shadow"
+                    style="max-width: 450px;"
+                    alt="Moje zestawy"
+                >
+            </div>
+        </div>
+    </div>
 </div>
-<div class="container mt-3" style="max-width: 700px;">
+
+<div class="container" style="max-width: 1000px;">
+    <hr class="my-4" style="opacity: 0.15;">
+</div>
+
+<div class="container mt-5" style="max-width: 700px;">
     {% for word_set in word_sets %}
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h6 class="mb-0">
-            {{ word_set.name }} ({{ word_set.words.count }})
-        </h6>
+        <div class="my-set-name">
+            {{ word_set.name }}
+            <span class="text-muted">({{ word_set.words.count }})</span>
+        </div>
 
-        <div class="d-flex justify-content-center gap-4">
-            <a href="/study/{{ word_set.slug }}/" class="btn my-set-action-btn btn-sm rounded-pill">
+        <div class="d-flex justify-content-center gap-3">
+            <a href="/study/{{ word_set.slug }}/" class="btn my-set-action-btn">
                 Ucz się
             </a>
 
-            <a href="/my-sets/{{ word_set.slug }}/" class="btn my-set-action-btn btn-sm rounded-pill">
+            <a href="/my-sets/{{ word_set.slug }}/" class="btn my-set-action-btn">
                 Edytuj
             </a>
             <form method="post" style="display:inline;">
@@ -32,7 +66,7 @@
 
                 <button
                     type="submit"
-                    class="btn my-set-action-btn btn-sm rounded-pill"
+                    class="btn my-set-action-btn"
                     onclick="return confirm('Czy na pewno chcesz usunąć ten zestaw?');">
                     Usuń
                 </button>
