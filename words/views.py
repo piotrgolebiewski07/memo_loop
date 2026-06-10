@@ -222,20 +222,20 @@ def my_set_detail(request, slug):
 
         text_pl = request.POST.get("text_pl").strip().lower()
         text_en = request.POST.get("text_en").strip().lower()
-        duplicate_exists = Word.objects.filter(
-            word_set=word_set,
-            text_pl=text_pl,
-            text_en=text_en
-        ).exists()
         edit_word_id = request.POST.get("edit_word_id")
 
         if edit_word_id:
-            word = Word.objects.get(id=edit_word_id, word_set=word_set)
-            word.text_pl = text_pl
-            word.text_en = text_en
-            word.save()
-
-            return redirect(f"/my-sets/{word_set.slug}/")
+            duplicate_exists = Word.objects.filter(
+                word_set=word_set,
+                text_pl=text_pl,
+                text_en=text_en
+            ).exclude(id=edit_word_id).exists()
+        else:
+            duplicate_exists = Word.objects.filter(
+                word_set=word_set,
+                text_pl=text_pl,
+                text_en=text_en
+            ).exists()
 
         if duplicate_exists:
             message = "Takie słówko już istnieje w tym zestawie"
@@ -249,6 +249,14 @@ def my_set_detail(request, slug):
                     "message": message,
                 }
             )
+
+        if edit_word_id:
+            word = Word.objects.get(id=edit_word_id, word_set=word_set)
+            word.text_pl = text_pl
+            word.text_en = text_en
+            word.save()
+
+            return redirect(f"/my-sets/{word_set.slug}/")
 
         Word.objects.create(
             text_pl=text_pl,
