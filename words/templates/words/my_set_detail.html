@@ -7,11 +7,16 @@
     <form method="post" class="mt-4" autocomplete="off">
         {% csrf_token %}
 
+        {% if edit_word %}
+            <input type="hidden" name="edit_word_id" value="{{ edit_word.id }}">
+        {% endif %}
+
         <input
             type="text"
             name="text_pl"
             class="form-control mb-3"
             placeholder="Polskie słowo"
+            value="{% if edit_word %}{{ edit_word.text_pl }}{% endif %}"
             autofocus
         >
 
@@ -20,17 +25,19 @@
             name="text_en"
             class="form-control mb-3"
             placeholder="Angielskie słowo"
+            value="{% if edit_word %}{{ edit_word.text_en }}{% endif %}"
         >
 
-        <button
-            type="submit"
-            class="btn study-btn rounded-pill me-3">
-            Dodaj słowo
-        </button>
+        <div class="mt-4 d-flex justify-content-center gap-4">
+            <button
+                type="submit" class="btn study-btn rounded-pill">
+                {% if edit_word %}Zapisz zmiany{% else %}Dodaj słowo{% endif %}
+            </button>
 
-        <a href="/my-sets/" class="btn end-btn btn-lg rounded-pill">
-            Wróć do: Moje zestawy
-        </a>
+            <a href="/my-sets/" class="btn end-btn btn-lg rounded-pill">
+                Wróć do: Moje zestawy
+            </a>
+        </div>
      </form>
 
     <div class="mt-5">
@@ -58,6 +65,10 @@
                                 <span class="text-muted">— {{ word.text_en }}</span>
                             </div>
                         </div>
+
+                        <a href="/my-sets/{{ word_set.slug }}/?edit_word={{ word.id }}" class="btn my-set-action-btn">
+                            Edytuj
+                        </a>
 
                     </div>
                 {% empty %}

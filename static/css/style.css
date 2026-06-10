@@ -166,8 +166,13 @@
 ==================== */
 
 .study-btn {
-    background-color: #f6b27c;
-    border-color: #f6b27c;
+    background: linear-gradient(
+        135deg,
+        #f6b27c 0%,
+        #ff7b72 100%
+    );
+
+    border: none;
     color: #4a2f1b;
     box-shadow: 0 2px 8px rgba(0,0,0,0.20);
     min-width: 180px;
@@ -175,8 +180,12 @@
 }
 
 .study-btn:hover {
-    background-color: #f8c49a;
-    border-color: #f8c49a;
+    background: linear-gradient(
+        135deg,
+        #f8c49a 0%,
+        #ff9b93 100%
+    );
+
     color: #4a2f1b;
 }
 
@@ -228,16 +237,16 @@
     width: 130px;
     padding: 1px 0px;
     font-size: 0.9rem;
-    background-color: #e8eef8;
-    border-color: #d5e0f3;
-    color: #244a7c;
+     background-color: #fff4ec;
+    border-color: #f7d8c2;
+    color: #7a4d35;
     box-shadow: 0 2px 4px rgba(0,0,0,0.10);
 }
 
 .my-set-action-btn:hover {
-    background-color: #dbe6f7;
-    border-color: #c5d5f0;
-    color: #1f3f69;
+    background-color: #ffe9db;
+    border-color: #f6c8ab;
+    color: #6b4029;
 }
 
 .my-sets-intro {
@@ -255,4 +264,10 @@
 .big-checkbox {
     transform: scale(1.5);
     margin-right: 10px;
+}
+
+.my-set-row {
+    padding-top: 0px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(217, 95, 2, 0.15);
 }

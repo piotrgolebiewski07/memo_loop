@@ -221,6 +221,15 @@ def my_set_detail(request, slug):
 
         text_pl = request.POST.get("text_pl")
         text_en = request.POST.get("text_en")
+        edit_word_id = request.POST.get("edit_word_id")
+
+        if edit_word_id:
+            word = Word.objects.get(id=edit_word_id, word_set=word_set)
+            word.text_pl = text_pl
+            word.text_en = text_en
+            word.save()
+
+            return redirect(f"/my-sets/{word_set.slug}/")
 
         Word.objects.create(
             text_pl=text_pl,
@@ -231,11 +240,18 @@ def my_set_detail(request, slug):
 
         return redirect(f"/my-sets/{word_set.slug}/")
 
+    edit_word_id = request.GET.get("edit_word")
+    edit_word = None
+
+    if edit_word_id:
+        edit_word = Word.objects.get(id=edit_word_id, word_set=word_set)
+
     return render(
         request,
         "words/my_set_detail.html",
         {
             "word_set": word_set,
+            "edit_word": edit_word,
         }
     )
 
