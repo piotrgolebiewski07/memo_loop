@@ -210,6 +210,7 @@ def create_set(request):
 
 def my_set_detail(request, slug):
     word_set = WordSet.objects.get(slug=slug)
+    message = ""
 
     if request.method == "POST":
 
@@ -219,8 +220,13 @@ def my_set_detail(request, slug):
 
             return redirect(f"/my-sets/{word_set.slug}/")
 
-        text_pl = request.POST.get("text_pl")
-        text_en = request.POST.get("text_en")
+        text_pl = request.POST.get("text_pl").strip().lower()
+        text_en = request.POST.get("text_en").strip().lower()
+        duplicate_exists = Word.objects.filter(
+            word_set=word_set,
+            text_pl=text_pl,
+            text_en=text_en
+        ).exists()
         edit_word_id = request.POST.get("edit_word_id")
 
         if edit_word_id:
@@ -230,6 +236,19 @@ def my_set_detail(request, slug):
             word.save()
 
             return redirect(f"/my-sets/{word_set.slug}/")
+
+        if duplicate_exists:
+            message = "Takie słówko już istnieje w tym zestawie"
+
+            return render(
+                request,
+                "words/my_set_detail.html",
+                {
+                    "word_set": word_set,
+                    "edit_word": None,
+                    "message": message,
+                }
+            )
 
         Word.objects.create(
             text_pl=text_pl,
@@ -252,6 +271,7 @@ def my_set_detail(request, slug):
         {
             "word_set": word_set,
             "edit_word": edit_word,
+            "message": message
         }
     )
 
