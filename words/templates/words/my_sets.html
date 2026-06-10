@@ -6,17 +6,9 @@
 <div class="container py-5 text-center" style="max-width: 1000px;">
     <div class="row align-items-center g-5">
          <div class="col d-flex flex-column justify-content-center">
-            <h1 class="section-title">
-                Moje zestawy
-            </h1>
-
-            <p class="my-sets-intro">
-                Twórz własne zestawy słówek dopasowane do swoich potrzeb.
-                Dodawaj nowe słowa, organizuj naukę <br />
-                i wracaj do materiału w dowolnym momencie.
-            </p>
-
              <ul class="hero-list" style="color: #6c757d; margin-bottom: 0px;">
+                 <li>Twórz własne zestawy słówek dopasowane do swoich potrzeb</li>
+                 <li>Dodawaj nowe słowa, organizuj naukę i wracaj do materiału w dowolnym momencie.</li>
                  <li>Ucz się tego, czego naprawdę potrzebujesz.</li>
              </ul>
 
@@ -30,8 +22,8 @@
         <div class="col">
             <div class="text-center">
                 <img
-                    src="{% static 'images/moje_zestawy.jpg' %}"
-                    class="img-fluid rounded-3 shadow"
+                    src="{% static 'images/moje_zestawy_4.jpg' %}"
+                    class="img-fluid rounded-3"
                     style="max-width: 450px;"
                     alt="Moje zestawy"
                 >
@@ -41,12 +33,17 @@
 </div>
 
 <div class="container" style="max-width: 1000px;">
-    <hr class="my-4" style="opacity: 0.15;">
+    <hr class="my-2" style="opacity: 0.15;">
 </div>
 
 <div class="container mt-5" style="max-width: 700px;">
+    <h1 class="section-title">
+        Moje zestawy
+    </h1>
+
     {% for word_set in word_sets %}
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="my-set-row d-flex justify-content-between align-items-center mb-3">
+
         <div class="my-set-name">
             {{ word_set.name }}
             <span class="text-muted">({{ word_set.words.count }})</span>
@@ -73,8 +70,8 @@
             </form>
         </div>
     </div>
-{% empty %}
-    <p>Nie masz jeszcze żadnych zestawów</p>
-{% endfor %}
+    {% empty %}
+        <p>Nie masz jeszcze żadnych zestawów</p>
+    {% endfor %}
 </div>
 {% endblock %}
