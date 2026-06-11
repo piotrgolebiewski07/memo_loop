@@ -220,9 +220,22 @@ def my_set_detail(request, slug):
 
             return redirect(f"/my-sets/{word_set.slug}/")
 
-        text_pl = request.POST.get("text_pl").strip().lower()
-        text_en = request.POST.get("text_en").strip().lower()
+        text_pl = request.POST.get("text_pl", "").strip().lower()
+        text_en = request.POST.get("text_en", "").strip().lower()
         edit_word_id = request.POST.get("edit_word_id")
+
+        if not text_pl or not text_en:
+            message = "Uzupełnij oba pola przed dodaniem słówka"
+
+            return render(
+                request,
+                "words/my_set_detail.html",
+                {
+                    "word_set": word_set,
+                    "edit_word": None,
+                    "message": message,
+                }
+            )
 
         if edit_word_id:
             duplicate_exists = Word.objects.filter(
