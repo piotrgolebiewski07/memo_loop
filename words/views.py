@@ -210,6 +210,7 @@ def create_set(request):
 
 def my_set_detail(request, slug):
     word_set = WordSet.objects.get(slug=slug)
+    message = ""
 
     if request.method == "POST":
 
@@ -219,9 +220,48 @@ def my_set_detail(request, slug):
 
             return redirect(f"/my-sets/{word_set.slug}/")
 
-        text_pl = request.POST.get("text_pl")
-        text_en = request.POST.get("text_en")
+        text_pl = request.POST.get("text_pl", "").strip().lower()
+        text_en = request.POST.get("text_en", "").strip().lower()
         edit_word_id = request.POST.get("edit_word_id")
+
+        if not text_pl or not text_en:
+            message = "Uzupełnij oba pola przed dodaniem słówka"
+
+            return render(
+                request,
+                "words/my_set_detail.html",
+                {
+                    "word_set": word_set,
+                    "edit_word": None,
+                    "message": message,
+                }
+            )
+
+        if edit_word_id:
+            duplicate_exists = Word.objects.filter(
+                word_set=word_set,
+                text_pl=text_pl,
+                text_en=text_en
+            ).exclude(id=edit_word_id).exists()
+        else:
+            duplicate_exists = Word.objects.filter(
+                word_set=word_set,
+                text_pl=text_pl,
+                text_en=text_en
+            ).exists()
+
+        if duplicate_exists:
+            message = "Takie słówko już istnieje w tym zestawie"
+
+            return render(
+                request,
+                "words/my_set_detail.html",
+                {
+                    "word_set": word_set,
+                    "edit_word": None,
+                    "message": message,
+                }
+            )
 
         if edit_word_id:
             word = Word.objects.get(id=edit_word_id, word_set=word_set)
@@ -252,6 +292,7 @@ def my_set_detail(request, slug):
         {
             "word_set": word_set,
             "edit_word": edit_word,
+            "message": message
         }
     )
 

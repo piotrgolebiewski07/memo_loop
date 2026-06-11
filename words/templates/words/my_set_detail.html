@@ -40,6 +40,12 @@
         </div>
      </form>
 
+    {% if message %}
+    <p class="text-danger mt-3">
+        {{ message }}
+    </p>
+    {% endif %}
+
     <div class="mt-5">
         <h4>Słówka</h4>
         <div class="mt-1">
