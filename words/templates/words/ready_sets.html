@@ -51,10 +51,10 @@
         </h2>
 
         <div class="ready-sets-grid">
-            {% for word_set in word_sets %}
-                <a href="/study/{{ word_set.slug }}/" class="ready-set-card text-decoration-none">
-                    <h6>{{ word_set.name }}</h6>
-                    <small class="text-muted">{{ word_set.words.count }} słówek</small>
+            {% for item in word_sets %}
+                <a href="/study/{{ item.set.slug }}/" class="ready-set-card text-decoration-none">
+                    <h6>{{ item.set.name }}</h6>
+                    <small class="text-muted">{{ item.word_count }} {{ item.word_label }}</small>
                 </a>
             {% endfor %}
         </div>

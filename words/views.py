@@ -5,6 +5,14 @@ from words.models import Word
 from .models import WordSet
 
 
+def word_count_label(count):
+    if count == 1:
+        return "słówko"
+    if count % 10 in [2, 3, 4] and count % 100 not in [12, 13, 14]:
+        return "słówka"
+    return "słówek"
+
+
 def index(request):
 
     result = ""
@@ -77,11 +85,22 @@ def home(request):
 def ready_sets(request):
     word_sets = WordSet.objects.filter(is_public=True)
 
+    ready_word_sets = []
+
+    for word_set in word_sets:
+        word_count = word_set.words.count()
+
+        ready_word_sets.append({
+            "set": word_set,
+            "word_count": word_count,
+            "word_label": word_count_label(word_count),
+        })
+
     return render(
         request,
         "words/ready_sets.html",
         {
-            "word_sets": word_sets,
+            "word_sets": ready_word_sets,
         }
     )
 
@@ -295,4 +314,3 @@ def my_set_detail(request, slug):
             "message": message
         }
     )
-
