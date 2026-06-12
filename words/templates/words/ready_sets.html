@@ -2,25 +2,25 @@
 {% load static %}
 {% block content %}
 
-<div class="container py-5">
-    <div class="row align-items-center">
+<div class="container pt-5 pb-3" style="max-width: 1000px;">
+    <div class="row align-items-center justify-content-center g-4">
         <div class="col">
             <div class="text-center">
                 <img
-                    src="{% static 'images/zestaw1.jpg' %}"
+                    src="{% static 'images/gotowe_zestawy_5.jpg' %}"
                     class="img-fluid"
-                    style="max-width: 200px;"
-                    alt="England"
+                    style="max-width: 280px;"
+                    alt="Gotowe zestawy"
                 >
             </div>
         </div>
 
-        <div class="col">
+        <div class="col d-flex flex-column justify-content-center text-center">
             <h1 class="section-title">
                 Gotowe zestawy
             </h1>
 
-            <p class="ready-sets-intro">
+            <p class="ready-sets-intro mx-auto" style="max-width: 420px;">
                 Wybierz kategorię słówek dopasowaną do swoich zainteresowań i rozpocznij naukę od razu bez tworzenia własnych zestawów.
             </p>
         </div>
@@ -28,17 +28,21 @@
         <div class="col">
             <div class="text-center">
                 <img
-                    src="{% static 'images/zestaw2.jpg' %}"
+                    src="{% static 'images/gotowe_zestawy_6.jpg' %}"
                     class="img-fluid"
-                    style="max-width: 200px;"
-                    alt="England"
+                    style="max-width: 280px;"
+                    alt="Gotowe zestawy"
                 >
             </div>
         </div>
     </div>
 </div>
 
-<div>
+<div class="container" style="max-width: 1000px;">
+    <hr class="my-2" style="opacity: 0.15;">
+</div>
+
+<div class="container mt-5">
     <!-- PODRÓŻE -->
 
     <div class="sets-section">
@@ -48,44 +52,11 @@
 
         <div class="ready-sets-grid">
             {% for word_set in word_sets %}
-                <a href="/study/{{ word_set.slug }}/" class="ready-set-card text-decoration-none text-dark">
-                    <h6>
-                        {{ word_set.name }}
-                        ({{ word_set.words.count }})
-                    </h6>
+                <a href="/study/{{ word_set.slug }}/" class="ready-set-card text-decoration-none">
+                    <h6>{{ word_set.name }}</h6>
+                    <small class="text-muted">{{ word_set.words.count }} słówek</small>
                 </a>
             {% endfor %}
-        </div>
-    </div>
-
-    <!-- IT -->
-
-    <div class="sets-section">
-
-        <h2 class="sets-title text-center">
-            IT
-        </h2>
-
-        <div class="ready-sets-grid">
-            <div class="ready-set-card">
-                <h6>Python Basics (18)</h6>
-            </div>
-
-            <div class="ready-set-card">
-                <h6>Git i GitHub (14)</h6>
-            </div>
-
-            <div class="ready-set-card">
-                <h6>HTML i CSS (16)</h6>
-            </div>
-
-            <div class="ready-set-card">
-                <h6>SQL Podstawy (12)</h6>
-            </div>
-
-            <div class="ready-set-card">
-                <h6>SQL Zaawansowany (16)</h6>
-            </div>
         </div>
     </div>
 </div>
