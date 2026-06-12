@@ -121,7 +121,6 @@
 
 .ready-sets-intro {
     text-align: center;
-    margin-bottom: 100px;
     color: #6c757d;
 }
 
@@ -135,27 +134,38 @@
 }
 
 .ready-set-card {
-    background-color: #fffaf7;
-    padding: 10px 20px;
-    border-radius: 40px;
-    box-shadow: 0px 10px 20px rgba(0,0,0,0.2);
+    background-color: #fff4ec;
+    width: 240px;
+    padding: 8px 20px;
+    border-radius: 12px;
+    border: 1px solid #f7d8c2;
+    color: #7a4d35;
+    box-shadow: 4px 4px 8px rgba(0,0,0,0.28);
+
+    display: block;
     text-align: center;
-    width: 250px;
-    margin: 0 auto;
-    height: 100%;
-    transition: 0.1s;
+    transition: box-shadow 0.25s, color 0.25s;
 }
 
 .ready-set-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.22);
-    cursor: pointer;
+    color: #6b4029;
+    box-shadow: 4px 4px 15px rgba(0,0,0,0.35);
+}
+
+.ready-set-card h6 {
+    margin-bottom: 4px;
+    font-weight: 600;
+    transition: color 0.35s;
+}
+
+.ready-set-card:hover h6 {
+    color: #6b4029;
 }
 
 .ready-sets-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 0px;
     justify-items: center;
     max-width: 900px;
     margin: 0 auto;
@@ -237,7 +247,7 @@
     width: 130px;
     padding: 1px 0px;
     font-size: 0.9rem;
-     background-color: #fff4ec;
+    background-color: #fff4ec;
     border-color: #f7d8c2;
     color: #7a4d35;
     box-shadow: 0 2px 4px rgba(0,0,0,0.10);
