@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.utils.text import slugify
+from django.contrib.auth.decorators import login_required
 
 from words.models import Word
 from .models import WordSet
@@ -201,6 +202,7 @@ def study_set(request, slug):
     )
 
 
+@login_required
 def my_sets(request):
     if request.method == "POST":
         delete_set_id = request.POST.get("delete_set_id")
@@ -210,7 +212,9 @@ def my_sets(request):
 
         return redirect("/my-sets/")
 
-    word_sets = WordSet.objects.filter(is_public=False)
+    word_sets = WordSet.objects.filter(
+        is_public=False,
+        owner=request.user,)
 
     return render(
         request,
@@ -221,6 +225,7 @@ def my_sets(request):
     )
 
 
+@login_required
 def create_set(request):
     if request.method == "POST":
         name = request.POST.get("name")
@@ -229,6 +234,7 @@ def create_set(request):
         word_set = WordSet.objects.create(
             name=name,
             slug=slug,
+            owner=request.user
         )
 
         return redirect(f"/my-sets/{word_set.slug}/")
@@ -239,8 +245,13 @@ def create_set(request):
     )
 
 
+@login_required
 def my_set_detail(request, slug):
-    word_set = WordSet.objects.get(slug=slug)
+    word_set = WordSet.objects.get(
+        slug=slug,
+        owner=request.user,
+        is_public=False,
+    )
     message = ""
 
     if request.method == "POST":
