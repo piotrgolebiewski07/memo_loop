@@ -108,6 +108,8 @@ def ready_sets(request):
 def study_set(request, slug):
     result = ""
     result_class = ""
+    user_answer = ""
+    show_next_button = False
     correct_answers = request.session.get("correct_answers", 0)
     wrong_answers = request.session.get("wrong_answers", 0)
 
@@ -124,7 +126,11 @@ def study_set(request, slug):
 
             return redirect("/my-sets/")
 
-        if "end_session" in request.POST:
+        if "next_word" in request.POST:
+            word = word_set.words.order_by("?").first()
+            show_next_button = False
+
+        elif "end_session" in request.POST:
             if "correct_answers" in request.session:
                 del request.session["correct_answers"]
             if "wrong_answers" in request.session:
@@ -139,6 +145,7 @@ def study_set(request, slug):
             word = Word.objects.get(id=word_id)
 
             answer = request.POST.get("answer")
+            user_answer = answer
 
             if word.text_en.lower() == answer.lower():
                 result = "SUPER!"
@@ -151,13 +158,15 @@ def study_set(request, slug):
                 wrong_answers += 1
                 request.session["wrong_answers"] = wrong_answers
 
+            show_next_button = True
+            '''
             word_new = word_set.words.order_by("?").first()
 
             while word_new.id == word.id and word_set.words.count() > 1:
                 word_new = word_set.words.order_by("?").first()
 
             word = word_new
-
+            '''
     else:
         if "correct_answers" in request.session:
             del request.session["correct_answers"]
@@ -185,6 +194,8 @@ def study_set(request, slug):
             "word_set": word_set,
             "success_rate": success_rate,
             "result_class": result_class,
+            "show_next_button": show_next_button,
+            "user_answer": user_answer,
         }
     )
 

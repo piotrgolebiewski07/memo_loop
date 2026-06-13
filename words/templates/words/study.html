@@ -25,9 +25,11 @@
             <input
                 type="text"
                 name="answer"
-                class="form-control form-control-lg mb-1"
-                placeholder="odpowiedź"
+                class="form-control form-control-lg mb-1 answer-input {{ result_class }}"
+                placeholder="{% if not result %}odpowiedź{% endif %}"
+                value="{{ user_answer }}"
                 autofocus
+                {% if show_next_button %}readonly{% endif %}
             >
 
             <p class="feedback-text text-center">
@@ -35,12 +37,20 @@
             </p>
 
             <div class="text-center d-flex justify-content-center gap-3 mt-4">
-                <button
-                    type="submit"
-                    class="btn study-btn btn-lg rounded-pill">
-                    Sprawdzam
-                </button>
-
+                {% if show_next_button %}
+                    <button
+                        type="submit"
+                        class="btn study-btn btn-lg rounded-pill"
+                        name="next_word">
+                        Dalej
+                    </button>
+                {% else %}
+                    <button
+                        type="submit"
+                        class="btn study-btn btn-lg rounded-pill">
+                        Sprawdzam
+                    </button>
+                {% endif %}
                 <button
                     type="submit"
                     class="btn end-btn btn-lg rounded-pill"
