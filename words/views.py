@@ -202,6 +202,7 @@ def study_set(request, slug):
     )
 
 
+@login_required
 def my_sets(request):
     if request.method == "POST":
         delete_set_id = request.POST.get("delete_set_id")
@@ -211,7 +212,9 @@ def my_sets(request):
 
         return redirect("/my-sets/")
 
-    word_sets = WordSet.objects.filter(is_public=False)
+    word_sets = WordSet.objects.filter(
+        is_public=False,
+        owner=request.user,)
 
     return render(
         request,
@@ -242,8 +245,13 @@ def create_set(request):
     )
 
 
+@login_required
 def my_set_detail(request, slug):
-    word_set = WordSet.objects.get(slug=slug)
+    word_set = WordSet.objects.get(
+        slug=slug,
+        owner=request.user,
+        is_public=False,
+    )
     message = ""
 
     if request.method == "POST":
