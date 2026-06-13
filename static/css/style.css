@@ -239,6 +239,42 @@
     color: #6c757d;
 }
 
+.answer-input.success {
+    border: 2px solid #198754;
+    background-color: #d4edda;
+    color: #198754;
+    font-weight: 600;
+    box-shadow: none;
+}
+
+.answer-input.danger {
+    border: 2px solid #dc3545;
+    background-color: #f8d7da;
+    color: #dc3545;
+    font-weight: 600;
+    box-shadow: none;
+}
+
+.answer-input {
+    border: 2px solid #dee2e6;
+}
+
+.answer-input:focus {
+    border-color: #dee2e6;
+    box-shadow: none;
+}
+
+
+.answer-input.success:focus {
+    border-color: #198754;
+    box-shadow: none;
+}
+
+.answer-input.danger:focus {
+    border-color: #dc3545;
+    box-shadow: none;
+}
+
 /* ====================
    MY SETS SECTION
 ==================== */
