@@ -327,3 +327,31 @@
     padding-bottom: 16px;
     border-bottom: 1px solid rgba(217, 95, 2, 0.15);
 }
+
+/* ====================
+   LOGIN SECTION
+==================== */
+
+.login-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #4a2f1b;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+}
+
+.login-form input:focus {
+    border-color: #d95f02;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(217, 95, 2, 0.15);
+}
+
+.login-form p {
+    margin-bottom: 20px;
+}

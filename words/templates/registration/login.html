@@ -1,23 +1,48 @@
 {% extends "words/base.html" %}
+{% load static %}
 
 {% block content %}
-
-<div class="container py-5" style="max-width: 500px">
-    <h1 class="text-center mb-4">
-        Logowanie
-    </h1>
-
-    <form method="post">
-        {% csrf_token %}
-
-        {{ form.as_p }}
-
-        <div class="text-center">
-            <button type="submit" class="btn study-btn rounded-pill">
-                Zaloguj
-            </button>
+<div class="container py-5" style="max-width: 750px">
+    <div class="row align-items-center g-5">
+        <div class="col">
+            <div class="text-center">
+                <img
+                    src="{% static 'images/logowanie_1.jpg' %}"
+                    class="img-fluid rounded-3"
+                    style="max-width: 350px;"
+                    alt="Logowanie"
+                >
+            </div>
         </div>
-    </form>
-</div>
 
+        <div class="col d-flex flex-column">
+            <h1 class="text-center mb-5">
+                Logowanie
+            </h1>
+
+            <form method="post" class="login-form mt-2">
+                {% csrf_token %}
+                <p>
+                    <label>Login</label>
+                    {{ form.username }}
+                </p>
+
+                <p>
+                    <label>Hasło</label>
+                    {{ form.password }}
+                </p>
+                {% if form.errors %}
+            <p class="text-danger text-center">
+                    Nieprawidłowa nazwa użytkownika lub hasło.
+                </p>
+            {% endif %}
+                <div class="text-center mt-5">
+                    <button type="submit" class="btn study-btn rounded-pill">
+                        Zaloguj
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
