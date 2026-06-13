@@ -275,6 +275,16 @@
     box-shadow: none;
 }
 
+.feedback-success {
+    color: #198754;
+    font-weight: 600;
+}
+
+.feedback-danger {
+    color: #dc3545;
+    font-weight: 600;
+}
+
 /* ====================
    MY SETS SECTION
 ==================== */
