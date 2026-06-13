@@ -127,7 +127,15 @@ def study_set(request, slug):
             return redirect("/my-sets/")
 
         if "next_word" in request.POST:
+            previous_word_id = request.POST.get("word_id")
             word = word_set.words.order_by("?").first()
+
+            while (
+                    word.id == int(previous_word_id)
+                    and word_set.words.count() > 1
+            ):
+                word = word_set.words.order_by("?").first()
+
             show_next_button = False
 
         elif "end_session" in request.POST:
@@ -159,14 +167,7 @@ def study_set(request, slug):
                 request.session["wrong_answers"] = wrong_answers
 
             show_next_button = True
-            '''
-            word_new = word_set.words.order_by("?").first()
 
-            while word_new.id == word.id and word_set.words.count() > 1:
-                word_new = word_set.words.order_by("?").first()
-
-            word = word_new
-            '''
     else:
         if "correct_answers" in request.session:
             del request.session["correct_answers"]
