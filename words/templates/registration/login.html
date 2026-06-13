@@ -22,8 +22,8 @@
 
             <form method="post" class="login-form mt-2">
                 {% csrf_token %}
-                <p>
-                    <label>Login</label>
+                <p >
+                    <label>Nazwa użytkownika</label>
                     {{ form.username }}
                 </p>
 
@@ -37,9 +37,17 @@
                 </p>
             {% endif %}
                 <div class="text-center mt-5">
-                    <button type="submit" class="btn study-btn rounded-pill">
-                        Zaloguj
+                    <button type="submit" class="btn login-btn">
+                        Zaloguj się
                     </button>
+                </div>
+                <div class="text-center text-muted login-help">
+                    <p><a href="">
+                        Odzyskaj hasło?
+                    </a></p>
+                    <p><a href="">
+                        Nie masz konta? Zarejestruj się.
+                    </a></p>
                 </div>
             </form>
         </div>
