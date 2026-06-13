@@ -17,7 +17,7 @@ Including another URLconf
 from words import views
 from django.contrib import admin
 from django.urls import include, path
-
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', views.home),
@@ -29,3 +29,5 @@ urlpatterns = [
     path('my-sets/<slug:slug>/', views.my_set_detail),
     path('accounts/', include("django.contrib.auth.urls")),
 ]
+
+
