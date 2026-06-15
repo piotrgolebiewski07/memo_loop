@@ -28,6 +28,7 @@ urlpatterns = [
     path('my-sets/create/', views.create_set),
     path('my-sets/<slug:slug>/', views.my_set_detail),
     path('accounts/', include("django.contrib.auth.urls")),
+    path("accounts/register/", views.register,)
 ]
 
 
