@@ -156,7 +156,7 @@ def study_set(request, slug):
             answer = request.POST.get("answer")
             user_answer = answer
 
-            if word.text_en.lower() == answer.lower():
+            if word.text_en.strip().lower() == answer.strip().lower():
                 result = "SUPER!"
                 result_class = "success"
                 correct_answers += 1
@@ -262,8 +262,8 @@ def my_set_detail(request, slug):
 
             return redirect(f"/my-sets/{word_set.slug}/")
 
-        text_pl = request.POST.get("text_pl", "").strip().lower()
-        text_en = request.POST.get("text_en", "").strip().lower()
+        text_pl = request.POST.get("text_pl", "").strip()
+        text_en = request.POST.get("text_en", "").strip()
         edit_word_id = request.POST.get("edit_word_id")
 
         if not text_pl or not text_en:

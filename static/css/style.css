@@ -290,13 +290,15 @@
 ==================== */
 
 .my-set-action-btn {
-    width: 130px;
+    width: 120px;
+    flex-shrink: 0;
     padding: 1px 0px;
     font-size: 0.9rem;
     background-color: #fff4ec;
     border-color: #f7d8c2;
     color: #7a4d35;
     box-shadow: 0 2px 4px rgba(0,0,0,0.10);
+    margin-left: 20px;
 }
 
 .my-set-action-btn:hover {
@@ -326,6 +328,16 @@
     padding-top: 0px;
     padding-bottom: 16px;
     border-bottom: 1px solid rgba(217, 95, 2, 0.15);
+}
+
+.word-left {
+    flex: 1;
+    min-width: 0;
+}
+
+.word-text {
+    min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 /* ====================

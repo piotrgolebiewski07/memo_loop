@@ -1,7 +1,7 @@
 {% extends "words/base.html" %}
 {% block content %}
 
-<div class="container py-5 text-center" style="max-width: 500px;">
+<div class="container py-5 text-center" style="max-width: 600px;">
     <h1>{{ word_set.name }}</h1>
 
     <form method="post" class="mt-4" autocomplete="off">
@@ -45,8 +45,9 @@
         {{ message }}
     </p>
     {% endif %}
-
-    <div class="mt-5">
+</div>
+<div class="container py-5 text-center" style="max-width: 800px;">
+    <div>
         <h4>Słówka</h4>
         <div class="mt-1">
             Liczba słówek: {{ word_set.words.count }}
@@ -54,11 +55,11 @@
 
         <form method="post">
             {% csrf_token %}
-            <div class="mt-4 mx-auto text-center" style="max-width: 600px;">
+            <div class="mt-4 mx-auto text-center">
                 {% for word in word_set.words.all %}
-                    <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                    <div class="d-flex justify-content-between align-items-start py-2 border-bottom my-set-row">
 
-                        <div class="d-flex align-items-center gap-3">
+                        <div class="d-flex align-items-start gap-3 word-left">
                             <input
                                 type="checkbox"
                                 name="selected_words"
@@ -66,7 +67,7 @@
                                 class="big-checkbox"
                             >
 
-                            <div>
+                            <div class="word-text text-start">
                                 <strong>{{ word.text_pl }}</strong>
                                 <span class="text-muted">— {{ word.text_en }}</span>
                             </div>
