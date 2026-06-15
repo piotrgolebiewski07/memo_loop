@@ -1,18 +1,65 @@
 {% extends "words/base.html" %}
-
+{% load static %}
 {% block content %}
-<div class="container py-5" style="max-width: 500px;">
-    <h1 class="text-center mb-5">
-        Rejestacja
-    </h1>
+<div class="container py-5" style="max-width: 750px;">
+    <div class="row align-items-center g-5">
+        <div class="col d-flex flex-column">
+            <h1 class="text-center mb-5">
+                Rejestracja
+            </h1>
 
-    <form method="post" class="login-form">
-        {% csrf_token %}
+            <form method="post" class="login-form">
+                {% csrf_token %}
 
-        {{ form.as_p }}
-        <button type="submit" class="btn login-btn mt-3">
-            Zarejestruj się
-        </button>
-    </form>
+                <p>
+                    <label>Nazwa użytkownika</label>
+                    {{ form.username }}
+
+                    {% for error in form.username.errors %}
+                        <small class="text-danger d-block">
+                            {{ error }}
+                        </small>
+                    {% endfor %}
+                </p>
+
+                <p>
+                    <label>Hasło</label>
+                    {{ form.password1 }}
+
+                    {% for error in form.password1.errors %}
+                        <small class="text-danger d-block">
+                            {{ error }}
+                        </small>
+                    {% endfor %}
+                </p>
+
+                <p>
+                    <label>Powtórz hasło</label>
+                    {{ form.password2 }}
+
+                    {% for error in form.password2.errors %}
+                        <small class="text-danger d-block">
+                            {{ error }}
+                        </small>
+                    {% endfor %}
+                </p>
+
+                <button type="submit" class="btn login-btn mt-3">
+                    Zarejestruj się
+                </button>
+            </form>
+        </div>
+
+        <div class="col">
+            <div class="text-center">
+                <img
+                    src="{% static 'images/rejestracja.jpg' %}"
+                    class="img-fluid rounded-3"
+                    style="max-width: 250px;"
+                    alt="Rejestracja"
+                >
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
