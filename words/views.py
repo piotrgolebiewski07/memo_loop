@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.utils.text import slugify
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 from words.models import Word
 from .models import WordSet
@@ -335,5 +337,25 @@ def my_set_detail(request, slug):
             "word_set": word_set,
             "edit_word": edit_word,
             "message": message
+        }
+    )
+
+
+def register(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect("/")
+    else:
+        form = UserCreationForm()
+
+    return render(
+        request,
+        "registration/register.html",
+        {
+            "form": form,
         }
     )
