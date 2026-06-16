@@ -7,6 +7,8 @@ from django.contrib.auth import login
 from words.models import Word
 from .models import WordSet
 
+import random
+
 
 def word_count_label(count):
     if count == 1:
@@ -113,10 +115,16 @@ def study_set(request, slug):
     result_class = ""
     user_answer = ""
     show_next_button = False
+    study_finished = False
     correct_answers = request.session.get("correct_answers", 0)
     wrong_answers = request.session.get("wrong_answers", 0)
 
     word_set = WordSet.objects.get(slug=slug)
+    session_key = f"study_words_{word_set.id}"
+
+    if session_key not in request.session:
+        words = list(word_set.words.order_by("?"))
+        request.session[session_key] = [word.id for word in words]
 
     if request.method == "POST":
 
@@ -130,14 +138,13 @@ def study_set(request, slug):
             return redirect("/my-sets/")
 
         if "next_word" in request.POST:
-            previous_word_id = request.POST.get("word_id")
-            word = word_set.words.order_by("?").first()
+            study_words = request.session.get(session_key, [])
 
-            while (
-                    word.id == int(previous_word_id)
-                    and word_set.words.count() > 1
-            ):
-                word = word_set.words.order_by("?").first()
+            if study_words:
+                print("NEXT:", study_words)
+                word = Word.objects.get(id=study_words[0])
+            else:
+                word = None
 
             show_next_button = False
 
@@ -163,11 +170,32 @@ def study_set(request, slug):
                 result_class = "success"
                 correct_answers += 1
                 request.session["correct_answers"] = correct_answers
+                study_words = request.session.get(session_key, [])
+                study_words.pop(0)
+                request.session[session_key] = study_words
+
+                if not study_words:
+                    study_finished = True
+                    show_next_button = False
             else:
                 result = f"{word.text_en}"
                 result_class = "danger"
                 wrong_answers += 1
                 request.session["wrong_answers"] = wrong_answers
+
+                study_words = request.session.get(session_key, [])
+
+                wrong_word_id = study_words.pop(0)
+
+                if len(study_words) > 1:
+                    insert_index = random.randint(1, len(study_words))
+                    study_words.insert(insert_index, wrong_word_id)
+                else:
+                    study_words.append(wrong_word_id)
+
+                request.session[session_key] = study_words
+            if not study_words:
+                print("KONIEC NAUKI")
 
             show_next_button = True
 
@@ -200,6 +228,7 @@ def study_set(request, slug):
             "result_class": result_class,
             "show_next_button": show_next_button,
             "user_answer": user_answer,
+            "study_finished": study_finished,
         }
     )
 
