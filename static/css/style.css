@@ -181,36 +181,27 @@
 ==================== */
 
 .study-btn {
-    background: linear-gradient(
-        135deg,
-        #f6b27c 0%,
-        #ff7b72 100%
-    );
-
-    border: none;
-    color: #4a2f1b;
+    background-color: #fd7f18;
+    border: 1px solid #c85f00;
+    color: #fff;
     box-shadow: 0 2px 8px rgba(0,0,0,0.20);
     min-width: 180px;
     font-size: 1rem;
 }
 
 .study-btn:hover {
-    background: linear-gradient(
-        135deg,
-        #f8c49a 0%,
-        #ff9b93 100%
-    );
-
-    color: #4a2f1b;
+    background-color: #e66d00;
+    border-color: #b85300;
+    color: #fff;
 }
 
 .end-btn {
-    min-width: 180px;
-    font-size: 1rem;
     background-color: #f3ede7;
     border-color: #e5ddd5;
     color: #6b5a4a;
-    box-shadow: 3px 3px 8px rgba(0,0,0,0.40);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.20);
+    font-size: 1rem;
+    min-width: 180px;
 }
 
 .end-btn:hover {
@@ -413,3 +404,25 @@
 .login-help a:hover {
     color: #4a2f1b;
 }
+
+/* ====================
+   PRIMARY ACTION BUTTONS
+==================== */
+
+.main-action-btn {
+    background-color: #fd7f18;
+    border: 1px solid #c85f00;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.20);
+    font-weight: 500;
+    font-size: 1rem;
+    transition: 0.2s;
+    min-width: 220px;
+}
+
+.main-action-btn:hover {
+    background-color: #e66d00;
+    border-color: #b85300;
+    color: #fff;
+}
+
