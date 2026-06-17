@@ -142,7 +142,11 @@ def study_set(request, slug):
             study_words = request.session.get(session_key, [])
 
             if study_words:
-                word = Word.objects.get(id=study_words[0])
+                word = word_set.words.filter(id=study_words[0]).first()
+
+                if word is None:
+                    request.session.pop(session_key, None)
+                    return redirect(f"/study/{word_set.slug}/")
             else:
                 word = None
 
@@ -162,14 +166,22 @@ def study_set(request, slug):
             study_words = request.session.get(session_key, [])
 
             if study_words:
-                word = Word.objects.get(id=study_words[0])
+                word = word_set.words.filter(id=study_words[0]).first()
+
+                if word is None:
+                    request.session.pop(session_key, None)
+                    return redirect(f"/study/{word_set.slug}/")
             else:
                 word = None
                 study_finished = True
 
         else:
             word_id = request.POST.get("word_id")
-            word = Word.objects.get(id=word_id)
+            word = word_set.words.filter(id=word_id).first()
+
+            if word is None:
+                request.session.pop(session_key, None)
+                return redirect(f"/study/{word_set.slug}/")
 
             answer = request.POST.get("answer")
             user_answer = answer
@@ -224,7 +236,11 @@ def study_set(request, slug):
             request.session[session_key] = study_words
 
         if study_words:
-            word = Word.objects.get(id=study_words[0])
+            word = word_set.words.filter(id=study_words[0]).first()
+
+            if word is None:
+                request.session.pop(session_key, None)
+                return redirect(f"/study/{word_set.slug}/")
         else:
             word = None
             study_finished = True
