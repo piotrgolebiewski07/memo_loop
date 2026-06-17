@@ -131,6 +131,7 @@ def study_set(request, slug):
         if "end_study" in request.POST:
             request.session.pop("correct_answers", None)
             request.session.pop("wrong_answers", None)
+            request.session.pop(session_key, None)
 
             if word_set.is_public:
                 return redirect("/ready-sets/")
@@ -141,7 +142,6 @@ def study_set(request, slug):
             study_words = request.session.get(session_key, [])
 
             if study_words:
-                print("NEXT:", study_words)
                 word = Word.objects.get(id=study_words[0])
             else:
                 word = None
@@ -156,7 +156,16 @@ def study_set(request, slug):
 
             correct_answers, wrong_answers = 0, 0
             result = ""
-            word = word_set.words.order_by("?").first()
+            words = list(word_set.words.order_by("?"))
+            request.session[session_key] = [word.id for word in words]
+
+            study_words = request.session.get(session_key, [])
+
+            if study_words:
+                word = Word.objects.get(id=study_words[0])
+            else:
+                word = None
+                study_finished = True
 
         else:
             word_id = request.POST.get("word_id")
@@ -171,12 +180,13 @@ def study_set(request, slug):
                 correct_answers += 1
                 request.session["correct_answers"] = correct_answers
                 study_words = request.session.get(session_key, [])
-                study_words.pop(0)
-                request.session[session_key] = study_words
+                if study_words:
+                    study_words.pop(0)
+                    request.session[session_key] = study_words
 
-                if not study_words:
-                    study_finished = True
-                    show_next_button = False
+                    if not study_words:
+                        study_finished = True
+
             else:
                 result = f"{word.text_en}"
                 result_class = "danger"
@@ -185,17 +195,16 @@ def study_set(request, slug):
 
                 study_words = request.session.get(session_key, [])
 
-                wrong_word_id = study_words.pop(0)
+                if study_words:
+                    wrong_word_id = study_words.pop(0)
 
-                if len(study_words) > 1:
-                    insert_index = random.randint(1, len(study_words))
-                    study_words.insert(insert_index, wrong_word_id)
-                else:
-                    study_words.append(wrong_word_id)
+                    if len(study_words) > 1:
+                        insert_index = random.randint(1, len(study_words))
+                        study_words.insert(insert_index, wrong_word_id)
+                    else:
+                        study_words.append(wrong_word_id)
 
-                request.session[session_key] = study_words
-            if not study_words:
-                print("KONIEC NAUKI")
+                    request.session[session_key] = study_words
 
             show_next_button = True
 
@@ -206,7 +215,19 @@ def study_set(request, slug):
             del request.session["wrong_answers"]
 
         correct_answers, wrong_answers = 0, 0
-        word = word_set.words.order_by("?").first()
+
+        study_words = request.session.get(session_key, [])
+
+        if not study_words:
+            words = list(word_set.words.order_by("?"))
+            study_words = [word.id for word in words]
+            request.session[session_key] = study_words
+
+        if study_words:
+            word = Word.objects.get(id=study_words[0])
+        else:
+            word = None
+            study_finished = True
 
     total_answers = correct_answers + wrong_answers
 
