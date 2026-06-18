@@ -116,8 +116,11 @@ def study_set(request, slug):
     user_answer = ""
     show_next_button = False
     study_finished = False
+    difficult_words_sorted = []
+    difficult_words_summary = []
     correct_answers = request.session.get("correct_answers", 0)
     wrong_answers = request.session.get("wrong_answers", 0)
+    difficult_words = request.session.get("difficult_words", {})
 
     word_set = WordSet.objects.get(slug=slug)
     session_key = f"study_words_{word_set.id}"
@@ -131,6 +134,7 @@ def study_set(request, slug):
         if "end_study" in request.POST:
             request.session.pop("correct_answers", None)
             request.session.pop("wrong_answers", None)
+            request.session.pop("difficult_words", None)
             request.session.pop(session_key, None)
 
             if word_set.is_public:
@@ -157,6 +161,8 @@ def study_set(request, slug):
                 del request.session["correct_answers"]
             if "wrong_answers" in request.session:
                 del request.session["wrong_answers"]
+
+            request.session.pop("difficult_words", None)
 
             correct_answers, wrong_answers = 0, 0
             result = ""
@@ -192,12 +198,30 @@ def study_set(request, slug):
                 correct_answers += 1
                 request.session["correct_answers"] = correct_answers
                 study_words = request.session.get(session_key, [])
+
                 if study_words:
                     study_words.pop(0)
                     request.session[session_key] = study_words
 
                     if not study_words:
                         study_finished = True
+
+                        difficult_words_sorted = sorted(
+                            difficult_words.items(),
+                            key=lambda item: item[1],
+                            reverse=True
+                        )
+
+                        difficult_words_summary = []
+
+                        for word_id, mistakes in difficult_words_sorted:
+                            difficult_word = word_set.words.filter(id=int(word_id)).first()
+
+                            if difficult_word:
+                                difficult_words_summary.append({
+                                    "word": difficult_word,
+                                    "mistakes": mistakes,
+                                })
 
             else:
                 result = f"{word.text_en}"
@@ -206,6 +230,11 @@ def study_set(request, slug):
                 request.session["wrong_answers"] = wrong_answers
 
                 study_words = request.session.get(session_key, [])
+
+                word_id_str = str(word.id)
+                difficult_words[word_id_str] = difficult_words.get(word_id_str, 0) + 1
+                request.session["difficult_words"] = difficult_words
+                print(difficult_words)
 
                 if study_words:
                     wrong_word_id = study_words.pop(0)
@@ -266,6 +295,7 @@ def study_set(request, slug):
             "show_next_button": show_next_button,
             "user_answer": user_answer,
             "study_finished": study_finished,
+            "difficult_words_summary": difficult_words_summary,
         }
     )
 
