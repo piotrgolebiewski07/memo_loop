@@ -35,15 +35,17 @@
             </button>
         </form>
 
-        {% if word_set.is_public %}
-            <a href="/ready-sets/" class="btn end-btn" style="min-width: 220px;">
+        <form method="post" class="m-0">
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="btn end-btn"
+                style="min-width: 220px;"
+                name="end_study">
                 Wróć do zestawów
-            </a>
-        {% else %}
-            <a href="/my-sets/" class="btn end-btn" style="min-width: 220px;">
-                Wróć do zestawów
-            </a>
-        {% endif %}
+            </button>
+        </form>
     </div>
 
     {% else %}
@@ -130,6 +132,26 @@
                         <span>Skuteczność:</span>
                         {{ success_rate }}%
                     </div>
+
+                    {% if study_finished and difficult_words_summary %}
+
+                        <h4 class="mt-5 mb-3">
+                            Najtrudniejsze słówka:
+                        </h4>
+
+                        {% for item in difficult_words_summary %}
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>
+                                    {{ item.word.text_pl }} → {{ item.word.text_en }}
+                                </span>
+
+                                <span>
+                                    {{ item.mistakes }} bł.
+                                </span>
+                            </div>
+                        {% endfor %}
+
+                    {% endif %}
                 </div>
             </div>
 
