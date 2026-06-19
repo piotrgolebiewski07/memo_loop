@@ -206,23 +206,6 @@ def study_set(request, slug):
                     if not study_words:
                         study_finished = True
 
-                        difficult_words_sorted = sorted(
-                            difficult_words.items(),
-                            key=lambda item: item[1],
-                            reverse=True
-                        )
-
-                        difficult_words_summary = []
-
-                        for word_id, mistakes in difficult_words_sorted:
-                            difficult_word = word_set.words.filter(id=int(word_id)).first()
-
-                            if difficult_word:
-                                difficult_words_summary.append({
-                                    "word": difficult_word,
-                                    "mistakes": mistakes,
-                                })
-
             else:
                 result = f"{word.text_en}"
                 result_class = "danger"
@@ -234,7 +217,6 @@ def study_set(request, slug):
                 word_id_str = str(word.id)
                 difficult_words[word_id_str] = difficult_words.get(word_id_str, 0) + 1
                 request.session["difficult_words"] = difficult_words
-                print(difficult_words)
 
                 if study_words:
                     wrong_word_id = study_words.pop(0)
@@ -281,6 +263,64 @@ def study_set(request, slug):
     else:
         success_rate = 0
 
+    if study_finished:
+        difficult_words_sorted = sorted(
+            difficult_words.items(),
+            key=lambda item: item[1],
+            reverse=True
+        )
+
+        difficult_words_summary = []
+
+        for word_id, mistakes in difficult_words_sorted[:2]:
+            difficult_word = word_set.words.filter(id=int(word_id)).first()
+
+            if difficult_word:
+                difficult_words_summary.append({
+                    "word": difficult_word,
+                    "mistakes": mistakes,
+                })
+
+    if success_rate == 100:
+        summary_title = "Idealnie!"
+        summary_text = "Perfekcyjna sesja. Nie było ani jednego błędu."
+
+    elif success_rate >= 70:
+        summary_title = "Super!"
+        summary_text = "Każda lekcja to krok do mistrzostwa."
+
+    elif success_rate >= 50:
+        summary_title = "Całkiem nieźle!"
+        summary_text = "Widać postępy. Jeszcze trochę praktyki."
+
+    elif success_rate >= 30:
+        summary_title = "Jest postęp!"
+        summary_text = "Nie zniechęcaj się. Każda powtórka pomaga."
+
+    else:
+        summary_title = "Nie poddawaj się!"
+        summary_text = "Nawet najlepsi zaczynali od błędów."
+
+    if success_rate >= 90:
+        motivation_title = "Idealnie!"
+        motivation_text = "Perfekcyjna sesja. Nie było ani jednego potknięcia."
+
+    elif success_rate >= 75:
+        motivation_title = "Świetna robota!"
+        motivation_text = "Większość odpowiedzi była poprawna. Jesteś na dobrej drodze."
+
+    elif success_rate >= 50:
+        motivation_title = "Całkiem nieźle!"
+        motivation_text = "Kilka błędów się pojawiło, ale właśnie tak wygląda nauka."
+
+    elif success_rate >= 25:
+        motivation_title = "Nie poddawaj się!"
+        motivation_text = "Błędy pokazują, które słówka warto jeszcze powtórzyć."
+
+    else:
+        motivation_title = "Nie martw się błędami!"
+        motivation_text = "To one sprawiają, że się uczysz i zapamiętujesz."
+
     return render(
         request,
         "words/study.html",
@@ -296,6 +336,10 @@ def study_set(request, slug):
             "user_answer": user_answer,
             "study_finished": study_finished,
             "difficult_words_summary": difficult_words_summary,
+            "summary_title": summary_title,
+            "summary_text": summary_text,
+            "motivation_title": motivation_title,
+            "motivation_text": motivation_text,
         }
     )
 
