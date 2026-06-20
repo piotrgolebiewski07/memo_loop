@@ -129,6 +129,7 @@
 
     {% endif %}
 
+    {% if study_finished %}
     <div class="container mt-4" style="max-width: 1200px">
         <div class="row justify-content-center g-4">
 
@@ -215,7 +216,6 @@
                 </div>
             </div>
 
-            {% if study_finished %}
             <div class="col-md-6">
                 <div class="card shadow h-100 stats-difficult-card">
                     <div class="card-body p-4 difficult-card-body">
@@ -229,9 +229,9 @@
                                     Najtrudniejsze słówka
                                 </h5>
                             {% else %}
-                                <h4 class="difficult-title mb-0">
+                                <h5 class="difficult-title mb-0">
                                     Bez trudnych słówek
-                                </h4>
+                                </h5>
                             {% endif %}
                         </div>
 
@@ -283,8 +283,8 @@
                     </div>
                 </div>
             </div>
-            {% endif %}
         </div>
     </div>
+    {% endif %}
 </div>
 {% endblock %}

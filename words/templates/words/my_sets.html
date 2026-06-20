@@ -3,8 +3,8 @@
 
 {% block content %}
 
-<div class="container py-5 text-center" style="max-width: 1000px;">
-    <div class="row align-items-center g-5">
+<div class="container py-3 text-center" style="max-width: 1000px;">
+    <div class="row align-items-center g-3">
          <div class="col d-flex flex-column justify-content-center">
              <ul class="hero-list" style="color: #6c757d; margin-bottom: 0px;">
                  <li>Twórz własne zestawy słówek dopasowane do swoich potrzeb</li>
@@ -12,7 +12,7 @@
                  <li>Ucz się tego, czego naprawdę potrzebujesz.</li>
              </ul>
 
-            <div class="mt-4">
+            <div class="mt-2">
                 <a href="/my-sets/create/" class="btn study-btn btn-lg px-5">
                     + Nowy zestaw
                 </a>
@@ -24,7 +24,7 @@
                 <img
                     src="{% static 'images/moje_zestawy_5.jpg' %}"
                     class="img-fluid rounded-3"
-                    style="max-width: 450px;"
+                    style="max-width: 350px;"
                     alt="Moje zestawy"
                 >
             </div>
@@ -32,9 +32,82 @@
     </div>
 </div>
 
-<div class="container" style="max-width: 1000px;">
+<div class="container" style="max-width: 1400px;">
     <hr class="my-2" style="opacity: 0.15;">
 </div>
+
+<div class="container" style="max-width: 1400px">
+    <div class="row justify-content-center g-4">
+        <div class="col-md-3">
+            <div class="my-sets-stat-card">
+                <div class="my-sets-stat-icon stat-blue">
+                    <i class="bi bi-file-earmark-text"></i>
+                </div>
+                    <div>
+                        <div class="my-sets-stat-number">
+                        {{ word_sets|length }}
+                    </div>
+                    <div class="my-sets-stat-label">
+                        zestawów
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="my-sets-stat-card">
+                <div class="my-sets-stat-icon stat-green">
+                    <i class="bi bi-book"></i>
+                </div>
+
+                <div>
+                    <div class="my-sets-stat-number">
+                        {{ total_words }}
+                    </div>
+                    <div class="my-sets-stat-label">
+                        Łączna liczba słówek
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="my-sets-stat-card">
+                <div class="my-sets-stat-icon stat-purple">
+                    <i class="bi bi-clock-history"></i>
+                </div>
+
+                <div>
+                    <div class="my-sets-stat-number">
+                        0
+                    </div>
+                    <div class="my-sets-stat-label">
+                        Najdłuższa seria
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="my-sets-stat-card">
+                <div class="my-sets-stat-icon stat-orange">
+                    <i class="bi bi-fire"></i>
+                </div>
+
+                <div>
+                    <div class="my-sets-stat-number">
+                        0
+                    </div>
+                    <div class="my-sets-stat-label">
+                        Łączna nauka
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <div class="container mt-5" style="max-width: 700px;">
     <h1 class="section-title">
