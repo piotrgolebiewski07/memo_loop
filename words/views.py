@@ -18,6 +18,23 @@ def word_count_label(count):
     return "słówek"
 
 
+def set_label(count):
+    if count == 1:
+        return "zestaw"
+
+    if count % 100 in {12, 13, 14}:
+        return "zestawów"
+
+    if count % 10 in {2, 3, 4}:
+        return "zestawy"
+
+    return "zestawów"
+
+
+def day_label(count):
+    return "dzień" if count == 1 else "dni"
+
+
 def index(request):
 
     result = ""
@@ -358,11 +375,24 @@ def my_sets(request):
         is_public=False,
         owner=request.user,)
 
+    total_words = sum(word_set.words.count() for word_set in word_sets)
+
+    set_count = word_sets.count()
+    set_label_text=set_label(set_count)
+
+    day_count = 0
+    day_label_text = day_label(day_count)
+
     return render(
         request,
         "words/my_sets.html",
         {
             "word_sets": word_sets,
+            "total_words": total_words,
+            "set_count": set_count,
+            "set_label": set_label_text,
+            "day_count": day_count,
+            "day_label": day_label_text,
         }
     )
 
