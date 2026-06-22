@@ -403,10 +403,15 @@ def create_set(request):
         name = request.POST.get("name")
         slug = slugify(name)
 
+        icon_data = request.POST.get("icon", "bi-journal-bookmark|stat-green")
+        icon, icon_color = icon_data.split("|")
+
         word_set = WordSet.objects.create(
             name=name,
             slug=slug,
-            owner=request.user
+            owner=request.user,
+            icon=icon,
+            icon_color=icon_color,
         )
 
         return redirect(f"/my-sets/{word_set.slug}/")

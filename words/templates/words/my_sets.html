@@ -129,8 +129,8 @@
     {% for word_set in word_sets %}
         <div class="my-set-row my-set-progress-row">
 
-            <div class="my-set-list-icon stat-green">
-                <i class="bi bi-book"></i>
+            <div class="my-set-list-icon {{ word_set.icon_color }}">
+                <i class="bi {{ word_set.icon }}"></i>
             </div>
 
             <div class="my-set-main">

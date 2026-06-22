@@ -7,6 +7,8 @@ class WordSet(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
     is_public = models.BooleanField(default=False)
+    icon = models.CharField(max_length=50, default="bi-journal-bookmark")
+    icon_color = models.CharField(max_length=30, default="stat-green")
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -14,6 +16,7 @@ class WordSet(models.Model):
         null=True,
         blank=True
     )
+
 
     def __str__(self):
         return self.name
