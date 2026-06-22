@@ -67,8 +67,20 @@
 
 .hero-list {
     list-style: none;
-    margin-left: 40px;
     text-align: left;
+}
+
+.page-hero-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.page-hero-text {
+    font-size: 1.1rem;
+    color: #6c757d;
+    margin-bottom: 0;
+    max-width: 420px;
 }
 
 .hero-list li {
@@ -755,6 +767,15 @@
     margin-top: 4px;
     font-size: 0.8rem;
     color: #6c757d;
+}
+
+.my-sets-main-panel {
+    background: white;
+    border: 1px solid #edf0f3;
+    border-radius: 18px;
+    padding: 20px;
+
+    box-shadow: 0 4px 18px rgba(0,0,0,0.05);
 }
 
 /* ====================

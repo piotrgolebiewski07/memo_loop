@@ -3,32 +3,31 @@
 
 {% block content %}
 
-<div class="container py-3 text-center" style="max-width: 1000px;">
-    <div class="row align-items-center g-3">
-         <div class="col d-flex flex-column justify-content-center">
-             <ul class="hero-list" style="color: #6c757d; margin-bottom: 0px;">
-                 <li>Twórz własne zestawy słówek dopasowane do swoich potrzeb</li>
-                 <li>Dodawaj nowe słowa, organizuj naukę i wracaj do materiału w dowolnym momencie.</li>
-                 <li>Ucz się tego, czego naprawdę potrzebujesz.</li>
-             </ul>
+<div class="container py-3 text-center" style="max-width: 1200px;">
+    <div class="row align-items-center">
+        <div class="col-md-4 text-start">
+            <h1 class="page-hero-title">
+                Moje zestawy
+            </h1>
 
-            <div class="mt-2">
-                <a href="/my-sets/create/" class="btn study-btn btn-lg px-5">
-                    + Nowy zestaw
-                </a>
-            </div>
-         </div>
-
-        <div class="col">
-            <div class="text-center">
-                <img
-                    src="{% static 'images/moje_zestawy_5.jpg' %}"
-                    class="img-fluid rounded-3"
-                    style="max-width: 350px;"
-                    alt="Moje zestawy"
-                >
-            </div>
+            <p class="page-hero-text">
+                Ucz się tego, czego naprawdę potrzebujesz.
+            </p>
         </div>
+
+        <div class="col-md-5 text-center">
+            <img
+                src="{% static 'images/fiszki_4.png' %}"
+                class="img-fluid rounded-3"
+                alt="Moje zestawy"
+            >
+        </div>
+
+        <div class="col-md-3 text-center">
+            <a href="/my-sets/create/" class="btn study-btn btn-lg px-5">
+                + Nowy zestaw
+            </a>
+         </div>
     </div>
 </div>
 
@@ -103,79 +102,83 @@
     </div>
 </div>
 
-<div class="my-sets-tabs">
+<div class="container mt-4" style="max-width: 1200px;">
+    <div class="my-sets-main-panel">
+        <div class="my-sets-tabs">
 
-    <button class="my-tab active">
-        Wszystkie
-    </button>
+            <button class="my-tab active">
+                Wszystkie
+            </button>
 
-    <button class="my-tab">
-        Ostatnio używane
-    </button>
+            <button class="my-tab">
+                Ostatnio używane
+            </button>
 
-    <button class="my-tab">
-        Największe
-    </button>
+            <button class="my-tab">
+                Największe
+            </button>
 
-</div>
-
-<div class="container mt-4" style="max-width: 1100px;">
-    <div class="my-sets-header">
-        <h1 class="section-title mb-0">
-            Moje zestawy
-        </h1>
-    </div>
-
-    {% for word_set in word_sets %}
-        <div class="my-set-row my-set-progress-row">
-
-            <div class="my-set-list-icon {{ word_set.icon_color }}">
-                <i class="bi {{ word_set.icon }}"></i>
-            </div>
-
-            <div class="my-set-main">
-                <div class="my-set-name">
-                    {{ word_set.name }}
-                </div>
-
-                <div class="my-set-meta">
-                    {{ word_set.words.count }} słówek
-                </div>
-            </div>
-
-            <div class="my-set-progress-box">
-                <div class="my-set-progress-bar">
-                    <div class="my-set-progress-fill" style="width: 40%;"></div>
-                </div>
-
-                <div class="my-set-progress-text">
-                    Postęp: 40%
-                </div>
-            </div>
-
-            <div class="my-set-actions d-flex justify-content-center gap-3">
-                <a href="/study/{{ word_set.slug }}/" class="btn my-set-study-btn">
-                    Ucz się
-                </a>
-
-                <a href="/my-sets/{{ word_set.slug }}/" class="btn my-set-edit-btn">
-                    Edytuj
-                </a>
-                <form method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <input type="hidden" name="delete_set_id" value="{{ word_set.id }}">
-
-                    <button
-                        type="submit"
-                        class="btn my-set-delete-btn"
-                        onclick="return confirm('Czy na pewno chcesz usunąć ten zestaw?');">
-                        Usuń
-                    </button>
-                </form>
-            </div>
         </div>
-    {% empty %}
-        <p class="text-center mt-4 text-muted">Nie masz jeszcze żadnych zestawów</p>
-    {% endfor %}
+
+        <div class="my-sets-list">
+            <div class="my-sets-header">
+                <h1 class="section-title mb-0">
+                    Moje zestawy
+                </h1>
+            </div>
+
+            {% for word_set in word_sets %}
+                <div class="my-set-row my-set-progress-row">
+
+                    <div class="my-set-list-icon {{ word_set.icon_color }}">
+                        <i class="bi {{ word_set.icon }}"></i>
+                    </div>
+
+                    <div class="my-set-main">
+                        <div class="my-set-name">
+                            {{ word_set.name }}
+                        </div>
+
+                        <div class="my-set-meta">
+                            {{ word_set.words.count }} słówek
+                        </div>
+                    </div>
+
+                    <div class="my-set-progress-box">
+                        <div class="my-set-progress-bar">
+                            <div class="my-set-progress-fill" style="width: 40%;"></div>
+                        </div>
+
+                        <div class="my-set-progress-text">
+                            Postęp: 40%
+                        </div>
+                    </div>
+
+                    <div class="my-set-actions d-flex justify-content-center gap-3">
+                        <a href="/study/{{ word_set.slug }}/" class="btn my-set-study-btn">
+                            Ucz się
+                        </a>
+
+                        <a href="/my-sets/{{ word_set.slug }}/" class="btn my-set-edit-btn">
+                            Edytuj
+                        </a>
+                        <form method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="delete_set_id" value="{{ word_set.id }}">
+
+                            <button
+                                type="submit"
+                                class="btn my-set-delete-btn"
+                                onclick="return confirm('Czy na pewno chcesz usunąć ten zestaw?');">
+                                Usuń
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-center mt-4 text-muted">Nie masz jeszcze żadnych zestawów</p>
+            {% endfor %}
+        </div>
+    </div>
 </div>
 {% endblock %}

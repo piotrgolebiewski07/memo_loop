@@ -3,9 +3,9 @@ from django.utils.text import slugify
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from django.db.models import Avg
 
-from words.models import Word
-from .models import WordSet
+from .models import WordSet, Word, StudySession
 
 import random
 
@@ -133,6 +133,7 @@ def study_set(request, slug):
     user_answer = ""
     show_next_button = False
     study_finished = False
+    session_completed = False
     difficult_words_sorted = []
     difficult_words_summary = []
     correct_answers = request.session.get("correct_answers", 0)
@@ -222,6 +223,7 @@ def study_set(request, slug):
 
                     if not study_words:
                         study_finished = True
+                        session_completed = True
 
             else:
                 result = f"{word.text_en}"
@@ -279,6 +281,15 @@ def study_set(request, slug):
         success_rate = round((correct_answers / total_answers) * 100)
     else:
         success_rate = 0
+
+    if session_completed and request.user.is_authenticated:
+        StudySession.objects.create(
+            user=request.user,
+            word_set=word_set,
+            correct_answers=correct_answers,
+            wrong_answers=wrong_answers,
+            success_rate=success_rate,
+        )
 
     if study_finished:
         difficult_words_sorted = sorted(
