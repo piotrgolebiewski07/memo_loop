@@ -3,9 +3,9 @@ from django.utils.text import slugify
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from django.db.models import Avg
 
-from words.models import Word
-from .models import WordSet
+from .models import WordSet, Word, StudySession
 
 import random
 
@@ -16,6 +16,23 @@ def word_count_label(count):
     if count % 10 in [2, 3, 4] and count % 100 not in [12, 13, 14]:
         return "słówka"
     return "słówek"
+
+
+def set_label(count):
+    if count == 1:
+        return "zestaw"
+
+    if count % 100 in {12, 13, 14}:
+        return "zestawów"
+
+    if count % 10 in {2, 3, 4}:
+        return "zestawy"
+
+    return "zestawów"
+
+
+def day_label(count):
+    return "dzień" if count == 1 else "dni"
 
 
 def index(request):
@@ -116,6 +133,7 @@ def study_set(request, slug):
     user_answer = ""
     show_next_button = False
     study_finished = False
+    session_completed = False
     difficult_words_sorted = []
     difficult_words_summary = []
     correct_answers = request.session.get("correct_answers", 0)
@@ -205,6 +223,7 @@ def study_set(request, slug):
 
                     if not study_words:
                         study_finished = True
+                        session_completed = True
 
             else:
                 result = f"{word.text_en}"
@@ -262,6 +281,15 @@ def study_set(request, slug):
         success_rate = round((correct_answers / total_answers) * 100)
     else:
         success_rate = 0
+
+    if session_completed and request.user.is_authenticated:
+        StudySession.objects.create(
+            user=request.user,
+            word_set=word_set,
+            correct_answers=correct_answers,
+            wrong_answers=wrong_answers,
+            success_rate=success_rate,
+        )
 
     if study_finished:
         difficult_words_sorted = sorted(
@@ -350,7 +378,7 @@ def my_sets(request):
         delete_set_id = request.POST.get("delete_set_id")
 
         if delete_set_id:
-            WordSet.objects.get(id=delete_set_id, is_public=False).delete()
+            WordSet.objects.get(id=delete_set_id, is_public=False, owner=request.user).delete()
 
         return redirect("/my-sets/")
 
@@ -358,11 +386,48 @@ def my_sets(request):
         is_public=False,
         owner=request.user,)
 
+    word_sets_data = []
+
+    for word_set in word_sets:
+        word_count = word_set.words.count()
+
+        last_sessions = list(
+            StudySession.objects.filter(
+                user=request.user,
+                word_set=word_set,
+            ).order_by("-created_at")[:10]
+        )
+
+        if last_sessions:
+            progress = round(sum(session.success_rate for session in last_sessions) / len(last_sessions)
+                             )
+        else:
+            progress = 0
+
+        word_sets_data.append({
+            "set": word_set,
+            "word_count": word_count,
+            "progress": progress,
+
+        })
+    total_words = sum(item["word_count"] for item in word_sets_data)
+
+    set_count = word_sets.count()
+    set_label_text = set_label(set_count)
+
+    day_count = 0
+    day_label_text = day_label(day_count)
+
     return render(
         request,
         "words/my_sets.html",
         {
-            "word_sets": word_sets,
+            "word_sets": word_sets_data,
+            "total_words": total_words,
+            "set_count": set_count,
+            "set_label": set_label_text,
+            "day_count": day_count,
+            "day_label": day_label_text,
         }
     )
 
@@ -373,10 +438,15 @@ def create_set(request):
         name = request.POST.get("name")
         slug = slugify(name)
 
+        icon_data = request.POST.get("icon", "bi-journal-bookmark|stat-green")
+        icon, icon_color = icon_data.split("|")
+
         word_set = WordSet.objects.create(
             name=name,
             slug=slug,
-            owner=request.user
+            owner=request.user,
+            icon=icon,
+            icon_color=icon_color,
         )
 
         return redirect(f"/my-sets/{word_set.slug}/")

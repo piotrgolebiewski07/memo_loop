@@ -7,6 +7,8 @@ class WordSet(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
     is_public = models.BooleanField(default=False)
+    icon = models.CharField(max_length=50, default="bi-journal-bookmark")
+    icon_color = models.CharField(max_length=30, default="stat-green")
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -34,4 +36,21 @@ class Word(models.Model):
 
     def __str__(self):
         return f"{self.text_pl} - {self.text_en}"
+
+
+class StudySession(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="study_sessions")
+    word_set = models.ForeignKey(WordSet, on_delete=models.CASCADE, related_name="study_sessions")
+
+    correct_answers = models.PositiveIntegerField(default=0)
+    wrong_answers = models.PositiveIntegerField(default=0)
+    success_rate = models.PositiveIntegerField(default=0)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.word_set.name} - {self.success_rate}%"
+
+
+
 
