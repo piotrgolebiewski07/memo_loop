@@ -127,44 +127,44 @@
                 </h1>
             </div>
 
-            {% for word_set in word_sets %}
+            {% for item in word_sets %}
                 <div class="my-set-row my-set-progress-row">
 
-                    <div class="my-set-list-icon {{ word_set.icon_color }}">
-                        <i class="bi {{ word_set.icon }}"></i>
+                    <div class="my-set-list-icon {{ item.set.icon_color }}">
+                        <i class="bi {{ item.set.icon }}"></i>
                     </div>
 
                     <div class="my-set-main">
                         <div class="my-set-name">
-                            {{ word_set.name }}
+                            {{ item.set.name }}
                         </div>
 
                         <div class="my-set-meta">
-                            {{ word_set.words.count }} słówek
+                            {{ item.word_count }} słówek
                         </div>
                     </div>
 
                     <div class="my-set-progress-box">
                         <div class="my-set-progress-bar">
-                            <div class="my-set-progress-fill" style="width: 40%;"></div>
+                            <div class="my-set-progress-fill" style="width: {{ item.progress }}%"></div>
                         </div>
 
                         <div class="my-set-progress-text">
-                            Postęp: 40%
+                            Postęp: {{ item.progress }}%
                         </div>
                     </div>
 
                     <div class="my-set-actions d-flex justify-content-center gap-3">
-                        <a href="/study/{{ word_set.slug }}/" class="btn my-set-study-btn">
+                        <a href="/study/{{ item.set.slug }}/" class="btn my-set-study-btn">
                             Ucz się
                         </a>
 
-                        <a href="/my-sets/{{ word_set.slug }}/" class="btn my-set-edit-btn">
+                        <a href="/my-sets/{{ item.set.slug }}/" class="btn my-set-edit-btn">
                             Edytuj
                         </a>
                         <form method="post" style="display:inline;">
                             {% csrf_token %}
-                            <input type="hidden" name="delete_set_id" value="{{ word_set.id }}">
+                            <input type="hidden" name="delete_set_id" value="{{ item.set.id }}">
 
                             <button
                                 type="submit"

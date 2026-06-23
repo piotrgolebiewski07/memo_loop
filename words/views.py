@@ -378,7 +378,7 @@ def my_sets(request):
         delete_set_id = request.POST.get("delete_set_id")
 
         if delete_set_id:
-            WordSet.objects.get(id=delete_set_id, is_public=False).delete()
+            WordSet.objects.get(id=delete_set_id, is_public=False, owner=request.user).delete()
 
         return redirect("/my-sets/")
 
@@ -386,10 +386,34 @@ def my_sets(request):
         is_public=False,
         owner=request.user,)
 
-    total_words = sum(word_set.words.count() for word_set in word_sets)
+    word_sets_data = []
+
+    for word_set in word_sets:
+        word_count = word_set.words.count()
+
+        last_sessions = list(
+            StudySession.objects.filter(
+                user=request.user,
+                word_set=word_set,
+            ).order_by("-created_at")[:10]
+        )
+
+        if last_sessions:
+            progress = round(sum(session.success_rate for session in last_sessions) / len(last_sessions)
+                             )
+        else:
+            progress = 0
+
+        word_sets_data.append({
+            "set": word_set,
+            "word_count": word_count,
+            "progress": progress,
+
+        })
+    total_words = sum(item["word_count"] for item in word_sets_data)
 
     set_count = word_sets.count()
-    set_label_text=set_label(set_count)
+    set_label_text = set_label(set_count)
 
     day_count = 0
     day_label_text = day_label(day_count)
@@ -398,7 +422,7 @@ def my_sets(request):
         request,
         "words/my_sets.html",
         {
-            "word_sets": word_sets,
+            "word_sets": word_sets_data,
             "total_words": total_words,
             "set_count": set_count,
             "set_label": set_label_text,

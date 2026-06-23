@@ -17,7 +17,6 @@ class WordSet(models.Model):
         blank=True
     )
 
-
     def __str__(self):
         return self.name
 
@@ -41,7 +40,7 @@ class Word(models.Model):
 
 class StudySession(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="study_sessions")
-    word_set = models.ForeignKey(WordSet,on_delete=models.CASCADE, related_name="study_sessions")
+    word_set = models.ForeignKey(WordSet, on_delete=models.CASCADE, related_name="study_sessions")
 
     correct_answers = models.PositiveIntegerField(default=0)
     wrong_answers = models.PositiveIntegerField(default=0)
