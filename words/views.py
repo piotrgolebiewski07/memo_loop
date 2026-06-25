@@ -435,8 +435,30 @@ def my_sets(request):
 @login_required
 def create_set(request):
     if request.method == "POST":
-        name = request.POST.get("name")
+        name = request.POST.get("name", "").strip()
+
+        if not name:
+            return render(
+                request,
+                "words/create_set.html",
+                {
+                    "message": "Podaj nazwę zestawu",
+                    }
+            )
         slug = slugify(name)
+
+        if WordSet.objects.filter(
+                slug=slug,
+                owner=request.user,
+                is_public=False,
+        ).exists():
+            return render(
+                request,
+                "words/create_set.html",
+                {
+                    "message": "Zestaw o takiej nazwie już istnieje",
+                }
+            )
 
         icon_data = request.POST.get("icon", "bi-journal-bookmark|stat-green")
         icon, icon_color = icon_data.split("|")
@@ -467,6 +489,37 @@ def my_set_detail(request, slug):
     message = ""
 
     if request.method == "POST":
+
+        if "update_set_name" in request.POST:
+            new_name = request.POST.get("set_name", "").strip()
+
+            if new_name:
+                new_slug = slugify(new_name)
+
+                slug_exists = WordSet.objects.filter(
+                    slug=new_slug,
+                    owner=request.user,
+                    is_public=False,
+                ).exclude(id=word_set.id).exists()
+
+                if slug_exists:
+                    message = "Zestaw o takiej nazwie już itnieje"
+
+                    return render(
+                        request,
+                        "words/my_set_detail.html",
+                        {
+                            "word_set": word_set,
+                            "edit_word": None,
+                            "message": message,
+                        }
+                    )
+
+                word_set.name = new_name
+                word_set.slug = new_slug
+                word_set.save()
+
+            return redirect(f"/my-sets/{word_set.slug}/")
 
         if "delete_words" in request.POST:
             selected_words = request.POST.getlist("selected_words")
@@ -546,7 +599,8 @@ def my_set_detail(request, slug):
         {
             "word_set": word_set,
             "edit_word": edit_word,
-            "message": message
+            "message": message,
+            "edit_set": request.GET.get("edit_set"),
         }
     )
 
