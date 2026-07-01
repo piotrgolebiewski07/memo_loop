@@ -376,9 +376,24 @@ def study_set(request, slug):
 def my_sets(request):
     if request.method == "POST":
         delete_set_id = request.POST.get("delete_set_id")
+        favorite_set_id = request.POST.get("favorite_set_id")
+
+        if favorite_set_id:
+            word_set = WordSet.objects.get(
+                id=favorite_set_id,
+                owner=request.user,
+                is_public=False,
+            )
+
+            word_set.is_favorite = not word_set.is_favorite
+            word_set.save()
 
         if delete_set_id:
-            WordSet.objects.get(id=delete_set_id, is_public=False, owner=request.user).delete()
+            WordSet.objects.get(
+                id=delete_set_id,
+                is_public=False,
+                owner=request.user
+            ).delete()
 
         return redirect("/my-sets/")
 
