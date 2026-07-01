@@ -106,17 +106,26 @@
     <div class="my-sets-main-panel">
         <div class="my-sets-tabs">
 
-            <button class="my-tab active">
+            <a
+                href="/my-sets/?filter=all"
+                class="my-tab {% if current_filter == 'all' %}active{% endif %}"
+                title="wszystkie">
                 Wszystkie
-            </button>
+            </a>
 
-            <button class="my-tab">
+            <a
+                href="/my-sets/?filter=favorites"
+                class="my-tab {% if current_filter == 'favorites' %}active{% endif %}"
+                title="ulubione">
+                Ulubione
+            </a>
+
+            <a
+                href="/my-sets/?filter=recent"
+                class="my-tab"
+                title="ostatnie">
                 Ostatnio używane
-            </button>
-
-            <button class="my-tab">
-                Największe
-            </button>
+            </a>
 
         </div>
 
@@ -172,7 +181,7 @@
                     </div>
 
                     <div class="my-set-actions d-flex justify-content-center gap-3">
-                        <a href="/study/{{ item.set.slug }}/" class="btn my-set-study-btn">
+                        <a href="/study/{{ item.set.slug }}/?filter={{ current_filter }}" class="btn my-set-study-btn">
                             Ucz się
                         </a>
 

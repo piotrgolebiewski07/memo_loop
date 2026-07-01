@@ -3,7 +3,7 @@ from django.utils.text import slugify
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-from django.db.models import Avg
+from django.db.models import Avg, Max
 
 from .models import WordSet, Word, StudySession
 
@@ -139,6 +139,7 @@ def study_set(request, slug):
     correct_answers = request.session.get("correct_answers", 0)
     wrong_answers = request.session.get("wrong_answers", 0)
     difficult_words = request.session.get("difficult_words", {})
+    current_filter = request.GET.get("filter", "all")
 
     word_set = WordSet.objects.get(slug=slug)
     session_key = f"study_words_{word_set.id}"
@@ -158,7 +159,7 @@ def study_set(request, slug):
             if word_set.is_public:
                 return redirect("/ready-sets/")
 
-            return redirect("/my-sets/")
+            return redirect(f"/my-sets/?filter={current_filter}")
 
         if "next_word" in request.POST:
             study_words = request.session.get(session_key, [])
@@ -397,9 +398,16 @@ def my_sets(request):
 
         return redirect("/my-sets/")
 
+    current_filter = request.GET.get("filter", "all")
+
     word_sets = WordSet.objects.filter(
         is_public=False,
         owner=request.user,)
+
+    if current_filter == "favorites":
+        word_sets = word_sets.filter(is_favorite=True)
+    elif current_filter == "recent":
+        word_sets = word_sets.annotate(last_used=Max("study_sessions__created_at")).order_by("-last_used")
 
     word_sets_data = []
 
@@ -443,6 +451,7 @@ def my_sets(request):
             "set_label": set_label_text,
             "day_count": day_count,
             "day_label": day_label_text,
+            "current_filter": current_filter,
         }
     )
 
