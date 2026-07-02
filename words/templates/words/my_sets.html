@@ -130,12 +130,6 @@
         </div>
 
         <div class="my-sets-list">
-            <div class="my-sets-header">
-                <h1 class="section-title mb-0">
-                    Moje zestawy
-                </h1>
-            </div>
-
             {% for item in word_sets %}
                 <div class="my-set-row my-set-progress-row">
 
@@ -144,25 +138,26 @@
                     </div>
 
                     <div class="my-set-main">
-                        <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center gap-3">
                             <div class="my-set-name">
                                 {{ item.set.name }}
                             </div>
-                            <div>
-                                <form method="post">
-                                    {% csrf_token %}
 
-                                    <input type="hidden" name="favorite_set_id" value="{{ item.set.id }}">
 
-                                    <button type="submit"  class="favorite-btn">
-                                        {% if item.set.is_favorite %}
-                                            <i class="bi bi-star-fill"></i>
-                                        {% else %}
-                                            <i class="bi bi-star"></i>
-                                        {% endif %}
-                                    </button>
-                                </form>
-                            </div>
+                            <form method="post" class="d-inline">
+                                {% csrf_token %}
+
+                                <input type="hidden" name="favorite_set_id" value="{{ item.set.id }}">
+
+                                <button type="submit"  class="favorite-btn">
+                                    {% if item.set.is_favorite %}
+                                        <i class="bi bi-star-fill favorite-star"></i>
+                                    {% else %}
+                                        <i class="bi bi-star favorite-star-empty"></i>
+                                    {% endif %}
+                                </button>
+                            </form>
+
                         </div>
 
                         <div class="my-set-meta">
