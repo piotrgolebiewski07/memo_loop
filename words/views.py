@@ -9,6 +9,8 @@ from .models import WordSet, Word, StudySession
 
 import random
 
+from .statistics import get_current_streak
+
 
 def word_count_label(count):
     if count == 1:
@@ -438,7 +440,7 @@ def my_sets(request):
     set_count = word_sets.count()
     set_label_text = set_label(set_count)
 
-    day_count = 0
+    day_count = get_current_streak(request.user)
     day_label_text = day_label(day_count)
 
     return render(
