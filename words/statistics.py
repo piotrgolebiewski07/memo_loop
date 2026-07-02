@@ -21,3 +21,11 @@ def get_current_streak(user):
 
     return current_streak
 
+
+def get_completed_sessions(user):
+    return StudySession.objects.filter(user=user).count()
+
+
+
+
+

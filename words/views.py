@@ -9,7 +9,7 @@ from .models import WordSet, Word, StudySession
 
 import random
 
-from .statistics import get_current_streak
+from .statistics import get_current_streak, get_completed_sessions
 
 
 def word_count_label(count):
@@ -443,6 +443,8 @@ def my_sets(request):
     day_count = get_current_streak(request.user)
     day_label_text = day_label(day_count)
 
+    number_of_sessions = get_completed_sessions(request.user)
+
     return render(
         request,
         "words/my_sets.html",
@@ -453,6 +455,7 @@ def my_sets(request):
             "set_label": set_label_text,
             "day_count": day_count,
             "day_label": day_label_text,
+            "number_of_sessions": number_of_sessions,
             "current_filter": current_filter,
         }
     )
