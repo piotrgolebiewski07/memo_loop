@@ -167,7 +167,7 @@
 
                     <div class="my-set-progress-box">
                         <div class="my-set-progress-bar">
-                            <div class="my-set-progress-fill" style="width: {{ item.progress }}%"></div>
+                            <div class="my-set-progress-fill {{ item.set.icon_color }}" style="width: {{ item.progress }}%"></div>
                         </div>
 
                         <div class="my-set-progress-text">
@@ -176,22 +176,27 @@
                     </div>
 
                     <div class="my-set-actions d-flex justify-content-center gap-3">
-                        <a href="/study/{{ item.set.slug }}/?filter={{ current_filter }}" class="btn my-set-study-btn">
-                            Ucz się
+                        <a
+                            href="/study/{{ item.set.slug }}/?filter={{ current_filter }}"
+                            class="d-flex btn my-set-study-btn justify-content-center align-items-center gap-1">
+                            <i class="bi bi-play action-icon"></i> <span>Ucz się</span>
                         </a>
 
-                        <a href="/my-sets/{{ item.set.slug }}/" class="btn my-set-edit-btn">
-                            Edytuj
+                        <a
+                            href="/my-sets/{{ item.set.slug }}/"
+                            class="d-flex btn my-set-edit-btn justify-content-center align-items-center gap-2">
+                            <i class="bi bi-pencil action-icon"></i> <span>Edytuj</span>
                         </a>
+
                         <form method="post" style="display:inline;">
                             {% csrf_token %}
                             <input type="hidden" name="delete_set_id" value="{{ item.set.id }}">
 
                             <button
                                 type="submit"
-                                class="btn my-set-delete-btn"
+                                class="btn my-set-delete-btn d-flex justify-content-center align-items-center gap-2"
                                 onclick="return confirm('Czy na pewno chcesz usunąć ten zestaw?');">
-                                Usuń
+                                <i class="bi bi-trash action-icon"></i><span>Usuń</span>
                             </button>
                         </form>
                     </div>

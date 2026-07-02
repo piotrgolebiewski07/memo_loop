@@ -566,7 +566,7 @@ html {
 }
 
 .my-set-study-btn {
-    min-width: 90px;
+    min-width: 120px;
 
     background: #eaf8ef;
     border: 1px solid #b7e4c7;
@@ -581,7 +581,7 @@ html {
 }
 
 .my-set-edit-btn {
-    min-width: 90px;
+    min-width: 120px;
 
     background: #eef4ff;
     border: 1px solid #c7d7fe;
@@ -595,7 +595,7 @@ html {
 }
 
 .my-set-delete-btn {
-    min-width: 90px;
+    min-width: 120px;
 
     background: #fff1f2;
     border: 1px solid #fecdd3;
@@ -727,8 +727,8 @@ html {
 }
 
 .my-set-list-icon {
-    width: 44px;
-    height: 44px;
+    width: 54px;
+    height: 54px;
     border-radius: 12px;
 
     display: flex;
@@ -751,7 +751,7 @@ html {
 
 .my-set-progress-box {
     width: 180px;
-    margin-right: 100px;
+    margin-right: 0;
 }
 
 .my-set-progress-bar {
@@ -763,7 +763,7 @@ html {
 
 .my-set-progress-fill {
     height: 100%;
-    background: #198754;
+    background: var(--accent);
     border-radius: 10px;
 }
 
@@ -788,7 +788,7 @@ html {
 
 .my-set-actions {
     margin-left: 50px;
-    margin-right: 0x;
+    margin-right: 0px;
 }
 
 .favorite-star {
@@ -799,6 +799,9 @@ html {
     color: #b8bec7;
 }
 
+.action-icon {
+    font-size: 1rem;
+}
 /* ====================
    LOGIN SECTION
 ==================== */
@@ -895,26 +898,202 @@ html {
    COLOR
 ==================== */
 
-.stat-blue       { background:#eff6ff; color:#2563eb; }
-.stat-green      { background:#ecfdf3; color:#16a34a; }
-.stat-purple     { background:#f5f3ff; color:#7c3aed; }
-.stat-orange     { background:#fff7ed; color:#ea580c; }
-.stat-red        { background:#fff1f2; color:#dc2626; }
+.stat-blue {
+    background: #eff6ff;
+    color: #2563eb;
+    --accent: #2563eb;
+}
 
-.stat-pink       { background:#fdf2f8; color:#db2777; }
-.stat-cyan       { background:#ecfeff; color:#0891b2; }
-.stat-indigo     { background:#eef2ff; color:#4f46e5; }
-.stat-yellow     { background:#fefce8; color:#ca8a04; }
-.stat-teal       { background:#f0fdfa; color:#0f766e; }
+.my-set-progress-fill.stat-blue {
+    background: #2563eb;
+}
 
-.stat-lime       { background:#f7fee7; color:#65a30d; }
-.stat-emerald    { background:#ecfdf5; color:#059669; }
-.stat-sky        { background:#f0f9ff; color:#0284c7; }
-.stat-violet     { background:#f5f3ff; color:#7c3aed; }
-.stat-rose       { background:#fff1f2; color:#e11d48; }
+.stat-green {
+    background: #ecfdf3;
+    color: #16a34a;
+    --accent: #16a34a;
+}
 
-.stat-amber      { background:#fffbeb; color:#d97706; }
-.stat-fuchsia    { background:#fdf4ff; color:#c026d3; }
-.stat-stone      { background:#fafaf9; color:#57534e; }
-.stat-slate      { background:#f8fafc; color:#475569; }
-.stat-brown      { background:#fef7ed; color:#92400e; }
+.my-set-progress-fill.stat-green {
+    background: #16a34a;
+}
+
+.stat-purple {
+    background: #f5f3ff;
+    color: #7c3aed;
+    --accent: #7c3aed;
+}
+
+.my-set-progress-fill.stat-purple {
+    background: #7c3aed;
+}
+
+.stat-orange {
+    background: #fff7ed;
+    color: #ea580c;
+    --accent: #ea580c;
+}
+
+.my-set-progress-fill.stat-orange{
+    background: #ea580c;
+}
+
+.stat-red {
+    background: #fff1f2;
+    color: #dc2626;
+    --accent: #dc2626;
+}
+
+.my-set-progress-fill.stat-red {
+    background: #dc2626;
+}
+
+.stat-pink {
+    background: #fdf2f8;
+    color: #db2777;
+    --accent: #db2777;
+}
+
+.my-set-progress-fill.stat-pink {
+    background: #db2777;
+}
+
+.stat-cyan {
+    background:#ecfeff;
+    color:#0891b2;
+    --accent: #0891b2;
+}
+
+.my-set-progress-fill.stat-cyan{
+    background: #0891b2;
+}
+
+.stat-indigo {
+    background: #eef2ff;
+    color: #4f46e5;
+    --accent: #4f46e5;
+}
+
+.my-set-progress-fill.stat-indigo{
+    background: #4f46e5;
+}
+
+.stat-yellow {
+    background: #fefce8;
+    color: #ca8a04;
+    --accent: #ca8a04;
+}
+
+.my-set-progress-fill.stat-yellow {
+    background: #ca8a04;
+}
+
+.stat-teal {
+    background: #f0fdfa;
+    color: #0f766e;
+    --accent: #0f766e;
+}
+
+.my-set-progress-fill.stat-teal {
+    background: #0f766e;
+}
+
+.stat-lime {
+    background: #f7fee7;
+    color: #65a30d;
+    --accent: #65a30d;
+}
+
+.my-set-progress-fill.stat-lime {
+    background: #65a30d;
+}
+
+.stat-emerald {
+    background: #ecfdf5;
+    color: #059669;
+    --accent: #059669;
+}
+
+.my-set-progress-fill.stat-emerald {
+    background: #059669;
+}
+
+.stat-sky {
+    background: #f0f9ff;
+    color: #0284c7;
+    --accent: #0284c7;
+}
+
+.my-set-progress-fill.stat-sky {
+    background: #0284c7;
+}
+
+.stat-violet {
+    background: #f5f3ff;
+    color: #7c3aed;
+    --accent: #7c3aed;
+}
+
+.my-set-progress-fill.stat-violet{
+    background: #7c3aed;
+}
+
+.stat-rose {
+    background: #fff1f2;
+    color: #e11d48;
+    --accent: #e11d48;
+}
+
+.my-set-progress-fill.stat-rose{
+    background: #e11d48;
+}
+
+.stat-amber {
+    background: #fffbeb;
+    color: #d97706;
+    --accent: #d97706;
+}
+
+.my-set-progress-fill.stat-amber {
+    background: #d97706;
+}
+
+.stat-fuchsia {
+    background: #fdf4ff;
+    color: #c026d3;
+    --accent: #c026d3;
+}
+
+.my-set-progress-fill.stat-fuchsia {
+    background: #c026d3;
+}
+
+.stat-stone {
+    background: #fafaf9;
+    color: #57534e;
+    --accent: #57534e;
+}
+
+.my-set-progress-fill.stat-stone {
+    background: #57534e;
+}
+
+.stat-slate {
+    background: #f8fafc;
+    color: #475569;
+    --accent: #475569;
+}
+
+.my-set-progress-fill.stat-slate  {
+    background: #475569;
+}
+
+.stat-brown {
+    background: #fef7ed;
+    color: #92400e;
+    --accent: #92400e;
+}
+
+.my-set-progress-fill.stat-brown {
+    background: #92400e;
+}
