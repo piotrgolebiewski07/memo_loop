@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.db.models import Avg, Max
+from django.core.paginator import Paginator
 
 from .models import WordSet, Word, StudySession
 
@@ -436,6 +437,11 @@ def my_sets(request):
             "progress": progress,
 
         })
+
+    paginator = Paginator(word_sets_data, 4)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
     total_words = sum(item["word_count"] for item in word_sets_data)
 
     set_count = word_sets.count()
@@ -458,6 +464,7 @@ def my_sets(request):
             "day_label": day_label_text,
             "number_of_sessions": number_of_sessions,
             "current_filter": current_filter,
+            "page_obj": page_obj,
         }
     )
 
