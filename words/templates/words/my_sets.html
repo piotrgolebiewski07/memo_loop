@@ -131,7 +131,7 @@
 
         <div class="my-sets-list">
             {% for item in word_sets %}
-                <div class="my-set-row my-set-progress-row">
+                <div id="set-{{ item.set.id }}" class="my-set-row my-set-progress-row">
 
                     <div class="my-set-list-icon {{ item.set.icon_color }}">
                         <i class="bi {{ item.set.icon }}"></i>
@@ -148,7 +148,7 @@
                                 {% csrf_token %}
 
                                 <input type="hidden" name="favorite_set_id" value="{{ item.set.id }}">
-
+                                <input type="hidden" name="next" value="{{ request.get_full_path }}#set-{{ item.set.id }}">
                                 <button type="submit"  class="favorite-btn">
                                     {% if item.set.is_favorite %}
                                         <i class="bi bi-star-fill favorite-star"></i>
