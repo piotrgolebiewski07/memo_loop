@@ -380,6 +380,7 @@ def my_sets(request):
     if request.method == "POST":
         delete_set_id = request.POST.get("delete_set_id")
         favorite_set_id = request.POST.get("favorite_set_id")
+        next_url = request.POST.get("next", "/my-sets/")
 
         if favorite_set_id:
             word_set = WordSet.objects.get(
@@ -398,7 +399,7 @@ def my_sets(request):
                 owner=request.user
             ).delete()
 
-        return redirect("/my-sets/")
+        return redirect(next_url)
 
     current_filter = request.GET.get("filter", "all")
 
