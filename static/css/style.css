@@ -832,6 +832,21 @@ html {
     background-color: #fff;
 }
 
+.page-size-label {
+    font-size: 0.85rem;
+    color: #4b5563;
+    margin-bottom: 3px;
+}
+
+.page-size-select {
+    background-color: #fafafa;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    color: #4b5563;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.85rem;
+}
+
 /* ====================
    LOGIN SECTION
 ==================== */
