@@ -205,7 +205,7 @@
                 <p class="text-center mt-4 text-muted">Nie masz jeszcze żadnych zestawów</p>
             {% endfor %}
 
-            <nav aria-label="Page navigation example" class="mt-3">
+            <nav aria-label="Pagination" class="mt-3">
                 <ul class="pagination justify-content-center">
                     {% if page_obj.has_previous %}
                         <li class="page-item">
@@ -217,10 +217,14 @@
                         </li>
                     {% endif %}
 
-                    {% for page in page_obj.paginator.page_range %}
+                    {% for page in elided_page_range %}
                         {% if page == page_obj.number %}
                             <li class="page-item active">
-                                <a class="page-link">{{ page }}</a>
+                                <span class="page-link">{{ page }}</span>
+                            </li>
+                        {% elif page == pagination_ellipsis %}
+                            <li class="page-item">
+                                <span class="page-link">{{ pagination_ellipsis }}</span>
                             </li>
                         {% else %}
                             <li class="page-item">

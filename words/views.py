@@ -438,9 +438,11 @@ def my_sets(request):
 
         })
 
-    paginator = Paginator(word_sets_data, 4)
+    paginator = Paginator(word_sets_data, 1)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
+    elided_page_range = paginator.get_elided_page_range(page_obj.number, on_each_side=1, on_ends=1)
+    pagination_ellipsis = paginator.ELLIPSIS
 
     total_words = sum(item["word_count"] for item in word_sets_data)
 
@@ -465,6 +467,8 @@ def my_sets(request):
             "number_of_sessions": number_of_sessions,
             "current_filter": current_filter,
             "page_obj": page_obj,
+            "elided_page_range": elided_page_range,
+            "pagination_ellipsis": pagination_ellipsis,
         }
     )
 
