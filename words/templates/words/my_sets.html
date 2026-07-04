@@ -24,7 +24,10 @@
         </div>
 
         <div class="col-md-3 text-center">
-            <a href="/my-sets/create/" class="btn study-btn btn-lg px-5">
+            <a
+                href="/my-sets/create/"
+                class="btn study-btn btn-lg px-5"
+            >
                 + Nowy zestaw
             </a>
          </div>
@@ -205,45 +208,77 @@
                 <p class="text-center mt-4 text-muted">Nie masz jeszcze żadnych zestawów</p>
             {% endfor %}
 
-            <nav aria-label="Pagination" class="mt-3">
-                <ul class="pagination justify-content-center">
-                    {% if page_obj.has_previous %}
-                        <li class="page-item">
-                            <a class="page-link" href="?filter={{ current_filter }}&page={{ page_obj.previous_page_number }}"><i class="bi bi-chevron-left"></i></a>
-                        </li>
-                    {% else %}
-                        <li class="page-item disabled">
-                            <a class="page-link"><i class="bi bi-chevron-left"></i></a>
-                        </li>
-                    {% endif %}
+            <div class="row align-items-center">
+                <div class="col-md-4"></div>
 
-                    {% for page in elided_page_range %}
-                        {% if page == page_obj.number %}
-                            <li class="page-item active">
-                                <span class="page-link">{{ page }}</span>
-                            </li>
-                        {% elif page == pagination_ellipsis %}
-                            <li class="page-item">
-                                <span class="page-link">{{ pagination_ellipsis }}</span>
-                            </li>
-                        {% else %}
-                            <li class="page-item">
-                                <a class="page-link" href="?filter={{ current_filter }}&page={{ page }}">{{ page }}</a>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
+                <div class="col-md-4 d-flex justify-content-center">
+                    <nav aria-label="Pagination" class="mt-3">
+                        <ul class="pagination justify-content-center">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a
+                                        class="page-link"
+                                        href="?filter={{ current_filter }}&page={{ page_obj.previous_page_number }}&per_page={{ per_page }}">
+                                        <i class="bi bi-chevron-left"></i>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link"><i class="bi bi-chevron-left"></i></a>
+                                </li>
+                            {% endif %}
 
-                    {% if page_obj.has_next %}
-                        <li class="page-item">
-                            <a class="page-link" href="?filter={{ current_filter }}&page={{ page_obj.next_page_number }}"><i class="bi bi-chevron-right"></i></a>
-                        </li>
-                    {% else %}
-                        <li class="page-item disabled">
-                            <a class="page-link"><i class="bi bi-chevron-right"></i></a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </nav>
+                            {% for page in elided_page_range %}
+                                {% if page == page_obj.number %}
+                                    <li class="page-item active">
+                                        <span class="page-link">{{ page }}</span>
+                                    </li>
+                                {% elif page == pagination_ellipsis %}
+                                    <li class="page-item">
+                                        <span class="page-link">{{ pagination_ellipsis }}</span>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <a
+                                            class="page-link"
+                                            href="?filter={{ current_filter }}&page={{ page }}&per_page={{ per_page }}"
+                                        >
+                                            {{ page }}
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a
+                                        class="page-link"
+                                        href="?filter={{ current_filter }}&page={{ page_obj.next_page_number }}&per_page={{ per_page }}"
+                                    >
+                                        <i class="bi bi-chevron-right"></i>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link"><i class="bi bi-chevron-right"></i></a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+
+                <div class="col-md-4 pe-5">
+                    <form class="d-flex align-items-center gap-2 justify-content-end">
+                        <label class="page-size-label" for="per_page">Pokaż na stronie:</label>
+                        <select class="page-size-select" name="per_page" id="per_page" onchange="this.form.submit()">
+                            {% for page_size in allowed_page_sizes %}
+                                <option value="{{ page_size }}" {% if per_page == page_size %}selected{% endif %}>{{ page_size }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="hidden" name="filter" value="{{ current_filter }}">
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>

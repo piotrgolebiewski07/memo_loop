@@ -438,7 +438,18 @@ def my_sets(request):
 
         })
 
-    paginator = Paginator(word_sets_data, 1)
+    allowed_page_sizes = [2, 5, 10, 20, 50]
+    per_page = request.GET.get("per_page", 10)
+
+    try:
+        per_page = int(per_page)
+    except ValueError:
+        per_page = 10
+
+    if per_page not in allowed_page_sizes:
+        per_page = 10
+
+    paginator = Paginator(word_sets_data, per_page)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     elided_page_range = paginator.get_elided_page_range(page_obj.number, on_each_side=1, on_ends=1)
@@ -469,6 +480,8 @@ def my_sets(request):
             "page_obj": page_obj,
             "elided_page_range": elided_page_range,
             "pagination_ellipsis": pagination_ellipsis,
+            "per_page": per_page,
+            "allowed_page_sizes": allowed_page_sizes,
         }
     )
 
