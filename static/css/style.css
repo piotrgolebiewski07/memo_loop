@@ -802,6 +802,36 @@ html {
 .action-icon {
     font-size: 1rem;
 }
+
+.pagination .page-link {
+    color: #212529;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    margin: 0 6px;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+    transition: all 0.2s ease;
+}
+
+.pagination .page-link:hover {
+    color: #d95f02;
+    background-color: #fff5ed;
+    border-color: #d95f02;
+}
+
+.page-item.active .page-link {
+    color: #d95f02 !important;
+    background-color: #fff !important;
+    border-color: #d95f02 !important;
+    font-weight: 600;
+}
+
+.page-item.disabled .page-link {
+    color: #adb5bd;
+    background-color: #fff;
+}
+
 /* ====================
    LOGIN SECTION
 ==================== */
