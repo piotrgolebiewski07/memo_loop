@@ -209,7 +209,10 @@
             {% endfor %}
 
             <div class="row align-items-center">
-                <div class="col-md-4"></div>
+                <div class="col-md-4 d-flex justify-content-start ps-5">
+                    {{ page_obj.start_index }} - {{ page_obj.end_index }} z {{ page_obj.paginator.count }} {{ pagination_set_label }}
+
+                </div>
 
                 <div class="col-md-4 d-flex justify-content-center">
                     <nav aria-label="Pagination" class="mt-3">

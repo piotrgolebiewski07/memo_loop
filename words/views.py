@@ -458,6 +458,7 @@ def my_sets(request):
     total_words = sum(item["word_count"] for item in word_sets_data)
 
     set_count = word_sets.count()
+    pagination_set_label = "zestawu" if set_count == 1 else "zestawów"
     set_label_text = set_label(set_count)
 
     day_count = get_current_streak(request.user)
@@ -482,6 +483,7 @@ def my_sets(request):
             "pagination_ellipsis": pagination_ellipsis,
             "per_page": per_page,
             "allowed_page_sizes": allowed_page_sizes,
+            "pagination_set_label": pagination_set_label,
         }
     )
 
