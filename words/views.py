@@ -403,6 +403,7 @@ def my_sets(request):
         return redirect(next_url)
 
     current_filter = request.GET.get("filter", "all")
+    search_query = request.GET.get("q", "").strip()
 
     word_sets = WordSet.objects.filter(
         is_public=False,
@@ -412,6 +413,9 @@ def my_sets(request):
         word_sets = word_sets.filter(is_favorite=True)
     elif current_filter == "recent":
         word_sets = word_sets.annotate(last_used=Max("study_sessions__created_at")).order_by("-last_used")
+
+    if search_query:
+        word_sets = word_sets.filter(name__icontains=search_query)
 
     word_sets_data = []
 
@@ -435,7 +439,6 @@ def my_sets(request):
             "set": word_set,
             "word_count": word_count,
             "progress": progress,
-
         })
 
     allowed_page_sizes = [2, 5, 10, 20, 50]
@@ -484,6 +487,7 @@ def my_sets(request):
             "per_page": per_page,
             "allowed_page_sizes": allowed_page_sizes,
             "pagination_set_label": pagination_set_label,
+            "search_query": search_query,
         }
     )
 
