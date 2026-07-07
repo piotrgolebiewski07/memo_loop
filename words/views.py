@@ -1,3 +1,6 @@
+from operator import itemgetter
+
+from django.db.models.functions import Lower
 from django.shortcuts import render, redirect
 from django.utils.text import slugify
 from django.contrib.auth.decorators import login_required
@@ -412,6 +415,7 @@ def my_sets(request):
 
     current_filter = request.GET.get("filter", "all")
     search_query = request.GET.get("q", "").strip()
+    sort_by = request.GET.get("sort", "newest")
 
     word_sets = WordSet.objects.filter(
         is_public=False,
@@ -426,6 +430,16 @@ def my_sets(request):
 
     if search_query:
         word_sets = word_sets.filter(name__icontains=search_query)
+
+    if sort_by == "name_asc":
+        word_sets = word_sets.order_by(Lower("name"))
+    elif sort_by == "name_desc":
+        word_sets = word_sets.order_by(Lower("name").desc())
+
+    if sort_by == "newest":
+        word_sets = word_sets.order_by("-created_at")
+    elif sort_by == "oldest":
+        word_sets = word_sets.order_by("created_at")
 
     word_sets_data = []
 
@@ -451,7 +465,17 @@ def my_sets(request):
             "progress": progress,
         })
 
-    allowed_page_sizes = [2, 5, 10, 20, 50]
+    if sort_by == "word_count_asc":
+        word_sets_data = sorted(word_sets_data, key=itemgetter("word_count"))
+    elif sort_by == "word_count_desc":
+        word_sets_data = sorted(word_sets_data, key=itemgetter("word_count"), reverse=True)
+
+    if sort_by == "progress_asc":
+        word_sets_data = sorted(word_sets_data, key=itemgetter("progress"))
+    elif sort_by == "progress_desc":
+        word_sets_data = sorted(word_sets_data, key=itemgetter("progress"), reverse=True)
+
+    allowed_page_sizes = [5, 10, 20, 50]
     per_page = request.GET.get("per_page", 10)
 
     try:
@@ -498,6 +522,7 @@ def my_sets(request):
             "allowed_page_sizes": allowed_page_sizes,
             "pagination_set_label": pagination_set_label,
             "search_query": search_query,
+            "sort_by": sort_by,
         }
     )
 

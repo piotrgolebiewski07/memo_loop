@@ -11,6 +11,7 @@ class WordSet(models.Model):
     is_deleted = models.BooleanField(default=False)
     icon = models.CharField(max_length=50, default="bi-journal-bookmark")
     icon_color = models.CharField(max_length=30, default="stat-green")
+    created_at = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

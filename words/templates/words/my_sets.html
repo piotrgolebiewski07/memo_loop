@@ -151,9 +151,31 @@
                     </button>
                 </div>
             </form>
+
+            <div class="pe-2">
+                <form method="get" class="d-flex align-items-center gap-2 justify-content-end">
+                    <label class="page-size-label" for="sort_by">Sortowanie:</label>
+                    <select class="page-size-select" name="sort" id="sort_by" onchange="this.form.submit()">
+                        <option value="newest" {% if sort_by == "newest" %}selected{% endif %}>Najnowsze</option>
+                        <option value="oldest" {% if sort_by == "oldest" %}selected{% endif %}>Najstarsze</option>
+
+                        <option value="name_asc" {% if sort_by == "name_asc" %}selected{% endif %}>Nazwa (A-Z)</option>
+                        <option value="name_desc" {% if sort_by == "name_desc" %}selected{% endif %}>Nazwa (Z-A)</option>
+
+                        <option value="word_count_asc" {% if sort_by == "word_count_asc" %}selected{% endif %}>Najmniej słówek</option>
+                        <option value="word_count_desc" {% if sort_by == "word_count_desc" %}selected{% endif %}>Najwięcej słówek</option>
+
+                        <option value="progress_asc" {% if sort_by == "progress_asc" %}selected{% endif %}>Najmniejszy postęp</option>
+                        <option value="progress_desc" {% if sort_by == "progress_desc" %}selected{% endif %}>Największy postęp</option>
+                    </select>
+                    <input type="hidden" name="q" value="{{ search_query }}">
+                    <input type="hidden" name="filter" value="{{ current_filter }}">
+                    <input type="hidden" name="per_page" value="{{ per_page }}">
+                </form>
+            </div>
+
+
         </div>
-
-
         <div class="my-sets-list">
             {% for item in page_obj %}
                 <div id="set-{{ item.set.id }}" class="my-set-row my-set-progress-row">
@@ -243,7 +265,7 @@
                                 <li class="page-item">
                                     <a
                                         class="page-link"
-                                        href="?filter={{ current_filter }}&page={{ page_obj.previous_page_number }}&per_page={{ per_page }}&q={{ search_query }}">
+                                        href="?filter={{ current_filter }}&page={{ page_obj.previous_page_number }}&per_page={{ per_page }}&q={{ search_query }}&sort={{ sort_by }}">
                                         <i class="bi bi-chevron-left"></i>
                                     </a>
                                 </li>
@@ -266,7 +288,7 @@
                                     <li class="page-item">
                                         <a
                                             class="page-link"
-                                            href="?filter={{ current_filter }}&page={{ page }}&per_page={{ per_page }}&q={{ search_query }}"
+                                            href="?filter={{ current_filter }}&page={{ page }}&per_page={{ per_page }}&q={{ search_query }}&sort={{ sort_by }}"
                                         >
                                             {{ page }}
                                         </a>
@@ -278,7 +300,7 @@
                                 <li class="page-item">
                                     <a
                                         class="page-link"
-                                        href="?filter={{ current_filter }}&page={{ page_obj.next_page_number }}&per_page={{ per_page }}&q={{ search_query }}"
+                                        href="?filter={{ current_filter }}&page={{ page_obj.next_page_number }}&per_page={{ per_page }}&q={{ search_query }}&sort={{ sort_by }}"
                                     >
                                         <i class="bi bi-chevron-right"></i>
                                     </a>
@@ -293,14 +315,16 @@
                 </div>
 
                 <div class="col-md-4 pe-5">
-                    <form class="d-flex align-items-center gap-2 justify-content-end">
+                    <form method="get" class="d-flex align-items-center gap-2 justify-content-end">
                         <label class="page-size-label" for="per_page">Pokaż na stronie:</label>
                         <select class="page-size-select" name="per_page" id="per_page" onchange="this.form.submit()">
                             {% for page_size in allowed_page_sizes %}
                                 <option value="{{ page_size }}" {% if per_page == page_size %}selected{% endif %}>{{ page_size }}</option>
                             {% endfor %}
                         </select>
+                        <input type="hidden" name="q" value="{{ search_query }}">
                         <input type="hidden" name="filter" value="{{ current_filter }}">
+                        <input type="hidden" name="sort" value="{{ sort_by }}">
                     </form>
                 </div>
             </div>
