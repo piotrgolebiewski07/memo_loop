@@ -144,7 +144,10 @@ def study_set(request, slug):
     difficult_words = request.session.get("difficult_words", {})
     current_filter = request.GET.get("filter", "all")
 
-    word_set = WordSet.objects.get(slug=slug)
+    word_set = WordSet.objects.get(
+        slug=slug,
+        is_deleted=False
+    )
     session_key = f"study_words_{word_set.id}"
 
     if session_key not in request.session:
@@ -388,17 +391,22 @@ def my_sets(request):
                 id=favorite_set_id,
                 owner=request.user,
                 is_public=False,
+                is_deleted=False,
             )
 
             word_set.is_favorite = not word_set.is_favorite
             word_set.save()
 
         if delete_set_id:
-            WordSet.objects.get(
+            word_set = WordSet.objects.get(
                 id=delete_set_id,
                 is_public=False,
-                owner=request.user
-            ).delete()
+                owner=request.user,
+                is_deleted=False,
+            )
+
+            word_set.is_deleted = True
+            word_set.save()
 
         return redirect(next_url)
 
@@ -407,7 +415,9 @@ def my_sets(request):
 
     word_sets = WordSet.objects.filter(
         is_public=False,
-        owner=request.user,)
+        owner=request.user,
+        is_deleted=False,
+    )
 
     if current_filter == "favorites":
         word_sets = word_sets.filter(is_favorite=True)
@@ -505,12 +515,16 @@ def create_set(request):
                     "message": "Podaj nazwę zestawu",
                     }
             )
-        slug = slugify(name)
+
+        base_slug = slugify(name)
+        actual_slug = base_slug
+        slug_number = 2
 
         if WordSet.objects.filter(
-                slug=slug,
-                owner=request.user,
-                is_public=False,
+            name=name,
+            owner=request.user,
+            is_public=False,
+            is_deleted=False,
         ).exists():
             return render(
                 request,
@@ -520,12 +534,16 @@ def create_set(request):
                 }
             )
 
+        while WordSet.objects.filter(slug=actual_slug).exists():
+            actual_slug = f"{base_slug}-{slug_number}"
+            slug_number += 1
+
         icon_data = request.POST.get("icon", "bi-journal-bookmark|stat-green")
         icon, icon_color = icon_data.split("|")
 
         word_set = WordSet.objects.create(
             name=name,
-            slug=slug,
+            slug=actual_slug,
             owner=request.user,
             icon=icon,
             icon_color=icon_color,
@@ -545,6 +563,7 @@ def my_set_detail(request, slug):
         slug=slug,
         owner=request.user,
         is_public=False,
+        is_deleted=False,
     )
     message = ""
 
@@ -560,6 +579,7 @@ def my_set_detail(request, slug):
                     slug=new_slug,
                     owner=request.user,
                     is_public=False,
+                    is_deleted=False,
                 ).exclude(id=word_set.id).exists()
 
                 if slug_exists:
