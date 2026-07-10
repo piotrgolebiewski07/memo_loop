@@ -135,7 +135,8 @@ def ready_sets(request):
             "set": word_set,
             "word_count": word_count,
             "word_label": word_label,
-            "level_class": level_class
+            "level_class": level_class,
+            "image_path": f"images/{word_set.image}",
         })
 
     return render(

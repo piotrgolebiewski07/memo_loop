@@ -46,20 +46,18 @@
         </div>
             <div class="ready-cards-grid">
                 {% for item in word_sets %}
-                    <!-- =========================
-                    Na lotnisku
-                    ========================= -->
+                    <!-- {{ item.set.name }} -->
 
                     <div class="ready-card">
                         <img
-                            src="{% static 'images/na_lotnisku.png' %}"
+                            src="{% static item.image_path %}"
                             class="ready-card-image"
-                            alt="Na lotnisku"
+                            alt="{{ item.set.name }}"
                         >
                         <div class="ready-card-body">
 
-                            <div class="my-sets-stat-icon ready-card-icon stat-sky">
-                                <i class="bi bi-airplane"></i>
+                            <div class="my-sets-stat-icon ready-card-icon {{ item.set.icon_color }}">
+                                <i class="bi {{ item.set.icon }}"></i>
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center mb-2">
