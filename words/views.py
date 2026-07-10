@@ -111,17 +111,18 @@ def home(request):
 
 
 def ready_sets(request):
-    word_sets = WordSet.objects.filter(is_public=True)
+    word_sets = WordSet.objects.filter(is_public=True, is_deleted=False)
 
     ready_word_sets = []
 
     for word_set in word_sets:
         word_count = word_set.words.count()
+        word_label = word_count_label(word_count)
 
         ready_word_sets.append({
             "set": word_set,
             "word_count": word_count,
-            "word_label": word_count_label(word_count),
+            "word_label": word_label,
         })
 
     return render(

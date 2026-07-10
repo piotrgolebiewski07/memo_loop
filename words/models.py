@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 class WordSet(models.Model):
     name = models.CharField(max_length=100)
+    description = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
     is_public = models.BooleanField(default=False)
     is_favorite = models.BooleanField(default=False)
