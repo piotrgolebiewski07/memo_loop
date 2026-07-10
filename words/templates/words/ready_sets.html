@@ -2,35 +2,35 @@
 {% load static %}
 {% block content %}
 
-<div class="container pt-5 pb-3" style="max-width: 1000px;">
-    <div class="row align-items-center justify-content-center g-4">
-        <div class="col">
-            <div class="text-center">
-                <img
-                    src="{% static 'images/gotowe_zestawy_5.jpg' %}"
-                    class="img-fluid"
-                    style="max-width: 280px;"
-                    alt="Gotowe zestawy"
-                >
+<div class="container" style="max-width: 1200px; ">
+    <div class="ready-page">
+        <div class="row align-items-center g-4">
+            <div class="col-md-5 ps-lg-4">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="ready-hero-icon stat-orange">
+                        <i class="bi bi-briefcase-fill"></i>
+                    </div>
+                    <h1 class="page-hero-title mb-0">
+                        Gotowe zestawy
+                    </h1>
+                </div>
+
+                <p class="page-hero-text">
+                    Wybierz kategorię słówek dopasowaną do swoich zainteresowań i rozpocznij naukę od razu bez tworzenia własnych zestawów.
+                </p>
+
+                <div class="mt-5">
+                    <a href="#" class="btn study-btn px-4">
+                        Przeglądaj wszystkie zestawy <i class="bi bi-arrow-right ms-2"></i>
+                    </a>
+                </div>
             </div>
-        </div>
 
-        <div class="col d-flex flex-column justify-content-center text-center">
-            <h1 class="page-hero-title">
-                Gotowe zestawy
-            </h1>
-
-            <p class="page-hero-text mx-auto">
-                Wybierz kategorię słówek dopasowaną do swoich zainteresowań i rozpocznij naukę od razu bez tworzenia własnych zestawów.
-            </p>
-        </div>
-
-        <div class="col">
-            <div class="text-center">
+            <div class="col-md-7  text-center ps-xl-5">
                 <img
-                    src="{% static 'images/gotowe_zestawy_6.jpg' %}"
+                    src="{% static 'images/gotowe_zestawy_11.png' %}"
                     class="img-fluid"
-                    style="max-width: 280px;"
+                    style="max-width: 580px;"
                     alt="Gotowe zestawy"
                 >
             </div>
@@ -38,25 +38,151 @@
     </div>
 </div>
 
-<div class="container" style="max-width: 1000px;">
-    <hr class="my-2" style="opacity: 0.15;">
+<div class="container mt-4" style="max-width: 1200px;">
+    <div class="ready-sets-panel">
+        <div class="ready-section-label">
+            <i class="bi bi-star"></i>
+            Popularne zestawy
+        </div>
+            <div class="ready-cards-grid">
+                {% for item in word_sets %}
+                    <!-- {{ item.set.name }} -->
+
+                    <div class="ready-card">
+                        <img
+                            src="{% static item.image_path %}"
+                            class="ready-card-image"
+                            alt="{{ item.set.name }}"
+                        >
+                        <div class="ready-card-body">
+
+                            <div class="my-sets-stat-icon ready-card-icon {{ item.set.icon_color }}">
+                                <i class="bi {{ item.set.icon }}"></i>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h5 class="ready-card-title mb-0">
+                                    {{ item.set.name }}
+                                </h5>
+
+                                <div class="ready-card-level {{ item.level_class }}">
+                                    {{ item.set.level }}
+                                </div>
+                            </div>
+
+                            <div class="ready-card-description">
+                                {{ item.set.description }}
+                            </div>
+
+                            <div class="ready-card-meta">
+                                {{ item.word_count }} {{ item.word_label }}
+                            </div>
+
+                            <a href="/study/{{ item.set.slug }}/" class="btn my-set-study-btn w-100">
+                               Ucz się
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+    </div>
 </div>
 
-<div class="container mt-5">
-    <!-- PODRÓŻE -->
+<div class="container mt-4" style="max-width: 1200px;">
+    <div class="ready-summary-panel">
+        <div class="row ready-summary-row g-3">
 
-    <div class="sets-section">
-        <h2 class="sets-title text-center">
-            Podróże
-        </h2>
+            <div class="col-md-6">
+                <div class="ready-summary-hero">
+                    <div class="row align-items-center">
+                        <div class="col-5 text-center">
+                            <img
+                                src="{% static 'images/ucz_się_od_pierwszej_minuty_4.png' %}"
+                                class="img-fluid"
+                                style="max-width: 220px;"
+                                alt="Mapa"
+                            >
+                        </div>
 
-        <div class="ready-sets-grid">
-            {% for item in word_sets %}
-                <a href="/study/{{ item.set.slug }}/" class="ready-set-card text-decoration-none">
-                    <h6>{{ item.set.name }}</h6>
-                    <small class="text-muted">{{ item.word_count }} {{ item.word_label }}</small>
-                </a>
-            {% endfor %}
+                        <div class="col-7">
+                            <h3 class="page-hero-title mb-4">
+                                Dlaczego warto wybrać gotowe zestawy?
+                            </h3>
+
+                            <p class="page-hero-text mb-5">
+                                Starannie przygotowane zestawy obejmują najważniejsze tematy, różne poziomy trudności i praktyczne słownictwo przydatne w nauce języka.
+                            </p>
+
+                            <div>
+                                <a href="#popularne" class="btn study-btn px-4">
+                                    Zobacz wszystkie zestawy <i class="bi bi-arrow-right ms-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="ready-summary-grid">
+
+                    <div class="ready-summary-card">
+                        <div class="ready-summary-top">
+                            <div class="ready-sets-stat-icon stat-red">
+                                <i class="bi bi-book"></i>
+                            </div>
+
+                            <div class="ready-summary-info">
+                                <div class="ready-summary-number text-red">12</div>
+                                <div class="ready-summary-title">gotowych zestawów</div>
+                                <div class="ready-summary-text">różnorodne tematy</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ready-summary-card">
+                        <div class="ready-summary-top">
+                            <div class="ready-sets-stat-icon stat-blue">
+                                <i class="bi bi-tags"></i>
+                            </div>
+
+                            <div class="ready-summary-info">
+                                <div class="ready-summary-number text-blue">560+</div>
+                                <div class="ready-summary-title">słówek</div>
+                                <div class="ready-summary-text">przydatnych na co dzień</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ready-summary-card">
+                        <div class="ready-summary-top">
+                            <div class="ready-sets-stat-icon stat-violet">
+                                <i class="bi bi-graph-up"></i>
+                            </div>
+
+                            <div class="ready-summary-info">
+                                <div class="ready-summary-number text-violet">A1-C1</div>
+                                <div class="ready-summary-title">poziomy trudności</div>
+                                <div class="ready-summary-text">od początkującego<br /> do zaawansowanego</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ready-summary-card">
+                        <div class="ready-summary-top">
+                            <div class="ready-sets-stat-icon stat-emerald">
+                                <i class="bi bi-play-circle"></i>
+                            </div>
+
+                            <div class="ready-summary-info">
+                                <div class="ready-summary-number text-emerald">100%</div>
+                                <div class="ready-summary-title">gotowe do nauki</div>
+                                <div class="ready-summary-text">bez tworzenia własnych zestawów</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

@@ -41,6 +41,17 @@ def day_label(count):
     return "dzień" if count == 1 else "dni"
 
 
+def get_color(level):
+    if level[-2] == "A":
+        return "level-a"
+    elif level[-2] == "B":
+        return "level-b"
+    elif level[-2] == "C":
+        return "level-c"
+    else:
+        return "level-a"
+
+
 def index(request):
 
     result = ""
@@ -111,17 +122,21 @@ def home(request):
 
 
 def ready_sets(request):
-    word_sets = WordSet.objects.filter(is_public=True)
+    word_sets = WordSet.objects.filter(is_public=True, is_deleted=False)
 
     ready_word_sets = []
 
     for word_set in word_sets:
         word_count = word_set.words.count()
+        word_label = word_count_label(word_count)
+        level_class = get_color(word_set.level)
 
         ready_word_sets.append({
             "set": word_set,
             "word_count": word_count,
-            "word_label": word_count_label(word_count),
+            "word_label": word_label,
+            "level_class": level_class,
+            "image_path": f"images/{word_set.image}",
         })
 
     return render(
