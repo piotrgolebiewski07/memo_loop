@@ -41,6 +41,17 @@ def day_label(count):
     return "dzień" if count == 1 else "dni"
 
 
+def get_color(level):
+    if level[-2] == "A":
+        return "level-a"
+    elif level[-2] == "B":
+        return "level-b"
+    elif level[-2] == "C":
+        return "level-c"
+    else:
+        return "level-a"
+
+
 def index(request):
 
     result = ""
@@ -118,11 +129,13 @@ def ready_sets(request):
     for word_set in word_sets:
         word_count = word_set.words.count()
         word_label = word_count_label(word_count)
+        level_class = get_color(word_set.level)
 
         ready_word_sets.append({
             "set": word_set,
             "word_count": word_count,
             "word_label": word_label,
+            "level_class": level_class
         })
 
     return render(
