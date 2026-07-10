@@ -20,7 +20,7 @@
                 </p>
 
                 <div class="mt-5">
-                    <a href="#popularne" class="btn study-btn px-4">
+                    <a href="#" class="btn study-btn px-4">
                         Przeglądaj wszystkie zestawy <i class="bi bi-arrow-right ms-2"></i>
                     </a>
                 </div>
@@ -78,127 +78,7 @@
                                 {{ item.word_count }} {{ item.word_label }}
                             </div>
 
-                            <a href="" class="btn my-set-study-btn w-100">
-                               Ucz się
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- =========================
-                    W hotelu
-                    ========================= -->
-
-                    <div class="ready-card">
-                        <img
-                            src="{% static 'images/w_hotelu_1.png' %}"
-                            class="ready-card-image"
-                            alt="W hotelu"
-                        >
-                        <div class="ready-card-body">
-
-                            <div class="my-sets-stat-icon ready-card-icon stat-lime">
-                                <i class="bi bi-suitcase-fill"></i>
-                            </div>
-
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <h5 class="ready-card-title mb-0">
-                                    W hotelu
-                                </h5>
-
-                                <div class="ready-card-level level-b">
-                                    A2-B1
-                                </div>
-                            </div>
-
-                            <div class="ready-card-description">
-                                Zwroty przy rezerwacji, meldunku i obsłudze hotelowej.
-                            </div>
-
-                            <div class="ready-card-meta">
-                                42 słówek
-                            </div>
-
-                            <a href="" class="btn my-set-study-btn w-100">
-                               Ucz się
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- =========================
-                    W restauracji
-                    ========================= -->
-
-                    <div class="ready-card">
-                        <img
-                            src="{% static 'images/w_restauracji.jpg' %}"
-                            class="ready-card-image"
-                            alt="W restauracji"
-                        >
-                        <div class="ready-card-body">
-
-                            <div class="my-sets-stat-icon ready-card-icon stat-orange">
-                                <i class="bi bi-cup-hot"></i>
-                            </div>
-
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <h5 class="ready-card-title mb-0">
-                                    W restauracji
-                                </h5>
-
-                                <div class="ready-card-level level-c">
-                                    C1
-                                </div>
-                            </div>
-
-                            <div class="ready-card-description">
-                                Słówka potrzebne przy zamawianiu jedzenia i płaceniu.
-                            </div>
-
-                            <div class="ready-card-meta">
-                                36 słówek
-                            </div>
-
-                            <a href="" class="btn my-set-study-btn w-100">
-                               Ucz się
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- =========================
-                    Codzienne rozmowy
-                    ========================= -->
-
-                    <div class="ready-card">
-                        <img
-                            src="{% static 'images/codzienne_rozmowy.png' %}"
-                            class="ready-card-image"
-                            alt="Codzienne rozmowy"
-                        >
-                        <div class="ready-card-body">
-
-                            <div class="my-sets-stat-icon ready-card-icon stat-blue">
-                                <i class="bi bi-chat-dots"></i>
-                            </div>
-
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <h5 class="ready-card-title mb-0">
-                                    Codzienne rozmowy
-                                </h5>
-
-                                <div class="ready-card-level level-a">
-                                    A2
-                                </div>
-                            </div>
-
-                            <div class="ready-card-description">
-                                Praktyczne zwroty do krótkich rozmów każdego dnia.
-                            </div>
-
-                            <div class="ready-card-meta">
-                                63 słówka
-                            </div>
-
-                            <a href="" class="btn my-set-study-btn w-100">
+                            <a href="/study/{{ item.set.slug }}/" class="btn my-set-study-btn w-100">
                                Ucz się
                             </a>
                         </div>
