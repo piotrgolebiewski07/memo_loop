@@ -1,13 +1,14 @@
 from operator import itemgetter
 
 from django.db.models.functions import Lower
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.text import slugify
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.db.models import Avg, Max
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 from .models import WordSet, Word, StudySession
 
@@ -162,10 +163,21 @@ def study_set(request, slug):
     difficult_words = request.session.get("difficult_words", {})
     current_filter = request.GET.get("filter", "all")
 
-    word_set = WordSet.objects.get(
-        slug=slug,
-        is_deleted=False
-    )
+    if request.user.is_authenticated:
+        word_set = get_object_or_404(
+            WordSet,
+            Q(slug=slug) &
+            Q(is_deleted=False) &
+            (Q(is_public=True) | Q(owner=request.user))
+            )
+    else:
+        word_set = get_object_or_404(
+            WordSet,
+            slug=slug,
+            is_deleted=False,
+            is_public=True,
+        )
+
     session_key = f"study_words_{word_set.id}"
 
     if session_key not in request.session:
