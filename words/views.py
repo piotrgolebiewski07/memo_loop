@@ -6,7 +6,7 @@ from django.utils.text import slugify
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-from django.db.models import Avg, Max
+from django.db.models import Max, Count
 from django.core.paginator import Paginator
 from django.db.models import Q
 
@@ -36,6 +36,19 @@ def set_label(count):
         return "zestawy"
 
     return "zestawów"
+
+
+def ready_sets_label(count):
+    if count == 1:
+        return "gotowy zestaw"
+
+    if count % 100 in {12, 13, 14}:
+        return "gotowych zestawów"
+
+    if count % 10 in {2, 3, 4}:
+        return "gotowe zestawy"
+
+    return "gotowych zestawów"
 
 
 def day_label(count):
@@ -125,6 +138,8 @@ def home(request):
 def ready_sets(request):
     word_sets = WordSet.objects.filter(is_public=True, is_deleted=False)
 
+    set_count = word_sets.count()
+    ready_sets_count_label = ready_sets_label(set_count)
     ready_word_sets = []
 
     for word_set in word_sets:
@@ -140,11 +155,19 @@ def ready_sets(request):
             "image_path": f"images/{word_set.image}",
         })
 
+    words_summary = word_sets.aggregate(total_words=Count("words"))
+    total_words = words_summary["total_words"]
+    total_words_label = word_count_label(total_words)
+
     return render(
         request,
         "words/ready_sets.html",
         {
             "word_sets": ready_word_sets,
+            "set_count": set_count,
+            "ready_sets_count_label": ready_sets_count_label,
+            "total_words": total_words,
+            "total_words_label": total_words_label,
         }
     )
 
