@@ -38,6 +38,19 @@ def set_label(count):
     return "zestawów"
 
 
+def ready_sets_label(count):
+    if count == 1:
+        return "gotowy zestaw"
+
+    if count % 100 in {12, 13, 14}:
+        return "gotowych zestawów"
+
+    if count % 10 in {2, 3, 4}:
+        return "gotowe zestawy"
+
+    return "gotowych zestawów"
+
+
 def day_label(count):
     return "dzień" if count == 1 else "dni"
 
@@ -125,6 +138,8 @@ def home(request):
 def ready_sets(request):
     word_sets = WordSet.objects.filter(is_public=True, is_deleted=False)
 
+    set_count = word_sets.count()
+    ready_sets_count_label = ready_sets_label(set_count)
     ready_word_sets = []
 
     for word_set in word_sets:
@@ -145,6 +160,8 @@ def ready_sets(request):
         "words/ready_sets.html",
         {
             "word_sets": ready_word_sets,
+            "set_count": set_count,
+            "ready_sets_count_label": ready_sets_count_label,
         }
     )
 

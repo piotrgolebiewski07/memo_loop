@@ -405,11 +405,13 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
+    width: 240px;
 }
 
 .ready-summary-info {
     display: flex;
     flex-direction: column;
+    width: 160px;
 }
 
 .ready-summary-number {
