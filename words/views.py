@@ -136,13 +136,16 @@ def home(request):
 
 
 def ready_sets(request):
-    word_sets = WordSet.objects.filter(is_public=True, is_deleted=False)
+    featured_word_sets = WordSet.objects.filter(is_public=True, is_deleted=False, is_featured=True)
+    other_word_sets =  WordSet.objects.filter(is_public=True, is_deleted=False, is_featured=False)
+    all_word_sets = WordSet.objects.filter(is_public=True, is_deleted=False)
 
-    set_count = word_sets.count()
+    set_count = all_word_sets.count()
     ready_sets_count_label = ready_sets_label(set_count)
     ready_word_sets = []
+    other_ready_word_sets = []
 
-    for word_set in word_sets:
+    for word_set in featured_word_sets:
         word_count = word_set.words.count()
         word_label = word_count_label(word_count)
         level_class = get_color(word_set.level)
@@ -154,8 +157,24 @@ def ready_sets(request):
             "level_class": level_class,
             "image_path": f"images/{word_set.image}",
         })
+    other_sets = request.GET.get("show-all")
 
-    words_summary = word_sets.aggregate(total_words=Count("words"))
+    if other_sets:
+
+        for word_set in other_word_sets:
+            word_count = word_set.words.count()
+            word_label = word_count_label(word_count)
+            level_class = get_color(word_set.level)
+
+            other_ready_word_sets.append({
+                "set": word_set,
+                "word_count": word_count,
+                "word_label": word_label,
+                "level_class": level_class,
+                "image_path": f"images/{word_set.image}",
+            })
+
+    words_summary = all_word_sets.aggregate(total_words=Count("words"))
     total_words = words_summary["total_words"]
     total_words_label = word_count_label(total_words)
 
@@ -164,10 +183,12 @@ def ready_sets(request):
         "words/ready_sets.html",
         {
             "word_sets": ready_word_sets,
+            "other_word_sets": other_ready_word_sets,
             "set_count": set_count,
             "ready_sets_count_label": ready_sets_count_label,
             "total_words": total_words,
             "total_words_label": total_words_label,
+            "other_sets": other_sets,
         }
     )
 
@@ -185,6 +206,7 @@ def study_set(request, slug):
     wrong_answers = request.session.get("wrong_answers", 0)
     difficult_words = request.session.get("difficult_words", {})
     current_filter = request.GET.get("filter", "all")
+    show_all = request.GET.get("show-all")
 
     if request.user.is_authenticated:
         word_set = get_object_or_404(
@@ -215,7 +237,9 @@ def study_set(request, slug):
             request.session.pop("difficult_words", None)
             request.session.pop(session_key, None)
 
-            if word_set.is_public:
+            if word_set.is_public and show_all:
+                return redirect("/ready-sets/?show-all=all")
+            elif word_set.is_public:
                 return redirect("/ready-sets/")
 
             return redirect(f"/my-sets/?filter={current_filter}")
