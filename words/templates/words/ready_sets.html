@@ -18,12 +18,13 @@
                 <p class="page-hero-text">
                     Wybierz kategorię słówek dopasowaną do swoich zainteresowań i rozpocznij naukę od razu bez tworzenia własnych zestawów.
                 </p>
-
-                <div class="mt-5">
-                    <a href="#" class="btn study-btn px-4">
-                        Przeglądaj wszystkie zestawy <i class="bi bi-arrow-right ms-2"></i>
-                    </a>
-                </div>
+                {% if not other_sets %}
+                    <div class="mt-5">
+                        <a href="?show-all=true#all-sets" class="btn study-btn px-4">
+                            Przeglądaj wszystkie zestawy <i class="bi bi-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                {% endif %}
             </div>
 
             <div class="col-md-7  text-center ps-xl-5">
@@ -40,9 +41,14 @@
 
 <div class="container mt-4" style="max-width: 1200px;">
     <div class="ready-sets-panel">
-        <div class="ready-section-label">
+
+        <div id="all-sets" class="ready-section-label">
             <i class="bi bi-star"></i>
-            Popularne zestawy
+            {% if not other_sets %}
+                Popularne zestawy
+            {% else %}
+                Wszystkie zestawy
+            {% endif %}
         </div>
             <div class="ready-cards-grid">
                 {% for item in word_sets %}
@@ -77,14 +83,56 @@
                             <div class="ready-card-meta">
                                 {{ item.word_count }} {{ item.word_label }}
                             </div>
+                            <a href="/study/{{ item.set.slug }}/{% if other_sets %}?show-all=true{% endif %}" class="btn my-set-study-btn w-100">
+                                Ucz się
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% if other_word_sets %}
+            <div class="ready-cards-grid mt-4">
+                {% for item in other_word_sets %}
+                    <!-- {{ item.set.name }} -->
 
-                            <a href="/study/{{ item.set.slug }}/" class="btn my-set-study-btn w-100">
+                    <div class="ready-card">
+                        <img
+                            src="{% static item.image_path %}"
+                            class="ready-card-image"
+                            alt="{{ item.set.name }}"
+                        >
+                        <div class="ready-card-body">
+
+                            <div class="my-sets-stat-icon ready-card-icon {{ item.set.icon_color }}">
+                                <i class="bi {{ item.set.icon }}"></i>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h5 class="ready-card-title mb-0">
+                                    {{ item.set.name }}
+                                </h5>
+
+                                <div class="ready-card-level {{ item.level_class }}">
+                                    {{ item.set.level }}
+                                </div>
+                            </div>
+
+                            <div class="ready-card-description">
+                                {{ item.set.description }}
+                            </div>
+
+                            <div class="ready-card-meta">
+                                {{ item.word_count }} {{ item.word_label }}
+                            </div>
+
+                            <a href="/study/{{ item.set.slug }}/{% if other_sets %}?show-all=true{% endif %}" class="btn my-set-study-btn w-100">
                                Ucz się
                             </a>
                         </div>
                     </div>
                 {% endfor %}
             </div>
+        {% endif %}
     </div>
 </div>
 
@@ -112,12 +160,13 @@
                             <p class="page-hero-text mb-5">
                                 Starannie przygotowane zestawy obejmują najważniejsze tematy, różne poziomy trudności i praktyczne słownictwo przydatne w nauce języka.
                             </p>
-
-                            <div>
-                                <a href="#popularne" class="btn study-btn px-4">
-                                    Zobacz wszystkie zestawy <i class="bi bi-arrow-right ms-2"></i>
-                                </a>
-                            </div>
+                            {% if not other_sets %}
+                                <div>
+                                    <a href="?show-all=true#all-sets" class="btn study-btn px-4">
+                                        Zobacz wszystkie zestawy <i class="bi bi-arrow-right ms-2"></i>
+                                    </a>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

@@ -15,6 +15,7 @@ class WordSet(models.Model):
     icon = models.CharField(max_length=50, default="bi-journal-bookmark")
     icon_color = models.CharField(max_length=30, default="stat-green")
     created_at = models.DateTimeField(auto_now_add=True)
+    is_featured = models.BooleanField(default=False)
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
