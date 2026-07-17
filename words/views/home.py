@@ -14,7 +14,7 @@ def home(request):
 
 def ready_sets(request):
     featured_word_sets = WordSet.objects.filter(is_public=True, is_deleted=False, is_featured=True)
-    other_word_sets =  WordSet.objects.filter(is_public=True, is_deleted=False, is_featured=False)
+    other_word_sets = WordSet.objects.filter(is_public=True, is_deleted=False, is_featured=False)
     all_word_sets = WordSet.objects.filter(is_public=True, is_deleted=False)
 
     set_count = all_word_sets.count()
@@ -34,7 +34,7 @@ def ready_sets(request):
             "level_class": level_class,
             "image_path": f"images/{word_set.image}",
         })
-    other_sets = request.GET.get("show-all")
+    other_sets = request.GET.get("show-all") == "true"
 
     if other_sets:
 

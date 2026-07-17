@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
+from django.urls import reverse
 
 import random
 
 from ..models import Word, WordSet, StudySession
-
 
 
 def index(request):
@@ -17,10 +17,8 @@ def index(request):
 
         if "end_session" in request.POST:
 
-            if "correct_answers" in request.session:
-                del request.session["correct_answers"]
-            if "wrong_answers" in request.session:
-                del request.session["wrong_answers"]
+            request.session.pop("correct_answers", None)
+            request.session.pop("wrong_answers", None)
 
             correct_answers, wrong_answers = 0, 0
             word = Word.objects.order_by("?").first()
@@ -49,10 +47,8 @@ def index(request):
             word = word_new
 
     else:
-        if "correct_answers" in request.session:
-            del request.session["correct_answers"]
-        if "wrong_answers" in request.session:
-            del request.session["wrong_answers"]
+        request.session.pop("correct_answers", None)
+        request.session.pop("wrong_answers", None)
 
         correct_answers, wrong_answers = 0, 0
         word = Word.objects.order_by("?").first()
@@ -76,13 +72,12 @@ def study_set(request, slug):
     show_next_button = False
     study_finished = False
     session_completed = False
-    difficult_words_sorted = []
     difficult_words_summary = []
     correct_answers = request.session.get("correct_answers", 0)
     wrong_answers = request.session.get("wrong_answers", 0)
     difficult_words = request.session.get("difficult_words", {})
     current_filter = request.GET.get("filter", "all")
-    show_all = request.GET.get("show-all")
+    show_all = request.GET.get("show-all") == "true"
 
     if request.user.is_authenticated:
         word_set = get_object_or_404(
@@ -114,11 +109,11 @@ def study_set(request, slug):
             request.session.pop(session_key, None)
 
             if word_set.is_public and show_all:
-                return redirect("/ready-sets/?show-all=all")
+                return redirect(f"{reverse('ready_sets')}?show-all=true")
             elif word_set.is_public:
-                return redirect("/ready-sets/")
+                return redirect("ready_sets")
 
-            return redirect(f"/my-sets/?filter={current_filter}")
+            return redirect(f"{reverse('my_sets')}?filter={current_filter}")
 
         if "next_word" in request.POST:
             study_words = request.session.get(session_key, [])
@@ -128,17 +123,15 @@ def study_set(request, slug):
 
                 if word is None:
                     request.session.pop(session_key, None)
-                    return redirect(f"/study/{word_set.slug}/")
+                    return redirect("study_set", slug=word_set.slug)
             else:
                 word = None
 
             show_next_button = False
 
         elif "end_session" in request.POST:
-            if "correct_answers" in request.session:
-                del request.session["correct_answers"]
-            if "wrong_answers" in request.session:
-                del request.session["wrong_answers"]
+            request.session.pop("correct_answers", None)
+            request.session.pop("wrong_answers", None)
 
             request.session.pop("difficult_words", None)
 
@@ -154,7 +147,7 @@ def study_set(request, slug):
 
                 if word is None:
                     request.session.pop(session_key, None)
-                    return redirect(f"/study/{word_set.slug}/")
+                    return redirect("study_set", slug=word_set.slug)
             else:
                 word = None
                 study_finished = True
@@ -165,7 +158,7 @@ def study_set(request, slug):
 
             if word is None:
                 request.session.pop(session_key, None)
-                return redirect(f"/study/{word_set.slug}/")
+                return redirect("study_set", slug=word_set.slug)
 
             answer = request.POST.get("answer")
             user_answer = answer
@@ -211,10 +204,8 @@ def study_set(request, slug):
             show_next_button = True
 
     else:
-        if "correct_answers" in request.session:
-            del request.session["correct_answers"]
-        if "wrong_answers" in request.session:
-            del request.session["wrong_answers"]
+        request.session.pop("correct_answers", None)
+        request.session.pop("wrong_answers", None)
 
         correct_answers, wrong_answers = 0, 0
 
@@ -230,7 +221,7 @@ def study_set(request, slug):
 
             if word is None:
                 request.session.pop(session_key, None)
-                return redirect(f"/study/{word_set.slug}/")
+                return redirect("study_set", slug=word_set.slug)
         else:
             word = None
             study_finished = True
@@ -252,15 +243,11 @@ def study_set(request, slug):
         )
 
     if study_finished:
-        difficult_words_sorted = sorted(
-            difficult_words.items(),
-            key=lambda item: item[1],
-            reverse=True
-        )
-
-        difficult_words_summary = []
-
-        for word_id, mistakes in difficult_words_sorted[:2]:
+        for word_id, mistakes in sorted(
+                difficult_words.items(),
+                key=lambda item: item[1],
+                reverse=True,
+        )[:2]:
             difficult_word = word_set.words.filter(id=int(word_id)).first()
 
             if difficult_word:

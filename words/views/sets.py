@@ -6,6 +6,7 @@ from django.db.models import Max
 from django.db.models.functions import Lower
 from django.shortcuts import redirect, render
 from django.utils.text import slugify
+from django.urls import reverse
 
 from ..models import StudySession, Word, WordSet
 from ..services.labels import day_label, set_label
@@ -18,7 +19,7 @@ def my_sets(request):
     if request.method == "POST":
         delete_set_id = request.POST.get("delete_set_id")
         favorite_set_id = request.POST.get("favorite_set_id")
-        next_url = request.POST.get("next", "/my-sets/")
+        next_url = request.POST.get("next", reverse("my_sets"))
 
         if favorite_set_id:
             word_set = WordSet.objects.get(
@@ -205,7 +206,7 @@ def create_set(request):
             icon_color=icon_color,
         )
 
-        return redirect(f"/my-sets/{word_set.slug}/")
+        return redirect("my_set_detail", slug=word_set.slug)
 
     return render(
         request,
@@ -239,7 +240,7 @@ def my_set_detail(request, slug):
                 ).exclude(id=word_set.id).exists()
 
                 if slug_exists:
-                    message = "Zestaw o takiej nazwie już itnieje"
+                    message = "Zestaw o takiej nazwie już istnieje"
 
                     return render(
                         request,
@@ -255,13 +256,13 @@ def my_set_detail(request, slug):
                 word_set.slug = new_slug
                 word_set.save()
 
-            return redirect(f"/my-sets/{word_set.slug}/")
+            return redirect("my_set_detail", slug=word_set.slug)
 
         if "delete_words" in request.POST:
             selected_words = request.POST.getlist("selected_words")
             Word.objects.filter(id__in=selected_words, word_set=word_set).delete()
 
-            return redirect(f"/my-sets/{word_set.slug}/")
+            return redirect("my_set_detail", slug=word_set.slug)
 
         text_pl = request.POST.get("text_pl", "").strip()
         text_en = request.POST.get("text_en", "").strip()
@@ -312,7 +313,7 @@ def my_set_detail(request, slug):
             word.text_en = text_en
             word.save()
 
-            return redirect(f"/my-sets/{word_set.slug}/")
+            return redirect("my_set_detail", slug=word_set.slug)
 
         Word.objects.create(
             text_pl=text_pl,
@@ -321,7 +322,7 @@ def my_set_detail(request, slug):
             level=1
         )
 
-        return redirect(f"/my-sets/{word_set.slug}/")
+        return redirect("my_set_detail", slug=word_set.slug)
 
     edit_word_id = request.GET.get("edit_word")
     edit_word = None
