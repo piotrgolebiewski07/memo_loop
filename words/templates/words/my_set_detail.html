@@ -24,7 +24,7 @@
                 </button>
 
                 <a
-                    href="/my-sets/{{ word_set.slug }}/"
+                    href="{% url 'my_set_detail' word_set.slug %}"
                     class="btn btn-sm btn-outline-secondary"
                     title="Anuluj">
                     <i class="bi bi-x-lg"></i>
@@ -38,7 +38,7 @@
             </h1>
 
             <a
-                href="/my-sets/{{ word_set.slug }}/?edit_set=true"
+                href="{% url 'my_set_detail' word_set.slug %}?edit_set=true"
                 class="btn btn-sm btn-outline-secondary"
                 title="Zmień nazwę zestawu">
                 <i class="bi bi-pencil"></i>
@@ -76,7 +76,7 @@
                 {% if edit_word %}Zapisz zmiany{% else %}Dodaj słowo{% endif %}
             </button>
 
-            <a href="/my-sets/" class="btn end-btn btn-lg">
+            <a href="{% url 'my_sets' %}" class="btn end-btn btn-lg">
                 Wróć do: Moje zestawy
             </a>
         </div>
@@ -115,7 +115,9 @@
                             </div>
                         </div>
 
-                        <a href="/my-sets/{{ word_set.slug }}/?edit_word={{ word.id }}" class="btn my-set-action-btn">
+                        <a
+                            href="{% url 'my_set_detail' word_set.slug %}?edit_word={{ word.id }}"
+                            class="btn my-set-action-btn">
                             Edytuj
                         </a>
 

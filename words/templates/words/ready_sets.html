@@ -16,7 +16,8 @@
                 </div>
 
                 <p class="page-hero-text">
-                    Wybierz kategorię słówek dopasowaną do swoich zainteresowań i rozpocznij naukę od razu bez tworzenia własnych zestawów.
+                    Wybierz kategorię słówek dopasowaną do swoich zainteresowań
+                    i rozpocznij naukę od razu bez tworzenia własnych zestawów.
                 </p>
                 {% if not other_sets %}
                     <div class="mt-5">
@@ -83,7 +84,8 @@
                             <div class="ready-card-meta">
                                 {{ item.word_count }} {{ item.word_label }}
                             </div>
-                            <a href="/study/{{ item.set.slug }}/{% if other_sets %}?show-all=true{% endif %}" class="btn my-set-study-btn w-100">
+                            <a href="{% url 'study_set' item.set.slug %}{% if other_sets %}?show-all=true{% endif %}"
+                               class="btn my-set-study-btn w-100">
                                 Ucz się
                             </a>
                         </div>
@@ -125,7 +127,8 @@
                                 {{ item.word_count }} {{ item.word_label }}
                             </div>
 
-                            <a href="/study/{{ item.set.slug }}/{% if other_sets %}?show-all=true{% endif %}" class="btn my-set-study-btn w-100">
+                            <a href="{% url 'study_set' item.set.slug %}{% if other_sets %}?show-all=true{% endif %}"
+                               class="btn my-set-study-btn w-100">
                                Ucz się
                             </a>
                         </div>

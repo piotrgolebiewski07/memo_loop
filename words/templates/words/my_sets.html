@@ -25,7 +25,7 @@
 
         <div class="col-md-3 text-center">
             <a
-                href="/my-sets/create/"
+                href="{% url 'create_set' %}"
                 class="btn study-btn btn-lg px-5"
             >
                 + Nowy zestaw
@@ -112,21 +112,21 @@
             <div class="my-sets-tabs m-0">
 
                 <a
-                    href="/my-sets/?filter=all"
+                    href="{% url 'my_sets' %}?filter=all"
                     class="my-tab {% if current_filter == 'all' %}active{% endif %}"
                     title="wszystkie">
                     Wszystkie
                 </a>
 
                 <a
-                    href="/my-sets/?filter=favorites"
+                    href="{% url 'my_sets' %}?filter=favorites"
                     class="my-tab {% if current_filter == 'favorites' %}active{% endif %}"
                     title="ulubione">
                     Ulubione
                 </a>
 
                 <a
-                    href="/my-sets/?filter=recent"
+                    href="{% url 'my_sets' %}?filter=recent"
                     class="my-tab {% if current_filter == 'recent' %}active{% endif %}"
                     title="ostatnie">
                     Ostatnio używane
@@ -224,13 +224,13 @@
 
                     <div class="my-set-actions d-flex justify-content-center gap-3">
                         <a
-                            href="/study/{{ item.set.slug }}/?filter={{ current_filter }}"
+                            href="{% url 'study_set' item.set.slug %}?filter={{ current_filter }}"
                             class="d-flex btn my-set-study-btn justify-content-center align-items-center gap-1">
                             <i class="bi bi-play action-icon"></i> <span>Ucz się</span>
                         </a>
 
                         <a
-                            href="/my-sets/{{ item.set.slug }}/"
+                            href="{% url 'my_set_detail' item.set.slug %}"
                             class="d-flex btn my-set-edit-btn justify-content-center align-items-center gap-2">
                             <i class="bi bi-pencil action-icon"></i> <span>Edytuj</span>
                         </a>

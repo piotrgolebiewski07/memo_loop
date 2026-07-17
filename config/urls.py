@@ -1,6 +1,6 @@
 """
 URL configuration for config project.
-
+R
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/6.0/topics/http/urls/
 Examples:
@@ -20,15 +20,15 @@ from django.urls import include, path
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('', views.home),
+    path('', views.home, name='home'),
     path("study/", include("words.urls")),
     path('admin/', admin.site.urls),
-    path('ready-sets/', views.ready_sets),
-    path('my-sets/', views.my_sets),
-    path('my-sets/create/', views.create_set),
-    path('my-sets/<slug:slug>/', views.my_set_detail),
+    path('ready-sets/', views.ready_sets, name="ready_sets"),
+    path('my-sets/', views.my_sets, name="my_sets"),
+    path('my-sets/create/', views.create_set, name="create_set"),
+    path('my-sets/<slug:slug>/', views.my_set_detail, name="my_set_detail"),
     path('accounts/', include("django.contrib.auth.urls")),
-    path("accounts/register/", views.register,)
+    path("accounts/register/", views.register, name="register")
 ]
 
 
