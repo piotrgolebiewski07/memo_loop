@@ -126,6 +126,8 @@ def study_set(request, slug):
                     return redirect("study_set", slug=word_set.slug)
             else:
                 word = None
+                study_finished = True
+                session_completed = True
 
             show_next_button = False
 
@@ -173,10 +175,6 @@ def study_set(request, slug):
                 if study_words:
                     study_words.pop(0)
                     request.session[session_key] = study_words
-
-                    if not study_words:
-                        study_finished = True
-                        session_completed = True
 
             else:
                 result = f"{word.text_en}"

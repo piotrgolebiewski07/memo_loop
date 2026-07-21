@@ -1,7 +1,7 @@
 import pytest
 from django.urls import reverse
 from pytest_django.asserts import assertTemplateUsed, assertContains, assertNotContains
-from words.models import WordSet
+from words.models import WordSet, Word
 
 
 # --- Home view ---
@@ -228,3 +228,103 @@ def test_other_user_cannot_access_private_study_set(client, django_user_model):
     response = client.get(url)
     assert response.status_code == 404
 
+
+@pytest.mark.django_db
+def test_public_study_set_displays_word(client):
+    word_set = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=True,
+        is_featured=False,
+        is_deleted=False,
+    )
+
+    word = Word.objects.create(
+        text_pl="drzewo",
+        text_en="tree",
+        word_set=word_set,
+    )
+
+    url = reverse("study_set", kwargs={"slug": word_set.slug})
+    response = client.get(url)
+
+    assert response.status_code == 200
+    assertContains(response, word.text_pl)
+
+
+@pytest.mark.django_db
+def test_public_study_set_shows_success_message_for_correct_answer(client):
+    word_set = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=True,
+        is_featured=False,
+        is_deleted=False,
+    )
+
+    word = Word.objects.create(
+        text_pl="drzewo",
+        text_en="tree",
+        word_set=word_set,
+    )
+
+    url = reverse("study_set", kwargs={"slug": word_set.slug})
+    client.get(url)
+    response = client.post(
+        url,
+        {
+            "word_id": word.id,
+            "answer": word.text_en,
+        },
+    )
+
+    assert response.status_code == 200
+    assertContains(response, "SUPER!")
+
+
+@pytest.mark.django_db
+def test_public_study_set_displays_summary_after_clicking_next_word(client):
+    word_set = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=True,
+        is_featured=False,
+        is_deleted=False,
+    )
+
+    word = Word.objects.create(
+        text_pl="drzewo",
+        text_en="tree",
+        word_set=word_set,
+    )
+
+    url = reverse("study_set", kwargs={"slug": word_set.slug})
+    client.get(url)
+    response_after_answer = client.post(
+        url,
+        {
+            "word_id": word.id,
+            "answer": word.text_en,
+        },
+    )
+
+    assertContains(response_after_answer, "SUPER!")
+
+    response = client.post(
+        url,
+        {
+            "next_word": "",
+        },
+    )
+
+    assert response.status_code == 200
+    assertContains(response,"Idealnie")
