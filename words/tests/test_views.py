@@ -180,3 +180,51 @@ def test_anonymous_user_cannot_access_private_study_set(client):
     response = client.get(url)
 
     assert response.status_code == 404
+
+
+@pytest.mark.django_db
+def test_owner_can_access_private_study_set(client, django_user_model):
+    user = django_user_model.objects.create_user(username="jan", password="haslo")
+
+    word_set = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        owner=user,
+    )
+
+    client.force_login(user)
+    url = reverse("study_set", kwargs={"slug": word_set.slug})
+
+    response = client.get(url)
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_other_user_cannot_access_private_study_set(client, django_user_model):
+    user_1 = django_user_model.objects.create_user(username="jan", password="haslo")
+    user_2 = django_user_model.objects.create_user(username="adam", password="haslo")
+
+    word_set = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        owner=user_1,
+    )
+
+    client.force_login(user_2)
+    url = reverse("study_set", kwargs={"slug": word_set.slug})
+
+    response = client.get(url)
+    assert response.status_code == 404
+
