@@ -381,3 +381,77 @@ def test_completed_private_study_session_is_saved(client, django_user_model):
     assert study_session.wrong_answers == 0
     assert study_session.success_rate == 100
 
+
+@pytest.mark.django_db
+def test_public_study_set_shows_correct_answer_after_wrong_answer(client):
+    word_set = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=True,
+        is_featured=False,
+        is_deleted=False,
+    )
+
+    word = Word.objects.create(
+        text_pl="drzewo",
+        text_en="tree",
+        word_set=word_set,
+    )
+
+    url = reverse("study_set", kwargs={"slug": word_set.slug})
+    client.get(url)
+    response = client.post(
+        url,
+        {
+            "word_id": word.id,
+            "answer": "three"
+        },
+    )
+
+    assert response.status_code == 200
+    assertContains(response, word.text_en)
+    assert response.context["wrong_answers"] == 1
+
+
+@pytest.mark.django_db
+def test_wrong_answer_returns_word_to_study_queue(client):
+    word_set = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=True,
+        is_featured=False,
+        is_deleted=False,
+    )
+
+    word = Word.objects.create(
+        text_pl="drzewo",
+        text_en="tree",
+        word_set=word_set,
+    )
+
+    url = reverse("study_set", kwargs={"slug": word_set.slug})
+    client.get(url)
+    response = client.post(
+        url,
+        {
+            "word_id": word.id,
+            "answer": "three",
+        }
+    )
+
+    session = client.session
+    session_key = f"study_words_{word_set.id}"
+
+    assert session[session_key] == [word.id]
+
+
+
+
+
+
