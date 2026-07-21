@@ -1,7 +1,7 @@
 import pytest
 from django.urls import reverse
 from pytest_django.asserts import assertTemplateUsed, assertContains, assertNotContains
-from words.models import WordSet, Word
+from words.models import WordSet, Word, StudySession
 
 
 # --- Home view ---
@@ -327,4 +327,57 @@ def test_public_study_set_displays_summary_after_clicking_next_word(client):
     )
 
     assert response.status_code == 200
-    assertContains(response,"Idealnie")
+    assertContains(response, "Idealnie")
+
+
+@pytest.mark.django_db
+def test_completed_private_study_session_is_saved(client, django_user_model):
+    user = django_user_model.objects.create_user(username="adam", password="haslo")
+    word_set = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        owner=user,
+    )
+
+    word = Word.objects.create(
+        text_pl="drzewo",
+        text_en="tree",
+        word_set=word_set,
+    )
+
+    client.force_login(user)
+    url = reverse("study_set", kwargs={"slug": word_set.slug})
+    response = client.get(url)
+    assertContains(response, word.text_pl)
+    client.post(
+        url,
+        {
+            "word_id": word.id,
+            "answer": word.text_en,
+        },
+    )
+
+    client.post(
+        url,
+        {
+            "next_word": "",
+        },
+    )
+
+    assert StudySession.objects.filter(user=user, word_set=word_set).count() == 1
+
+    study_session = StudySession.objects.get(
+        user=user,
+        word_set=word_set,
+    )
+
+    assert study_session.correct_answers == 1
+    assert study_session.wrong_answers == 0
+    assert study_session.success_rate == 100
+
