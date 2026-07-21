@@ -1,8 +1,10 @@
 import pytest
+from django.urls import reverse
 from pytest_django.asserts import assertTemplateUsed, assertContains, assertNotContains
 from words.models import WordSet
 
 
+# --- Home view ---
 def test_with_client(client):
     response = client.get("/")
 
@@ -14,6 +16,7 @@ def test_should_use_correct_template_to_render_a_view(client):
     assertTemplateUsed(response, "words/home.html")
 
 
+# --- Ready sets view ---
 @pytest.mark.django_db
 def test_ready_sets_page_returns_status_200(client):
     response = client.get("/ready-sets/")
@@ -140,3 +143,40 @@ def test_ready_sets_page_context_contains_public_sets_count(client):
     response = client.get("/ready-sets/")
     assert response.context["set_count"] == 2
 
+
+# --- Study set view ---
+@pytest.mark.django_db
+def test_anonymous_user_can_access_public_study_set(client):
+    word_set = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=True,
+        is_featured=False,
+        is_deleted=False,
+    )
+
+    url = reverse("study_set", kwargs={"slug": word_set.slug})
+    response = client.get(url)
+
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_anonymous_user_cannot_access_private_study_set(client):
+    word_set = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+    )
+    url = reverse("study_set", kwargs={"slug": word_set.slug})
+    response = client.get(url)
+
+    assert response.status_code == 404
