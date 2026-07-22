@@ -451,7 +451,60 @@ def test_wrong_answer_returns_word_to_study_queue(client):
     assert session[session_key] == [word.id]
 
 
+@pytest.mark.django_db
+def test_ending_public_study_redirects_to_ready_sets(client):
+    word_set = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=True,
+        is_featured=False,
+        is_deleted=False,
+    )
 
+    url = reverse("study_set", kwargs={"slug": word_set.slug})
+    client.get(url)
+
+    response = client.post(
+        url,
+        {
+            "end_study": "",
+        }
+    )
+
+    assert response.status_code == 302
+    assert response.url == reverse("ready_sets")
+
+
+@pytest.mark.django_db
+def test_ending_private_study_redirects_to_my_sets_with_filter(client, django_user_model):
+    user = django_user_model.objects.create_user(username="jan", password="haslo")
+    word_set = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        owner=user,
+    )
+    client.force_login(user)
+    url = reverse("study_set", kwargs={"slug": word_set.slug}, query={"filter": "favorites"})
+    client.get(url)
+
+    response = client.post(
+        url,
+        {
+            "end_study": "",
+        }
+    )
+
+    assert response.status_code == 302
+    assert response.url == reverse("my_sets", query={"filter": "favorites"})
 
 
 
