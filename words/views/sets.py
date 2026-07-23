@@ -4,14 +4,13 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Max
 from django.db.models.functions import Lower
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.utils.text import slugify
 from django.urls import reverse
 
 from ..models import StudySession, Word, WordSet
 from ..services.labels import day_label, set_label
 from ..statistics import get_completed_sessions, get_current_streak
-
 
 
 @login_required
@@ -22,7 +21,8 @@ def my_sets(request):
         next_url = request.POST.get("next", reverse("my_sets"))
 
         if favorite_set_id:
-            word_set = WordSet.objects.get(
+            word_set = get_object_or_404(
+                WordSet,
                 id=favorite_set_id,
                 owner=request.user,
                 is_public=False,
@@ -33,7 +33,8 @@ def my_sets(request):
             word_set.save()
 
         if delete_set_id:
-            word_set = WordSet.objects.get(
+            word_set = get_object_or_404(
+                WordSet,
                 id=delete_set_id,
                 is_public=False,
                 owner=request.user,
