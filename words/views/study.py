@@ -7,64 +7,6 @@ import random
 from ..models import Word, WordSet, StudySession
 
 
-def index(request):
-
-    result = ""
-    correct_answers = request.session.get("correct_answers", 0)
-    wrong_answers = request.session.get("wrong_answers", 0)
-
-    if request.method == "POST":
-
-        if "end_session" in request.POST:
-
-            request.session.pop("correct_answers", None)
-            request.session.pop("wrong_answers", None)
-
-            correct_answers, wrong_answers = 0, 0
-            word = Word.objects.order_by("?").first()
-
-        else:
-
-            word_id = request.POST.get("word_id")
-            word = Word.objects.get(id=word_id)
-
-            answer = request.POST.get("answer")
-
-            if word.text_en.lower() == answer.lower():
-                result = "Dobrze"
-                correct_answers += 1
-                request.session["correct_answers"] = correct_answers
-            else:
-                result = f"Błąd. Poprawna odpowiedź: {word.text_en}"
-                wrong_answers += 1
-                request.session["wrong_answers"] = wrong_answers
-
-            word_new = Word.objects.order_by("?").first()
-
-            while word_new.id == word.id and Word.objects.count() > 1:
-                word_new = Word.objects.order_by("?").first()
-
-            word = word_new
-
-    else:
-        request.session.pop("correct_answers", None)
-        request.session.pop("wrong_answers", None)
-
-        correct_answers, wrong_answers = 0, 0
-        word = Word.objects.order_by("?").first()
-
-    return render(
-        request,
-        "words/study.html",
-        {
-            "word": word,
-            "result": result,
-            'correct_answers': correct_answers,
-            'wrong_answers': wrong_answers,
-        }
-    )
-
-
 def study_set(request, slug):
     result = ""
     result_class = ""

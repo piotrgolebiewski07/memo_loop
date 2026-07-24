@@ -217,7 +217,8 @@ def create_set(request):
 
 @login_required
 def my_set_detail(request, slug):
-    word_set = WordSet.objects.get(
+    word_set = get_object_or_404(
+        WordSet,
         slug=slug,
         owner=request.user,
         is_public=False,
