@@ -1165,4 +1165,229 @@ def test_owner_cannot_add_duplicate_word_to_my_set_detail(client, django_user_mo
     assert Word.objects.filter(word_set=word_set).count() == 1
 
 
+@pytest.mark.django_db
+def test_owner_can_edit_word_in_my_set_detail(client, django_user_model):
+    user = django_user_model.objects.create_user(username="jan", password="haslo")
+    client.force_login(user)
+    word_set = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        is_favorite=False,
+        owner=user,
+    )
+    url = reverse("my_set_detail", kwargs={"slug": word_set.slug})
+    word = Word.objects.create(
+        text_pl="drzewo",
+        text_en="tree",
+        word_set=word_set,
+    )
+
+    response = client.post(
+        url,
+        {
+            "text_pl": "drzewo",
+            "text_en": "a tree",
+            "edit_word_id": word.id,
+        }
+    )
+
+    assert response.status_code == 302
+    word.refresh_from_db()
+    assert word.text_pl == "drzewo"
+    assert word.text_en == "a tree"
+
+
+@pytest.mark.django_db
+def test_owner_cannot_edit_word_to_duplicate_in_my_set_detail(client, django_user_model):
+    user = django_user_model.objects.create_user(username="jan", password="haslo")
+    client.force_login(user)
+    word_set = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        is_favorite=False,
+        owner=user,
+    )
+    url = reverse("my_set_detail", kwargs={"slug": word_set.slug})
+    word_1 = Word.objects.create(
+        text_pl="drzewo",
+        text_en="tree",
+        word_set=word_set,
+    )
+    word_2 = Word.objects.create(
+        text_pl="dom",
+        text_en="house",
+        word_set=word_set,
+    )
+    response = client.post(
+        url,
+        {
+            "text_pl": "drzewo",
+            "text_en": "tree",
+            "edit_word_id": word_2.id,
+        }
+    )
+
+    assert response.status_code == 200
+    word_2.refresh_from_db()
+    assertContains(response, "Takie słówko już istnieje w tym zestawie")
+    assert word_2.text_pl == "dom"
+    assert word_2.text_en == "house"
+
+
+@pytest.mark.django_db
+def test_owner_can_delete_selected_word_from_my_set_detail(client, django_user_model):
+    user = django_user_model.objects.create_user(username="jan", password="haslo")
+    client.force_login(user)
+    word_set = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        is_favorite=False,
+        owner=user,
+    )
+    url = reverse("my_set_detail", kwargs={"slug": word_set.slug})
+    word_1 = Word.objects.create(
+        text_pl="drzewo",
+        text_en="tree",
+        word_set=word_set,
+    )
+    word_2 = Word.objects.create(
+        text_pl="dom",
+        text_en="house",
+        word_set=word_set,
+    )
+    response = client.post(
+        url,
+        {
+            "delete_words": "",
+            "selected_words": [word_2.id],
+        }
+    )
+
+    assert response.status_code == 302
+    assert not Word.objects.filter(id=word_2.id).exists()
+    assert Word.objects.filter(id=word_1.id).exists()
+
+
+@pytest.mark.django_db
+def test_owner_can_update_name_of_my_set(client, django_user_model):
+    user = django_user_model.objects.create_user(username="jan", password="haslo")
+    client.force_login(user)
+    word_set = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        is_favorite=False,
+        owner=user,
+    )
+    url = reverse("my_set_detail", kwargs={"slug": word_set.slug})
+    response = client.post(
+        url,
+        {
+            "update_set_name": "",
+            "set_name": "Angielski A2",
+        }
+    )
+
+    assert response.status_code == 302
+    word_set.refresh_from_db()
+    assert word_set.name == "Angielski A2"
+    assert word_set.slug == "angielski-a2"
+
+
+@pytest.mark.django_db
+def test_owner_cannot_update_set_name_to_duplicate(client, django_user_model):
+    user = django_user_model.objects.create_user(username="jan", password="haslo")
+    client.force_login(user)
+    word_set_1 = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        is_favorite=False,
+        owner=user,
+    )
+    word_set_2 = WordSet.objects.create(
+        name="Niemiecki B1",
+        description="Podstawowe słówka z niemieckiego",
+        level="B1",
+        image="default.jpg",
+        slug="niemiecki-b1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        is_favorite=False,
+        owner=user,
+    )
+    url = reverse("my_set_detail", kwargs={"slug": word_set_2.slug})
+    response = client.post(
+        url,
+        {
+            "update_set_name": "",
+            "set_name": "Angielski A1",
+        }
+    )
+
+    assert response.status_code == 200
+    assertContains(response, "Zestaw o takiej nazwie już istnieje")
+    word_set_2.refresh_from_db()
+    assert word_set_1.name == "Angielski A1"
+    assert word_set_2.name == "Niemiecki B1"
+    assert word_set_2.slug == "niemiecki-b1"
+
+
+@pytest.mark.django_db
+def test_owner_can_open_word_edit_form_in_my_set_detail(client, django_user_model):
+    user = django_user_model.objects.create_user(username="jan", password="haslo")
+    client.force_login(user)
+    word_set = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        is_favorite=False,
+        owner=user,
+    )
+    word = Word.objects.create(
+        text_pl="drzewo",
+        text_en="tree",
+        word_set=word_set,
+    )
+
+    url = reverse("my_set_detail", kwargs={"slug": word_set.slug}, query={"edit_word": word.id})
+    response = client.get(url)
+
+    assert response.status_code == 200
+    assert response.context["edit_word"].id == word.id
+
 
