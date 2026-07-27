@@ -507,6 +507,28 @@ def test_ending_private_study_redirects_to_my_sets_with_filter(client, django_us
     assert response.url == reverse("my_sets", query={"filter": "favorites"})
 
 
+@pytest.mark.django_db
+def test_study_set_displays_summary_when_word_set_is_empty(client, django_user_model):
+    user = django_user_model.objects.create_user(username="jan", password="haslo")
+    client.force_login(user)
+    word_set = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        owner=user,
+    )
+    url = reverse("study_set", kwargs={"slug": word_set.slug})
+    response = client.get(url)
+
+    assert response.status_code == 200
+    assertContains(response, "Gratulacje")
+
+
 # --- Create set view ---
 def test_anonymous_user_is_redirected_from_create_set(client):
     url = reverse("create_set")
@@ -1435,6 +1457,45 @@ def test_owner_can_update_set_name_used_by_another_user(client, django_user_mode
     word_set_1.refresh_from_db()
     assert word_set_1.name == "Niemiecki B1"
     assert word_set_1.slug == "niemiecki-b1-2"
+
+
+@pytest.mark.django_db
+def test_owner_cannot_open_edit_form_for_word_from_another_set(client, django_user_model):
+    user = django_user_model.objects.create_user(username="jan", password="haslo")
+    client.force_login(user)
+    word_set_1 = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        is_favorite=False,
+        owner=user,
+    )
+    word_set_2 = WordSet.objects.create(
+        name="Niemiecki B1",
+        description="Podstawowe słówka z niemieckiego",
+        level="B1",
+        image="default.jpg",
+        slug="niemiecki-b1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        is_favorite=False,
+        owner=user,
+    )
+    word = Word.objects.create(
+        text_pl="drzewo",
+        text_en="tree",
+        word_set=word_set_2,
+    )
+    url = reverse("my_set_detail", kwargs={"slug": word_set_1.slug})
+    response = client.get(f"{url}?edit_word={word.id}")
+
+    assert response.status_code == 404
 
 
 # --- Authentication views ---

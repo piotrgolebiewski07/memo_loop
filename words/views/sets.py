@@ -316,7 +316,7 @@ def my_set_detail(request, slug):
             )
 
         if edit_word_id:
-            word = Word.objects.get(id=edit_word_id, word_set=word_set)
+            word = get_object_or_404(Word, id=edit_word_id, word_set=word_set)
             word.text_pl = text_pl
             word.text_en = text_en
             word.save()
@@ -336,7 +336,7 @@ def my_set_detail(request, slug):
     edit_word = None
 
     if edit_word_id:
-        edit_word = Word.objects.get(id=edit_word_id, word_set=word_set)
+        edit_word = get_object_or_404(Word, id=edit_word_id, word_set=word_set)
 
     return render(
         request,
