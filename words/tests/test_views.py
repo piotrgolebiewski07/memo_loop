@@ -1391,6 +1391,52 @@ def test_owner_can_open_word_edit_form_in_my_set_detail(client, django_user_mode
     assert response.context["edit_word"].id == word.id
 
 
+@pytest.mark.django_db
+def test_owner_can_update_set_name_used_by_another_user(client, django_user_model):
+    user_1 = django_user_model.objects.create_user(username="jan", password="haslo")
+    user_2 = django_user_model.objects.create_user(username="adam", password="haslo")
+    client.force_login(user_1)
+    word_set_1 = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        is_favorite=False,
+        owner=user_1,
+    )
+    word_set_2 = WordSet.objects.create(
+        name="Niemiecki B1",
+        description="Podstawowe słówka z niemieckiego",
+        level="B1",
+        image="default.jpg",
+        slug="niemiecki-b1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        is_favorite=False,
+        owner=user_2,
+    )
+
+    url = reverse("my_set_detail", kwargs={"slug": word_set_1.slug})
+    response = client.post(
+        url,
+        {
+            "update_set_name": "",
+            "set_name": "Niemiecki B1",
+        }
+    )
+
+    assert response.status_code == 302
+
+    word_set_1.refresh_from_db()
+    assert word_set_1.name == "Niemiecki B1"
+    assert word_set_1.slug == "niemiecki-b1-2"
+
+
 # --- Authentication views ---
 def test_register_page_returns_status_200(client):
     url = reverse("register")

@@ -232,16 +232,14 @@ def my_set_detail(request, slug):
             new_name = request.POST.get("set_name", "").strip()
 
             if new_name:
-                new_slug = slugify(new_name)
-
-                slug_exists = WordSet.objects.filter(
-                    slug=new_slug,
+                name_exists = WordSet.objects.filter(
+                    name=new_name,
                     owner=request.user,
                     is_public=False,
                     is_deleted=False,
                 ).exclude(id=word_set.id).exists()
 
-                if slug_exists:
+                if name_exists:
                     message = "Zestaw o takiej nazwie już istnieje"
 
                     return render(
@@ -253,6 +251,14 @@ def my_set_detail(request, slug):
                             "message": message,
                         }
                     )
+
+                base_slug = slugify(new_name)
+                new_slug = base_slug
+                slug_number = 2
+
+                while WordSet.objects.filter(slug=new_slug).exclude(id=word_set.id).exists():
+                    new_slug = f"{base_slug}-{slug_number}"
+                    slug_number += 1
 
                 word_set.name = new_name
                 word_set.slug = new_slug
