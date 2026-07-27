@@ -1498,6 +1498,52 @@ def test_owner_cannot_open_edit_form_for_word_from_another_set(client, django_us
     assert response.status_code == 404
 
 
+@pytest.mark.django_db
+def test_owner_cannot_edit_word_from_another_set(client, django_user_model):
+    user = django_user_model.objects.create_user(username="jan", password="haslo")
+    client.force_login(user)
+    word_set_1 = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        is_favorite=False,
+        owner=user,
+    )
+    word_set_2 = WordSet.objects.create(
+        name="Niemiecki B1",
+        description="Podstawowe słówka z niemieckiego",
+        level="B1",
+        image="default.jpg",
+        slug="niemiecki-b1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        is_favorite=False,
+        owner=user,
+    )
+    word = Word.objects.create(
+        text_pl="drzewo",
+        text_en="tree",
+        word_set=word_set_2,
+    )
+    url = reverse("my_set_detail", kwargs={"slug": word_set_1.slug})
+    response = client.post(
+        url,
+        {
+            "edit_word_id": word.id,
+            "text_pl": "dom",
+            "text_en": "house",
+        }
+    )
+
+    assert response.status_code == 404
+
+
 # --- Authentication views ---
 def test_register_page_returns_status_200(client):
     url = reverse("register")
