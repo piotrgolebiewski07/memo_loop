@@ -4,14 +4,13 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Max
 from django.db.models.functions import Lower
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.utils.text import slugify
 from django.urls import reverse
 
 from ..models import StudySession, Word, WordSet
 from ..services.labels import day_label, set_label
 from ..statistics import get_completed_sessions, get_current_streak
-
 
 
 @login_required
@@ -22,7 +21,8 @@ def my_sets(request):
         next_url = request.POST.get("next", reverse("my_sets"))
 
         if favorite_set_id:
-            word_set = WordSet.objects.get(
+            word_set = get_object_or_404(
+                WordSet,
                 id=favorite_set_id,
                 owner=request.user,
                 is_public=False,
@@ -33,7 +33,8 @@ def my_sets(request):
             word_set.save()
 
         if delete_set_id:
-            word_set = WordSet.objects.get(
+            word_set = get_object_or_404(
+                WordSet,
                 id=delete_set_id,
                 is_public=False,
                 owner=request.user,
@@ -216,7 +217,8 @@ def create_set(request):
 
 @login_required
 def my_set_detail(request, slug):
-    word_set = WordSet.objects.get(
+    word_set = get_object_or_404(
+        WordSet,
         slug=slug,
         owner=request.user,
         is_public=False,
@@ -229,17 +231,27 @@ def my_set_detail(request, slug):
         if "update_set_name" in request.POST:
             new_name = request.POST.get("set_name", "").strip()
 
-            if new_name:
-                new_slug = slugify(new_name)
-
-                slug_exists = WordSet.objects.filter(
-                    slug=new_slug,
+            if not new_name:
+                message = "Podaj nazwę zestawu"
+                return render(
+                    request,
+                    "words/my_set_detail.html",
+                    {
+                        "word_set": word_set,
+                        "edit_word": None,
+                        "message": message,
+                        "edit_set": True,
+                    }
+                )
+            else:
+                name_exists = WordSet.objects.filter(
+                    name=new_name,
                     owner=request.user,
                     is_public=False,
                     is_deleted=False,
                 ).exclude(id=word_set.id).exists()
 
-                if slug_exists:
+                if name_exists:
                     message = "Zestaw o takiej nazwie już istnieje"
 
                     return render(
@@ -251,6 +263,14 @@ def my_set_detail(request, slug):
                             "message": message,
                         }
                     )
+
+                base_slug = slugify(new_name)
+                new_slug = base_slug
+                slug_number = 2
+
+                while WordSet.objects.filter(slug=new_slug).exclude(id=word_set.id).exists():
+                    new_slug = f"{base_slug}-{slug_number}"
+                    slug_number += 1
 
                 word_set.name = new_name
                 word_set.slug = new_slug
@@ -308,7 +328,7 @@ def my_set_detail(request, slug):
             )
 
         if edit_word_id:
-            word = Word.objects.get(id=edit_word_id, word_set=word_set)
+            word = get_object_or_404(Word, id=edit_word_id, word_set=word_set)
             word.text_pl = text_pl
             word.text_en = text_en
             word.save()
@@ -328,7 +348,7 @@ def my_set_detail(request, slug):
     edit_word = None
 
     if edit_word_id:
-        edit_word = Word.objects.get(id=edit_word_id, word_set=word_set)
+        edit_word = get_object_or_404(Word, id=edit_word_id, word_set=word_set)
 
     return render(
         request,
