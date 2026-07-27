@@ -231,7 +231,19 @@ def my_set_detail(request, slug):
         if "update_set_name" in request.POST:
             new_name = request.POST.get("set_name", "").strip()
 
-            if new_name:
+            if not new_name:
+                message = "Podaj nazwę zestawu"
+                return render(
+                    request,
+                    "words/my_set_detail.html",
+                    {
+                        "word_set": word_set,
+                        "edit_word": None,
+                        "message": message,
+                        "edit_set": True,
+                    }
+                )
+            else:
                 name_exists = WordSet.objects.filter(
                     name=new_name,
                     owner=request.user,

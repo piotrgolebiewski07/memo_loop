@@ -1544,6 +1544,84 @@ def test_owner_cannot_edit_word_from_another_set(client, django_user_model):
     assert response.status_code == 404
 
 
+@pytest.mark.django_db
+def test_owner_cannot_delete_word_from_another_set(client,django_user_model):
+    user = django_user_model.objects.create_user(username="jan", password="haslo")
+    client.force_login(user)
+    word_set_1 = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        is_favorite=False,
+        owner=user,
+    )
+    word_set_2 = WordSet.objects.create(
+        name="Niemiecki B1",
+        description="Podstawowe słówka z niemieckiego",
+        level="B1",
+        image="default.jpg",
+        slug="niemiecki-b1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        is_favorite=False,
+        owner=user,
+    )
+    word = Word.objects.create(
+        text_pl="drzewo",
+        text_en="tree",
+        word_set=word_set_2,
+    )
+    url = reverse("my_set_detail", kwargs={"slug": word_set_1.slug})
+    response = client.post(
+        url,
+        {
+            "delete_words": "",
+            "selected_words": word.id,
+        }
+    )
+
+    assert response.status_code == 302
+    assert Word.objects.filter(id=word.id, word_set=word_set_2,).exists()
+
+
+@pytest.mark.django_db
+def test_owner_cannot_update_set_name_to_empty_name(client, django_user_model):
+    user = django_user_model.objects.create_user(username="jan", password="haslo")
+    client.force_login(user)
+    word_set = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        is_favorite=False,
+        owner=user,
+    )
+    url = reverse("my_set_detail", kwargs={"slug": word_set.slug})
+    response = client.post(
+        url,
+        {
+            "update_set_name": "",
+            "set_name": "",
+        }
+    )
+
+    assert response.status_code == 200
+    assertContains(response, "Podaj nazwę zestawu")
+
+    word_set.refresh_from_db()
+    assert word_set.name == "Angielski A1"
+
+
 # --- Authentication views ---
 def test_register_page_returns_status_200(client):
     url = reverse("register")
