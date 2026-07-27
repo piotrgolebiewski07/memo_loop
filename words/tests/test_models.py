@@ -1,3 +1,5 @@
+from django.core.exceptions import ValidationError
+
 from words.models import WordSet, Word, StudySession
 from django.contrib.auth.models import User
 
@@ -181,3 +183,65 @@ def test_study_session_default_values():
     assert study_session.wrong_answers == 0
     assert study_session.success_rate == 0
 
+
+def test_word_level_cannot_be_lower_than_one():
+    word = Word(
+        text_pl="drzewo",
+        text_en="tree",
+        level=0,
+    )
+
+    with pytest.raises(ValidationError):
+        word.full_clean()
+
+
+def test_word_level_cannot_be_higher_than_five():
+    word = Word(
+        text_pl="drzewo",
+        text_en="tree",
+        level=6,
+    )
+
+    with pytest.raises(ValidationError):
+        word.full_clean()
+
+
+def test_word_level_accepts_valid_value():
+    word = Word(
+        text_pl="drzewo",
+        text_en="tree",
+        level=2,
+    )
+
+    word.full_clean()
+
+
+@pytest.mark.django_db
+def test_deleting_word_set_deletes_related_words_and_study_sessions(django_user_model):
+    user = django_user_model.objects.create_user(username="jan", password="haslo",)
+    word_set = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="default.jpg",
+        slug="angielski-a1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        is_favorite=False,
+        owner=user,
+    )
+    word = Word.objects.create(
+        word_set=word_set,
+        text_pl="drzewo",
+        text_en="tree",
+        level=2,
+    )
+    study_session = StudySession.objects.create(
+        user=user,
+        word_set=word_set
+    )
+
+    word_set.delete()
+    assert not Word.objects.filter(id=word.id).exists()
+    assert not StudySession.objects.filter(id=study_session.id).exists()
