@@ -11,7 +11,7 @@ def test_word_set_str():
         name="Angielski A1",
         description="Podstawowe słówka",
         level="A1",
-        image="default.jpg",
+        image="czas_wolny.png",
         slug="angielski-a1",
     )
 
@@ -23,7 +23,7 @@ def test_word_set_default_flags():
         name="Angielski A1",
         description="Podstawowe słówka",
         level="A1",
-        image="default.jpg",
+        image="czas_wolny.png",
         slug="angielski-a1",
     )
 
@@ -38,7 +38,7 @@ def test_word_set_default_icon():
         name="Angielski A1",
         description="Podstawowe słówka",
         level="A1",
-        image="default.jpg",
+        image="czas_wolny.png",
         slug="angielski-a1",
     )
     assert word_set.icon == "bi-journal-bookmark"
@@ -51,7 +51,7 @@ def test_word_set_can_be_saved_to_database():
         name="Angielski A1",
         description="Podstawowe słówka",
         level="A1",
-        image="default.jpg",
+        image="czas_wolny.png",
         slug="angielski-a1",
     )
 
@@ -72,7 +72,7 @@ def test_word_set_owner():
         name="Angielski A1",
         description="Podstawowe słówka",
         level="A1",
-        image="default.jpg",
+        image="czas_wolny.png",
         slug="angielski-a1",
         owner=user
     )
@@ -96,7 +96,7 @@ def test_word_word_set():
         name="Angielski A1",
         description="Podstawowe słówka",
         level="A1",
-        image="default.jpg",
+        image="czas_wolny.png",
         slug="angielski-a1",
     )
 
@@ -116,7 +116,7 @@ def test_word_set_word():
         name="Angielski A1",
         description="Podstawowe słówka",
         level="A1",
-        image="default.jpg",
+        image="czas_wolny.png",
         slug="angielski-a1",
     )
 
@@ -141,7 +141,7 @@ def test_study_session_str():
         name="Angielski A1",
         description="Podstawowe słówka",
         level="A1",
-        image="default.jpg",
+        image="czas_wolny.png",
         slug="angielski-a1",
     )
 
@@ -170,7 +170,7 @@ def test_study_session_default_values():
         name="Angielski A1",
         description="Podstawowe słówka",
         level="A1",
-        image="default.jpg",
+        image="czas_wolny.png",
         slug="angielski-a1",
     )
 
@@ -223,7 +223,7 @@ def test_deleting_word_set_deletes_related_words_and_study_sessions(django_user_
         name="Angielski A1",
         description="Podstawowe słówka",
         level="A1",
-        image="default.jpg",
+        image="czas_wolny.png",
         slug="angielski-a1",
         is_public=False,
         is_featured=False,
