@@ -36,6 +36,7 @@ def study_set(request, slug):
             is_public=True,
         )
 
+    total_words = word_set.words.count()
     session_key = f"study_words_{word_set.id}"
 
     if session_key not in request.session:
@@ -243,6 +244,7 @@ def study_set(request, slug):
             "word": word,
             "result": result,
             "correct_answers": correct_answers,
+            "total_words": total_words,
             "wrong_answers": wrong_answers,
             "word_set": word_set,
             "success_rate": success_rate,

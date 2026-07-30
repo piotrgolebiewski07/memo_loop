@@ -66,7 +66,12 @@
     </div>
 
     {% else %}
-
+    <div class="study-progress text-center mb-4">
+        <div class="study-progress-track">
+            <div class="study-progress-fill" style="width: {% widthratio correct_answers total_words 100 %}%"></div>
+        </div>
+        <span>{{ correct_answers }} / {{ total_words }}</span>
+    </div>
     <div class="card shadow text-center mx-auto mb-4" style="max-width: 600px;">
         <div class="card-body py-5">
             <h2 class="study-word">
