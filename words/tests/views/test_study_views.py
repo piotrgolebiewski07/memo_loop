@@ -387,3 +387,112 @@ def test_study_set_displays_summary_when_word_set_is_empty(client, django_user_m
 
     assert response.status_code == 200
     assertContains(response, "Gratulacje")
+
+
+# Study progress tests
+@pytest.mark.django_db
+def test_study_set_context_contains_total_words(client, django_user_model):
+    user = django_user_model.objects.create_user(username="jan", password="haslo")
+    client.force_login(user)
+    word_set = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="czas_wolny.png",
+        slug="angielski-a1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        owner=user,
+    )
+    Word.objects.create(
+        text_pl="drzewo",
+        text_en="tree",
+        word_set=word_set,
+    )
+    Word.objects.create(
+        text_pl="dom",
+        text_en="house",
+        word_set=word_set,
+    )
+    Word.objects.create(
+        text_pl="krzesło",
+        text_en="chair",
+        word_set=word_set,
+    )
+    url = reverse("study_set", kwargs={"slug": word_set.slug})
+    response = client.get(url)
+
+    assert response.status_code == 200
+    assert response.context["total_words"] == 3
+
+
+@pytest.mark.django_db
+# Study progress tests
+def test_study_set_correct_answer_increases_progress(client, django_user_model):
+    user = django_user_model.objects.create_user(username="jan", password="haslo")
+    client.force_login(user)
+    word_set = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="czas_wolny.png",
+        slug="angielski-a1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        owner=user,
+    )
+    word = Word.objects.create(
+        text_pl="drzewo",
+        text_en="tree",
+        word_set=word_set,
+    )
+
+    url = reverse("study_set", kwargs={"slug": word_set.slug})
+    client.get(url)
+    response = client.post(
+        url,
+        {
+            "word_id": word.id,
+            "answer": word.text_en,
+        }
+    )
+    assert response.status_code == 200
+    assert response.context["correct_answers"] == 1
+    assertContains(response, "1 / 1")
+
+
+@pytest.mark.django_db
+def test_study_set_wrong_answer_does_not_increase_progress(client, django_user_model):
+    user = django_user_model.objects.create_user(username="jan", password="haslo")
+    client.force_login(user)
+    word_set = WordSet.objects.create(
+        name="Angielski A1",
+        description="Podstawowe słówka",
+        level="A1",
+        image="czas_wolny.png",
+        slug="angielski-a1",
+        is_public=False,
+        is_featured=False,
+        is_deleted=False,
+        owner=user,
+    )
+    word = Word.objects.create(
+        text_pl="drzewo",
+        text_en="tree",
+        word_set=word_set,
+    )
+
+    url = reverse("study_set", kwargs={"slug": word_set.slug})
+    client.get(url)
+    response = client.post(
+        url,
+        {
+            "word_id": word.id,
+            "answer": "tre",
+        }
+    )
+    assert response.status_code == 200
+    assert response.context["correct_answers"] == 0
+    assertContains(response, "0 / 1")
