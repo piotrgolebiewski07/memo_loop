@@ -2,6 +2,26 @@
 {% load static %}
 {% block content %}
 
+<script>
+    // Funkcja odczytuje podane słowo na głos
+    function speakWord(word) {
+
+        // Zatrzymuje poprzedni dźwięk, jeśli jeszcze trwa
+        window.speechSynthesis.cancel();
+
+        // Tworzy komunikat głosowy z angielskiego słowa
+        const utterance = new SpeechSynthesisUtterance(word);
+
+        // Ustawia język angielski brytyjski
+        utterance.lang = "en-GB";
+
+        // Ustawia trochę wolniejsze tempo odczytu
+        utterance.rate = 0.9;
+
+        // Uruchamia odczyt głosowy
+        window.speechSynthesis.speak(utterance);
+    }
+</script>
 <div class="container py-5">
     <div class="text-center mb-5">
         <h2 class="study-title">
@@ -74,6 +94,16 @@
     </div>
     <div class="card shadow text-center mx-auto mb-4" style="max-width: 600px;">
         <div class="card-body py-5">
+
+            <button
+                type="button"
+                id="sound-toggle-btn"
+                class="btn btn-outline-secondary btn-sm position-absolute top-0 end-0 m-3"
+                title="Włącz lub wyłącz dźwięk"
+                >
+                <i class="bi bi-volume-up-fill"></i>
+            </button>
+
             <h2 class="study-word">
                 {{ word.text_pl }}
             </h2>
@@ -128,10 +158,66 @@
                 </button>
             </div>
         </form>
-
-
     </div>
 
+    <script>
+        // Czeka, aż cała strona HTML zostanie załadowana
+        window.addEventListener("DOMContentLoaded", function() {
+
+            // Wyszukuje przycisk głośnika po jego id
+            const button = document.getElementById("sound-toggle-btn");
+
+            // Django wstawia tutaj aktualne angielskie słowo z bazy danych
+            const word = "{{ word.text_en|escapejs }}";
+
+            // Odczytuje z pamięci przeglądarki ustawienie dźwięku.
+            // Jeśli wcześniej nie zapisano ustawienia, dźwięk jest włączony.
+            let soundEnabled =
+                localStorage.getItem("memoLoopSoundEnabled") !== "false";
+
+            // Funkcja zmienia ikonę i podpowiedź po najechaniu myszką
+            function updateSoundButton() {
+
+                // Gdy dźwięk jest włączony, pokazuje zwykły głośnik
+                if (soundEnabled) {
+                    button.innerHTML = '<i class="bi bi-volume-up-fill"></i>';
+                    button.title = "Wyłącz dźwięk";
+
+                // Gdy dźwięk jest wyłączony, pokazuje wyciszony głośnik
+                } else {
+                    button.innerHTML = '<i class="bi bi-volume-mute-fill"></i>';
+                    button.title = "Włącz dźwięk";
+                }
+            }
+
+            // Ustawia poprawną ikonę zaraz po otwarciu strony
+            updateSoundButton();
+
+            // Reaguje na kliknięcie ikony głośnika
+            button.addEventListener("click", function() {
+
+                // Zmienia stan: włączony na wyłączony albo wyłączony na włączony
+                soundEnabled = !soundEnabled;
+
+                // Zapisuje wybrane ustawienie w pamięci przeglądarki
+                localStorage.setItem(
+                    "memoLoopSoundEnabled",
+                    soundEnabled
+                );
+
+                // Odświeża ikonę po kliknięciu
+                updateSoundButton();
+            });
+
+            {% if show_next_button %}
+                // Po sprawdzeniu odpowiedzi odczytuje słowo,
+                // ale tylko gdy dźwięk jest włączony
+                if (soundEnabled) {
+                    speakWord(word);
+                }
+            {% endif %}
+        });
+    </script>
     {% endif %}
 
     {% if study_finished %}
