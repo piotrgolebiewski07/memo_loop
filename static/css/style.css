@@ -1,6 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Smooch+Sans:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap');
 
+
+:root {
+    --color-primary: #fd7f18;
+    --color-primary-hover: #e66d00;
+    --color-primary-border: #c85f00;
+    --color-text: #27272a;
+    --color-muted: #6c757d;
+    --color-white: #ffffff;
+
+    --shadow-button: 0 2px 8px rgba(0, 0, 0, 0.20);
+    --radius-button: 12px;
+}
+
 html {
     overflow-y: scroll;
 }
@@ -473,16 +486,16 @@ body {
 ==================== */
 
 .study-btn {
-    background-color: #fd7f18;
-    border: 1px solid #c85f00;
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.20);
+    background-color: var(--color-primary);
+    border: 1px solid var(--color-primary-border);
+    color: var(--color-white);
+    box-shadow: var(--shadow-button);
     min-width: 180px;
     font-size: 1rem;
 }
 
 .study-btn:hover {
-    background-color: #e66d00;
+    background-color: var(--color-primary-hover);
     border-color: #b85300;
     color: #fff;
 }
@@ -938,26 +951,6 @@ body {
     justify-content: center;
 
     font-size: 24px;
-}
-
-.stat-blue {
-    background: #eff6ff;
-    color: #2563eb;
-}
-
-.stat-green {
-    background: #ecfdf3;
-    color: #16a34a;
-}
-
-.stat-purple {
-    background: #f5f3ff;
-    color: #7c3aed;
-}
-
-.stat-orange {
-    background: #fff7ed;
-    color: #ea580c;
 }
 
 .my-sets-stat-number {
