@@ -1277,18 +1277,10 @@ body {
     --accent: #2563eb;
 }
 
-.my-set-progress-fill.stat-blue {
-    background: #2563eb;
-}
-
 .stat-green {
     background: #ecfdf3;
     color: #16a34a;
     --accent: #16a34a;
-}
-
-.my-set-progress-fill.stat-green {
-    background: #16a34a;
 }
 
 .stat-purple {
@@ -1297,18 +1289,10 @@ body {
     --accent: #7c3aed;
 }
 
-.my-set-progress-fill.stat-purple {
-    background: #7c3aed;
-}
-
 .stat-orange {
     background: #fff7ed;
     color: #ea580c;
     --accent: #ea580c;
-}
-
-.my-set-progress-fill.stat-orange{
-    background: #ea580c;
 }
 
 .stat-red {
@@ -1317,18 +1301,10 @@ body {
     --accent: #dc2626;
 }
 
-.my-set-progress-fill.stat-red {
-    background: #dc2626;
-}
-
 .stat-pink {
     background: #fdf2f8;
     color: #db2777;
     --accent: #db2777;
-}
-
-.my-set-progress-fill.stat-pink {
-    background: #db2777;
 }
 
 .stat-cyan {
@@ -1337,18 +1313,10 @@ body {
     --accent: #0891b2;
 }
 
-.my-set-progress-fill.stat-cyan{
-    background: #0891b2;
-}
-
 .stat-indigo {
     background: #eef2ff;
     color: #4f46e5;
     --accent: #4f46e5;
-}
-
-.my-set-progress-fill.stat-indigo{
-    background: #4f46e5;
 }
 
 .stat-yellow {
@@ -1357,18 +1325,10 @@ body {
     --accent: #ca8a04;
 }
 
-.my-set-progress-fill.stat-yellow {
-    background: #ca8a04;
-}
-
 .stat-teal {
     background: #f0fdfa;
     color: #0f766e;
     --accent: #0f766e;
-}
-
-.my-set-progress-fill.stat-teal {
-    background: #0f766e;
 }
 
 .stat-lime {
@@ -1377,18 +1337,10 @@ body {
     --accent: #65a30d;
 }
 
-.my-set-progress-fill.stat-lime {
-    background: #65a30d;
-}
-
 .stat-emerald {
     background: #ecfdf5;
     color: #059669;
     --accent: #059669;
-}
-
-.my-set-progress-fill.stat-emerald {
-    background: #059669;
 }
 
 .stat-sky {
@@ -1397,18 +1349,10 @@ body {
     --accent: #0284c7;
 }
 
-.my-set-progress-fill.stat-sky {
-    background: #0284c7;
-}
-
 .stat-violet {
     background: #f5f3ff;
     color: #7c3aed;
     --accent: #7c3aed;
-}
-
-.my-set-progress-fill.stat-violet{
-    background: #7c3aed;
 }
 
 .stat-rose {
@@ -1417,18 +1361,10 @@ body {
     --accent: #e11d48;
 }
 
-.my-set-progress-fill.stat-rose{
-    background: #e11d48;
-}
-
 .stat-amber {
     background: #fffbeb;
     color: #d97706;
     --accent: #d97706;
-}
-
-.my-set-progress-fill.stat-amber {
-    background: #d97706;
 }
 
 .stat-fuchsia {
@@ -1437,18 +1373,10 @@ body {
     --accent: #c026d3;
 }
 
-.my-set-progress-fill.stat-fuchsia {
-    background: #c026d3;
-}
-
 .stat-stone {
     background: #fafaf9;
     color: #57534e;
     --accent: #57534e;
-}
-
-.my-set-progress-fill.stat-stone {
-    background: #57534e;
 }
 
 .stat-slate {
@@ -1457,16 +1385,12 @@ body {
     --accent: #475569;
 }
 
-.my-set-progress-fill.stat-slate  {
-    background: #475569;
-}
-
 .stat-brown {
     background: #fef7ed;
     color: #92400e;
     --accent: #92400e;
 }
 
-.my-set-progress-fill.stat-brown {
-    background: #92400e;
+.my-set-progress-fill[class*="stat-"] {
+    background: var(--accent);
 }
