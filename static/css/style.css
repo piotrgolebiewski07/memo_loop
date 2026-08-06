@@ -1444,4 +1444,34 @@ body {
     .ready-summary-info {
         width: auto;
     }
+
+    .navbar .container {
+        flex-wrap: wrap;
+        justify-content: center;
+        row-gap: 10px;
+    }
+
+    .nav-menu {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        gap: 16px !important;
+    }
+
+    .nav-auth {
+        gap: 12px !important;
+    }
+
+    .nav-link,
+    .nav-user,
+    .auth-btn {
+        font-size: 1rem;
+    }
+
+    .study-actions .study-btn,
+    .study-actions .main-action-btn,
+    .study-actions .end-btn {
+        width: auto;
+        min-width: 220px;
+    }
 }

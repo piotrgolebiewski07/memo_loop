@@ -25,7 +25,7 @@
             </a>
 
             <!-- Menu -->
-            <div class="d-flex gap-4 align-items-center">
+            <div class="nav-menu d-flex gap-4 align-items-center">
 
                 <a class="nav-link menu-link text-dark" href="{% url 'home' %}">
                     Strona główna
@@ -44,7 +44,7 @@
             </div>
 
             <!-- Auth -->
-            <div class="d-flex gap-3 align-items-center">
+            <div class="nav-auth d-flex gap-3 align-items-center">
                 {% if user.is_authenticated %}
                     <span class="nav-user">
                         Witaj, {{ user.username }}
