@@ -108,7 +108,7 @@
 <div class="container mt-4" style="max-width: 1200px;">
     <div class="my-sets-main-panel">
 
-        <div class="d-flex justify-content-between align-items-center px-4 pt-3 mb-3">
+        <div class="my-sets-controls d-flex justify-content-between align-items-center px-4 pt-3 mb-3">
             <div class="my-sets-tabs m-0">
 
                 <a
@@ -159,14 +159,20 @@
                         <option value="newest" {% if sort_by == "newest" %}selected{% endif %}>Najnowsze</option>
                         <option value="oldest" {% if sort_by == "oldest" %}selected{% endif %}>Najstarsze</option>
 
-                        <option value="name_asc" {% if sort_by == "name_asc" %}selected{% endif %}>Nazwa (A-Z)</option>
-                        <option value="name_desc" {% if sort_by == "name_desc" %}selected{% endif %}>Nazwa (Z-A)</option>
+                        <option value="name_asc"
+                                {% if sort_by == "name_asc" %}selected{% endif %}>Nazwa (A-Z)</option>
+                        <option value="name_desc"
+                                {% if sort_by == "name_desc" %}selected{% endif %}>Nazwa (Z-A)</option>
 
-                        <option value="word_count_asc" {% if sort_by == "word_count_asc" %}selected{% endif %}>Najmniej słówek</option>
-                        <option value="word_count_desc" {% if sort_by == "word_count_desc" %}selected{% endif %}>Najwięcej słówek</option>
+                        <option value="word_count_asc"
+                                {% if sort_by == "word_count_asc" %}selected{% endif %}>Najmniej słówek</option>
+                        <option value="word_count_desc"
+                                {% if sort_by == "word_count_desc" %}selected{% endif %}>Najwięcej słówek</option>
 
-                        <option value="progress_asc" {% if sort_by == "progress_asc" %}selected{% endif %}>Najmniejszy postęp</option>
-                        <option value="progress_desc" {% if sort_by == "progress_desc" %}selected{% endif %}>Największy postęp</option>
+                        <option value="progress_asc"
+                                {% if sort_by == "progress_asc" %}selected{% endif %}>Najmniejszy postęp</option>
+                        <option value="progress_desc"
+                                {% if sort_by == "progress_desc" %}selected{% endif %}>Największy postęp</option>
                     </select>
                     <input type="hidden" name="q" value="{{ search_query }}">
                     <input type="hidden" name="filter" value="{{ current_filter }}">
@@ -195,7 +201,8 @@
                                 {% csrf_token %}
 
                                 <input type="hidden" name="favorite_set_id" value="{{ item.set.id }}">
-                                <input type="hidden" name="next" value="{{ request.get_full_path }}#set-{{ item.set.id }}">
+                                <input type="hidden" name="next"
+                                       value="{{ request.get_full_path }}#set-{{ item.set.id }}">
                                 <button type="submit"  class="favorite-btn">
                                     {% if item.set.is_favorite %}
                                         <i class="bi bi-star-fill favorite-star"></i>
@@ -214,7 +221,9 @@
 
                     <div class="my-set-progress-box">
                         <div class="my-set-progress-bar">
-                            <div class="my-set-progress-fill {{ item.set.icon_color }}" style="width: {{ item.progress }}%"></div>
+                            <div
+                                class="my-set-progress-fill {{ item.set.icon_color }}"
+                                style="width: {{ item.progress }}%"></div>
                         </div>
 
                         <div class="my-set-progress-text">
@@ -254,7 +263,8 @@
 
             <div class="row align-items-center">
                 <div class="col-md-4 d-flex justify-content-start ps-5">
-                    {{ page_obj.start_index }} - {{ page_obj.end_index }} z {{ page_obj.paginator.count }} {{ pagination_set_label }}
+                    {{ page_obj.start_index }} - {{ page_obj.end_index }}
+                    z {{ page_obj.paginator.count }} {{ pagination_set_label }}
 
                 </div>
 
@@ -319,7 +329,10 @@
                         <label class="page-size-label" for="per_page">Pokaż na stronie:</label>
                         <select class="page-size-select" name="per_page" id="per_page" onchange="this.form.submit()">
                             {% for page_size in allowed_page_sizes %}
-                                <option value="{{ page_size }}" {% if per_page == page_size %}selected{% endif %}>{{ page_size }}</option>
+                                <option
+                                    value="{{ page_size }}"
+                                    {% if per_page == page_size %}selected{% endif %}>{{ page_size }}
+                                </option>
                             {% endfor %}
                         </select>
                         <input type="hidden" name="q" value="{{ search_query }}">

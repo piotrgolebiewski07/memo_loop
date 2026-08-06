@@ -1495,4 +1495,44 @@ body {
         margin-top: 12px;
         align-self: center;
     }
+
+    .my-sets-controls {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 12px;
+        padding: 16px !important;
+    }
+
+    .my-sets-tabs {
+        margin: 0;
+        justify-content: flex-start;
+    }
+
+    .my-sets-search-form {
+        max-width: none;
+        width: 100%;
+    }
+
+    .my-sets-search-form input {
+        min-width: 0;
+    }
+
+    .my-sets-controls > .pe-2 {
+        padding-right: 0 !important;
+    }
+
+    .my-sets-controls > .pe-2 form {
+        justify-content: flex-start !important;
+    }
+
+    .my-sets-tabs {
+    width: 100%;
+    }
+
+    .my-tab {
+        flex: 1;
+        padding: 8px 6px;
+        font-size: 0.85rem;
+        text-align: center;
+    }
 }
