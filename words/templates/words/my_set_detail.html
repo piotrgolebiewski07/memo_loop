@@ -10,7 +10,7 @@
                 <input
                     type="text"
                     name="set_name"
-                    class="form-control form-control-lg text-center"
+                    class="set-name-input form-control form-control-lg text-center"
                     style="max-width: 320px;"
                     value="{{ word_set.name }}"
                 >
@@ -33,7 +33,7 @@
         </form>
     {% else %}
         <div class="d-flex justify-content-center align-items-center gap-2 mb-4">
-            <h1 class="mb-0">
+            <h1 class="set-name-heading mb-0">
                 {{ word_set.name }}
             </h1>
 
@@ -70,7 +70,7 @@
             value="{% if edit_word %}{{ edit_word.text_en }}{% endif %}"
         >
 
-        <div class="mt-4 d-flex justify-content-center gap-4">
+        <div class="mt-4 d-flex flex-column flex-md-row align-items-center justify-content-center gap-3">
             <button
                 type="submit" class="btn study-btn">
                 {% if edit_word %}Zapisz zmiany{% else %}Dodaj słowo{% endif %}
@@ -99,7 +99,7 @@
             {% csrf_token %}
             <div class="mt-4 mx-auto text-center">
                 {% for word in word_set.words.all %}
-                    <div class="d-flex justify-content-between align-items-start py-2 border-bottom my-set-row">
+                    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start py-2 border-bottom my-set-row">
 
                         <div class="d-flex align-items-start gap-3 word-left">
                             <input

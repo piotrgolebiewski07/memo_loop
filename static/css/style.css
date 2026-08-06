@@ -838,6 +838,7 @@ body {
     border-radius: 20px;
 }
 
+
 /* ====================
    MY SETS SECTION
 ==================== */
@@ -860,6 +861,17 @@ body {
     color: #6b4029;
 }
 
+.set-name-input {
+    flex: 1;
+    min-width: 0;
+}
+
+.set-name-heading {
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
 .my-sets-intro {
     text-align: center;
     margin-bottom: 20px;
@@ -870,6 +882,9 @@ body {
     font-size: 1.1rem;
     font-weight: 700;
     letter-spacing: 0.5px;
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 .big-checkbox {
@@ -1038,7 +1053,7 @@ body {
 }
 
 .my-set-main {
-    min-width: 170px;
+    min-width: 0;
     flex: 0.9;
 }
 
@@ -1473,5 +1488,11 @@ body {
     .study-actions .end-btn {
         width: auto;
         min-width: 220px;
+    }
+
+    .my-set-action-btn {
+        margin-left: 0;
+        margin-top: 12px;
+        align-self: center;
     }
 }
