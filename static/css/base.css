@@ -1,0 +1,33 @@
+/* ====================
+   GLOBAL STYLES
+==================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Smooch+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap');
+
+:root {
+    --color-primary: #fd7f18;
+    --color-primary-hover: #e66d00;
+    --color-primary-border: #c85f00;
+    --color-primary-border-hover: #b85300;
+    --color-text: #27272a;
+    --color-muted: #6c757d;
+    --color-white: #ffffff;
+
+    --shadow-button: 0 2px 8px rgba(0, 0, 0, 0.20);
+    --radius-button: 12px;
+
+    --radius-card: 18px;
+    --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+    --font-main: 'Smooch Sans', sans-serif;
+    --font-brand: 'Caveat', cursive;
+}
+
+html {
+    overflow-y: scroll;
+}
+
+body {
+    background-color: #ffffff;
+}

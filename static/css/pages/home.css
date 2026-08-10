@@ -1,0 +1,82 @@
+/* ====================
+   HERO
+==================== */
+
+.hero-text {
+    font-size: 2.4rem;
+    margin-top: 40px;
+    margin-bottom: 50px;
+}
+
+.hero-subtext {
+    font-size: 1.2rem;
+    color: var(--color-muted);
+}
+
+.hero-list {
+    list-style: none;
+    text-align: left;
+    margin-left: 40px;
+}
+
+.page-hero-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.page-hero-text {
+    font-size: 1.1rem;
+    color: var(--color-muted);
+    margin-bottom: 0;
+    max-width: 420px;
+}
+
+.hero-list li {
+    margin-bottom: 20px;
+}
+
+.hero-list li::before {
+    content: "✓";
+    color: #d95f02;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* ====================
+   FEATURES
+==================== */
+
+.section-title {
+    text-align: center;
+    font-size: 2.0rem;
+    margin-bottom: 60px;
+}
+
+.feature-card {
+    background-color: white;
+    padding: 20px 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    height: 100%;
+    text-align: center;
+}
+
+.feature-number {
+    width: 50px;
+    height: 50px;
+    background-color: #e67e22;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto 30px auto;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.feature-subtext {
+    font-size: 1.0rem;
+    color: var(--color-muted);
+}

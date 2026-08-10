@@ -1,0 +1,366 @@
+/* ====================
+   STUDY
+==================== */
+
+/* STUDY ACTIONS */
+
+.study-btn {
+    min-width: 180px;
+    font-size: 1rem;
+}
+
+.end-btn {
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    color: #27272a;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.20);
+    font-size: 1rem;
+    min-width: 220px;
+    font-weight: 600;
+    padding: 10px 28px;
+    border-radius: var(--radius-button);
+}
+
+.end-btn:hover {
+    background-color: #f8f9fa;
+    border: 2px solid #e5e7eb;
+    color: #5a4b3e;
+}
+
+/* STUDY CONTENT */
+
+.stats-image {
+    opacity: 0.8;
+}
+
+.study-title {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.study-word {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.study-stats-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+/* ANSWER FEEDBACK */
+
+.feedback-text {
+    min-height: 28px;
+    font-size: 1.2rem;
+    color: var(--color-muted);
+}
+
+.answer-input.success {
+    border: 2px solid #198754;
+    background-color: #d4edda;
+    color: #198754;
+    font-weight: 600;
+    box-shadow: none;
+}
+
+.answer-input.danger {
+    border: 2px solid #dc3545;
+    background-color: #f8d7da;
+    color: #dc3545;
+    font-weight: 600;
+    box-shadow: none;
+}
+
+.answer-input {
+    border: 2px solid #dee2e6;
+}
+
+.answer-input:focus {
+    border-color: #dee2e6;
+    box-shadow: none;
+}
+
+
+.answer-input.success:focus {
+    border-color: #198754;
+    box-shadow: none;
+}
+
+.answer-input.danger:focus {
+    border-color: #dc3545;
+    box-shadow: none;
+}
+
+.feedback-success {
+    color: #198754;
+    font-weight: 600;
+}
+
+.feedback-danger {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+/* SESSION STATISTICS */
+
+.stats-summary-card {
+    background-color: #fbfffc;
+    border: 1px solid #b7e4c7;
+    border-radius: 16px;
+}
+
+.stats-difficult-card {
+    background-color: #fffcf2;
+    border: 1px solid #fdeed5;
+    border-radius: 16px;
+}
+
+.stats-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #e8f7ee;
+    color: #1f8a52;
+    border: 1px solid #b7e4c7;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+}
+
+.difficult-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #fee9a4;
+    color: #955512;
+    border: 1px solid #e8d6aa;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    line-height: 0;
+}
+
+.difficult-icon i {
+    transform: translateX(1px);
+}
+
+.stats-title {
+    color: #087047;
+    font-weight: 700;
+}
+
+.difficult-title {
+    color: #955512;
+    font-weight: 700;
+}
+
+.stats-item {
+    background-color: white;
+    border: 1px solid #e9ecef;
+    border-radius: 14px;
+    padding: 4px 8px;
+    margin-bottom: 0px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.result-icon {
+    width: 20px;
+    height: 20px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-right: 15px;
+
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+
+    line-height: 1;
+}
+
+.success-icon {
+    background-color: #2db56b;
+}
+
+.danger-icon {
+    background-color: #ff6b6b;
+}
+
+.info-icon {
+    background-color: #5aa2ff;
+}
+
+.stats-feedback {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 18px;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+/* SUCCESS SUMMARY */
+
+.success-circle {
+    position: relative;
+    width: 70px;
+    height: 70px;
+
+    border-radius: 50%;
+    background: conic-gradient(
+        #7DC444 calc(var(--rate) * 1%),
+        #e9ecef 0
+    );
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #27272a;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.success-circle::before {
+    content: "";
+    position: absolute;
+
+    width: 54px;
+    height: 54px;
+
+    border-radius: 50%;
+    background-color: #f8fffa;
+}
+
+.success-circle span {
+    position: relative;
+    z-index: 1;
+}
+
+.stars {
+    color: #f4b400;
+    font-size: 1.5rem;
+    letter-spacing: 3px;
+}
+
+.summary-text {
+    color: var(--color-muted);
+    font-size: 0.95rem;
+}
+
+.summary-title {
+    color: #367c5c;
+    font-weight: 700;
+}
+
+.stats-value {
+    min-width: 60px;
+    text-align: center;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 700;
+}
+
+.success-value {
+    background-color: #d8f3dc;
+    color: #198754;
+}
+
+.danger-value {
+    background-color: #f8d7da;
+    color: #dc3545;
+}
+
+.info-value {
+    background-color: #dbeafe;
+    color: #2563eb;
+}
+
+/* MOTIVATION */
+
+.motivation-card {
+    background-color: #fffcf2;
+    border: 1px solid #f0dfb1;
+    border-radius: 18px;
+
+    padding: 18px 24px;
+    margin-top: 36px;
+}
+
+.motivation-icon {
+    font-size: 42px;
+}
+
+.motivation-title {
+    color: #955512;
+    font-weight: 700;
+}
+
+.motivation-text {
+    color: #4b5563;
+    font-size: 1.1rem;
+}
+
+.motivation-emoji {
+    font-size: 38px;
+}
+
+.difficult-card-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* PROGRESS BAR */
+
+.study-progress{
+    display: flex;
+    align-items: center;
+    max-width: 600px;
+    margin: 0 auto;
+    gap: 12px;
+}
+
+.study-progress-track{
+    flex: 1;
+    height: 6px;
+    background-color: #e5e7eb;
+    border-radius: 20px;
+}
+
+.study-progress-fill{
+    height: 100%;
+    background-color: #22c55e;
+    border-radius: 20px;
+}
+
+/* ====================
+   RESPONSIVE
+==================== */
+
+@media (max-width: 575.98px) {
+
+
+    .study-actions .study-btn,
+    .study-actions .main-action-btn,
+    .study-actions .end-btn {
+        width: auto;
+        min-width: 220px;
+    }
+}
