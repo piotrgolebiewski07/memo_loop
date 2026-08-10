@@ -1,6 +1,8 @@
 /* ====================
-   STUDY SECTION
+   STUDY
 ==================== */
+
+/* STUDY ACTIONS */
 
 .study-btn {
     min-width: 180px;
@@ -11,7 +13,7 @@
     background-color: #ffffff;
     border: 1px solid #d1d5db;
     color: #27272a;
-    box-shadow: 0px 4px 14px rgba(0,0,0,0.20);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.20);
     font-size: 1rem;
     min-width: 220px;
     font-weight: 600;
@@ -24,6 +26,8 @@
     border: 2px solid #e5e7eb;
     color: #5a4b3e;
 }
+
+/* STUDY CONTENT */
 
 .stats-image {
     opacity: 0.8;
@@ -43,6 +47,8 @@
     font-size: 1.4rem;
     font-weight: 600;
 }
+
+/* ANSWER FEEDBACK */
 
 .feedback-text {
     min-height: 28px;
@@ -95,6 +101,8 @@
     color: #dc3545;
     font-weight: 600;
 }
+
+/* SESSION STATISTICS */
 
 .stats-summary-card {
     background-color: #fbfffc;
@@ -176,7 +184,6 @@
 
     margin-right: 15px;
 
-    font-weight:200;
     color: white;
     font-size: 14px;
     font-weight: 700;
@@ -207,6 +214,8 @@
 
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
+
+/* SUCCESS SUMMARY */
 
 .success-circle {
     position: relative;
@@ -283,6 +292,8 @@
     color: #2563eb;
 }
 
+/* MOTIVATION */
+
 .motivation-card {
     background-color: #fffcf2;
     border: 1px solid #f0dfb1;
@@ -315,6 +326,8 @@
     flex-direction: column;
     height: 100%;
 }
+
+/* PROGRESS BAR */
 
 .study-progress{
     display: flex;
@@ -351,4 +364,3 @@
         min-width: 220px;
     }
 }
-

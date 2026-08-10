@@ -1,9 +1,9 @@
 @import url("base.css");
+@import url("utilities.css");
 @import url("components.css");
 @import url("pages/home.css");
 @import url("pages/ready-sets.css");
 @import url("pages/study.css");
 @import url("pages/my-sets.css");
 @import url("pages/auth.css");
-@import url("pages/statistics.css");
 

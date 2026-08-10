@@ -1,7 +1,8 @@
-
 /* ====================
-   READY SETS SECTION
+   READY SETS
 ==================== */
+
+/* PAGE LAYOUT */
 
 .ready-page {
     position: relative;
@@ -38,6 +39,8 @@
     z-index: 1;
 }
 
+/* PANELS */
+
 .ready-sets-panel,
 .ready-summary-panel {
     background: var(--color-white);
@@ -49,6 +52,12 @@
 .ready-sets-panel {
     border: 1px solid rgba(0,0,0,.03);
 }
+
+.ready-summary-panel {
+    border: 1px solid rgba(0,0,0,.04);
+}
+
+/* READY SET CARDS */
 
 .ready-section-label {
     color: #fd7f18;
@@ -181,9 +190,7 @@
     margin-top: auto;
 }
 
-.ready-summary-panel {
-    border: 1px solid rgba(0,0,0,.04);
-}
+/* READY SET SUMMARY */
 
 .ready-summary-row {
     align-items: stretch;
@@ -305,27 +312,6 @@
     font-size: 34px;
 }
 
-.text-blue     { color: #2563eb; }
-.text-green    { color: #16a34a; }
-.text-purple   { color: #7c3aed; }
-.text-orange   { color: #ea580c; }
-.text-red      { color: #dc2626; }
-.text-pink     { color: #db2777; }
-.text-cyan     { color: #0891b2; }
-.text-indigo   { color: #4f46e5; }
-.text-yellow   { color: #ca8a04; }
-.text-teal     { color: #0f766e; }
-.text-lime     { color: #65a30d; }
-.text-emerald  { color: #059669; }
-.text-sky      { color: #0284c7; }
-.text-violet   { color: #7c3aed; }
-.text-rose     { color: #e11d48; }
-.text-amber    { color: #d97706; }
-.text-fuchsia  { color: #c026d3; }
-.text-stone    { color: #57534e; }
-.text-slate    { color: #475569; }
-.text-brown    { color: #92400e; }
-
 /* ====================
    RESPONSIVE
 ==================== */
@@ -357,4 +343,3 @@
         width: auto;
     }
 }
-

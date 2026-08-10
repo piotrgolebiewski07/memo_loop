@@ -1,5 +1,5 @@
 /* ====================
-   LOGIN SECTION
+   AUTHENTICATION
 ==================== */
 
 .login-form label {
@@ -59,4 +59,3 @@
 .login-help a:hover {
     color: #4a2f1b;
 }
-

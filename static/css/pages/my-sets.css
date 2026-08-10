@@ -1,11 +1,13 @@
 /* ====================
-   MY SETS SECTION
+   MY SETS
 ==================== */
+
+/* SET ACTIONS */
 
 .my-set-action-btn {
     width: 120px;
     flex-shrink: 0;
-    padding: 1px 0px;
+    padding: 1px 0;
     font-size: 0.9rem;
     background-color: #fff4ec;
     border-color: #f7d8c2;
@@ -20,6 +22,8 @@
     color: #6b4029;
 }
 
+/* SET NAME EDITING */
+
 .set-name-input {
     flex: 1;
     min-width: 0;
@@ -30,6 +34,8 @@
     min-width: 0;
     overflow-wrap: anywhere;
 }
+
+/* SET LIST */
 
 .my-sets-intro {
     text-align: center;
@@ -52,7 +58,7 @@
 }
 
 .my-set-row {
-    padding-top: 0px;
+    padding-top: 0;
     padding-bottom: 16px;
     border-bottom: 1px solid rgba(217, 95, 2, 0.15);
 }
@@ -110,6 +116,8 @@
     overflow-wrap: anywhere;
 }
 
+/* SET STATISTICS */
+
 .my-sets-stat-card {
     background: #ffffff;
     border: 1px solid #f1e4d8;
@@ -143,8 +151,10 @@
 
 .my-sets-stat-label {
     color: var(--color-muted);
-    font-size: 0.90rem;
+    font-size: 0.9rem;
 }
+
+/* TABS */
 
 .my-sets-tabs {
     display: flex;
@@ -177,6 +187,8 @@
     background: #fd7f18;
     color: white;
 }
+
+/* SET PROGRESS */
 
 .my-sets-header {
     text-align: center;
@@ -239,11 +251,17 @@
     border-radius: 10px;
 }
 
+.my-set-progress-fill[class*="stat-"] {
+    background: var(--accent);
+}
+
 .my-set-progress-text {
     margin-top: 4px;
     font-size: 0.8rem;
     color: var(--color-muted);
 }
+
+/* FAVORITES AND ACTIONS */
 
 .my-sets-main-panel {
     background: white;
@@ -260,7 +278,7 @@
 
 .my-set-actions {
     margin-left: 50px;
-    margin-right: 0px;
+    margin-right: 0;
 }
 
 .favorite-star {
@@ -274,6 +292,8 @@
 .action-icon {
     font-size: 1rem;
 }
+
+/* PAGINATION */
 
 .pagination .page-link {
     color: #212529;
@@ -319,6 +339,8 @@
     font-size: 0.85rem;
 }
 
+/* SEARCH */
+
 .my-sets-search-form {
     max-width: 360px;
 }
@@ -354,11 +376,7 @@
 }
 
 .search-input:focus {
-    box-shadow: none
-}
-
-.my-set-progress-fill[class*="stat-"] {
-    background: var(--accent);
+    box-shadow: none;
 }
 
 /* ====================
@@ -399,6 +417,7 @@
 
     .my-sets-tabs {
         margin: 0;
+        width: 100%;
         justify-content: flex-start;
     }
 
@@ -417,10 +436,6 @@
 
     .my-sets-controls > .pe-2 form {
         justify-content: flex-start !important;
-    }
-
-    .my-sets-tabs {
-    width: 100%;
     }
 
     .my-tab {

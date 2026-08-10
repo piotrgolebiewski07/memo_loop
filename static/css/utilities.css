@@ -1,8 +1,8 @@
-
-
 /* ====================
-   COLOR
+   COLOR UTILITIES
 ==================== */
+
+/* STAT COLORS */
 
 .stat-blue {
     background: #eff6ff;
@@ -17,9 +17,9 @@
 }
 
 .stat-purple {
-    background: #f5f3ff;
-    color: #7c3aed;
-    --accent: #7c3aed;
+    background: #faf5ff;
+    color: #9333ea;
+    --accent: #9333ea;
 }
 
 .stat-orange {
@@ -41,8 +41,8 @@
 }
 
 .stat-cyan {
-    background:#ecfeff;
-    color:#0891b2;
+    background: #ecfeff;
+    color: #0891b2;
     --accent: #0891b2;
 }
 
@@ -123,3 +123,26 @@
     color: #92400e;
     --accent: #92400e;
 }
+
+/* TEXT COLORS */
+
+.text-blue     { color: #2563eb; }
+.text-green    { color: #16a34a; }
+.text-purple   { color: #9333ea; }
+.text-orange   { color: #ea580c; }
+.text-red      { color: #dc2626; }
+.text-pink     { color: #db2777; }
+.text-cyan     { color: #0891b2; }
+.text-indigo   { color: #4f46e5; }
+.text-yellow   { color: #ca8a04; }
+.text-teal     { color: #0f766e; }
+.text-lime     { color: #65a30d; }
+.text-emerald  { color: #059669; }
+.text-sky      { color: #0284c7; }
+.text-violet   { color: #7c3aed; }
+.text-rose     { color: #e11d48; }
+.text-amber    { color: #d97706; }
+.text-fuchsia  { color: #c026d3; }
+.text-stone    { color: #57534e; }
+.text-slate    { color: #475569; }
+.text-brown    { color: #92400e; }
