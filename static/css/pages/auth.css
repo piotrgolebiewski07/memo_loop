@@ -1,0 +1,62 @@
+/* ====================
+   LOGIN SECTION
+==================== */
+
+.login-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #4a2f1b;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+}
+
+.login-form input:focus {
+    border-color: #d95f02;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(217, 95, 2, 0.15);
+}
+
+.login-form p {
+    margin-bottom: 20px;
+}
+
+.login-btn {
+    width: 100%;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: 0.2s;
+}
+
+.login-btn:hover {
+    transform: translateY(-1px);
+}
+
+.login-btn:focus {
+    box-shadow: 0 0 0 3px rgba(253, 127, 24, 0.25);
+}
+
+.login-help {
+    color: var(--color-muted);
+    font-size: 0.9rem;
+    margin-top: 35px;
+}
+
+.login-help p {
+    margin-bottom: 5px;
+}
+
+.login-help a {
+    color: var(--color-muted);
+    text-decoration: none;
+}
+
+.login-help a:hover {
+    color: #4a2f1b;
+}
+
