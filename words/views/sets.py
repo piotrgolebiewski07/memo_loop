@@ -2,7 +2,7 @@ from operator import itemgetter
 
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.db.models import Max
+from django.db.models import Count, Max, Prefetch
 from django.db.models.functions import Lower
 from django.shortcuts import redirect, render, get_object_or_404
 from django.utils.text import slugify
@@ -75,16 +75,20 @@ def my_sets(request):
         word_sets = word_sets.order_by("created_at")
 
     word_sets_data = []
+    word_sets = word_sets.annotate(word_count=Count("words", distinct=True))
+    word_sets = word_sets.prefetch_related(
+        Prefetch(
+            "study_sessions",
+            queryset=StudySession.objects.filter(
+                user=request.user
+            ).order_by("-created_at"),
+            to_attr="prefetched_sessions",
+        )
+    )
 
     for word_set in word_sets:
-        word_count = word_set.words.count()
-
-        last_sessions = list(
-            StudySession.objects.filter(
-                user=request.user,
-                word_set=word_set,
-            ).order_by("-created_at")[:10]
-        )
+        word_count = word_set.word_count
+        last_sessions = word_set.prefetched_sessions[:10]
 
         if last_sessions:
             progress = round(sum(session.success_rate for session in last_sessions) / len(last_sessions)
