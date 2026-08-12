@@ -222,7 +222,7 @@ def create_set(request):
 @login_required
 def my_set_detail(request, slug):
     word_set = get_object_or_404(
-        WordSet,
+        WordSet.objects.prefetch_related("words"),
         slug=slug,
         owner=request.user,
         is_public=False,
