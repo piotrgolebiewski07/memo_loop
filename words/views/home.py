@@ -13,8 +13,28 @@ def home(request):
 
 
 def ready_sets(request):
-    featured_word_sets = WordSet.objects.filter(is_public=True, is_deleted=False, is_featured=True)
-    other_word_sets = WordSet.objects.filter(is_public=True, is_deleted=False, is_featured=False)
+    featured_word_sets = (
+        WordSet.objects
+        .filter(
+            is_public=True,
+            is_deleted=False,
+            is_featured=True
+        )
+        .annotate(
+            word_count=Count("words", distinct=True)
+        )
+    )
+    other_word_sets = (
+        WordSet.objects
+        .filter(
+            is_public=True,
+            is_deleted=False,
+            is_featured=False
+        )
+        .annotate(
+            word_count=Count("words", distinct=True)
+        )
+    )
     all_word_sets = WordSet.objects.filter(is_public=True, is_deleted=False)
 
     set_count = all_word_sets.count()
@@ -23,7 +43,7 @@ def ready_sets(request):
     other_ready_word_sets = []
 
     for word_set in featured_word_sets:
-        word_count = word_set.words.count()
+        word_count = word_set.word_count
         word_label = word_count_label(word_count)
         level_class = get_color(word_set.level)
 
@@ -39,7 +59,7 @@ def ready_sets(request):
     if other_sets:
 
         for word_set in other_word_sets:
-            word_count = word_set.words.count()
+            word_count = word_set.word_count
             word_label = word_count_label(word_count)
             level_class = get_color(word_set.level)
 
