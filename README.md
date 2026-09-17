@@ -4,7 +4,7 @@ A web application for learning English vocabulary through custom flashcard sets,
 
 ## Live demo
 
-[Open FiszkoMat](https://pgolebiewski07.alwaysdata.net/)
+[Open FiszkoMat](https://fiszkomat.com.pl/)
 
 ## Preview
 
