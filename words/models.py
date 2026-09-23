@@ -12,6 +12,8 @@ class WordSet(models.Model):
     is_public = models.BooleanField(default=False)
     is_favorite = models.BooleanField(default=False)
     is_deleted = models.BooleanField(default=False)
+    share_token = models.UUIDField(unique=True, null=True, blank=True, editable=False)
+    share_expires_at = models.DateTimeField(null=True, blank=True)
     icon = models.CharField(max_length=50, default="bi-journal-bookmark")
     icon_color = models.CharField(max_length=30, default="stat-green")
     created_at = models.DateTimeField(auto_now_add=True)
@@ -57,7 +59,3 @@ class StudySession(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.word_set.name} - {self.success_rate}%"
-
-
-
-
