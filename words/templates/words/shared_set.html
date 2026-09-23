@@ -1,0 +1,66 @@
+{% extends "words/base.html" %}
+
+{% block content %}
+
+<div class="container py-5" style="max-width: 750px;">
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+
+            <div class="text-center">
+                <i class="bi bi-journal-plus fs-1 text-success"></i>
+
+                <h1 class="h3 mt-3">
+                    {{ word_set.name }}
+                </h1>
+
+                <p class="text-muted">
+                    Udostępnił: {{ word_set.owner.username }}
+                </p>
+
+                <p>
+                    Liczba słówek: {{ word_set.words.count }}
+                </p>
+            </div>
+
+            <div class="mt-4">
+                {% for word in word_set.words.all %}
+                <div class="d-flex justify-content-between border-bottom py-2">
+                    <strong>{{ word.text_pl }}</strong>
+                    <span class="text-muted">
+                            {{ word.text_en }}
+                        </span>
+                </div>
+                {% empty %}
+                <p class="text-center text-muted">
+                    Ten zestaw nie zawiera słówek.
+                </p>
+                {% endfor %}
+            </div>
+
+            <div class="text-center mt-4">
+                {% if user.is_authenticated %}
+                <form method="post">
+                    {% csrf_token %}
+
+                    <button
+                            type="submit"
+                            class="btn study-btn"
+                    >
+                        Dodaj do moich zestawów
+                    </button>
+                </form>
+                {% else %}
+                <a
+                        href="{% url 'login' %}?next={{ request.path }}"
+                        class="btn study-btn"
+                >
+                    Zaloguj się, aby dodać zestaw
+                </a>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

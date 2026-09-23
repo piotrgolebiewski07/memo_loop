@@ -11,6 +11,7 @@ from django.utils import timezone
 from django.utils.text import slugify
 from django.urls import reverse
 from django.views.decorators.http import require_POST
+from django.db import transaction
 
 from ..models import StudySession, Word, WordSet
 from ..services.labels import day_label, set_label
@@ -418,6 +419,93 @@ def shared_set(request, token):
         is_public=False,
         is_deleted=False
     )
+
+    if request.method == "POST":
+        if not request.user.is_authenticated:
+            login_url = reverse("login")
+            return redirect(
+                f"{login_url}?next={request.path}"
+            )
+
+        if word_set.owner == request.user:
+            return redirect(
+                "my_set_detail",
+                slug=word_set.slug,
+            )
+
+        with transaction.atomic():
+            word_set = get_object_or_404(
+                WordSet.objects.select_for_update().prefetch_related("words"),
+                share_token=token,
+                share_expires_at__gt=timezone.now(),
+                is_public=False,
+                is_deleted=False,
+            )
+
+            new_name = word_set.name
+            copy_number = 2
+
+            while WordSet.objects.filter(
+                    name=new_name,
+                    owner=request.user,
+                    is_public=False,
+                    is_deleted=False,
+            ).exists():
+                new_name = (
+                    f"{word_set.name} "
+                    f"(kopia {copy_number})"
+                )
+
+                copy_number += 1
+
+            base_slug = slugify(new_name)
+            new_slug = base_slug
+            slug_number = 2
+
+            while WordSet.objects.filter(
+                    slug=new_slug
+            ).exists():
+                new_slug = (
+                    f"{base_slug}-{slug_number}"
+                )
+                slug_number += 1
+
+            copied_set = WordSet.objects.create(
+                name=new_name,
+                description=word_set.description,
+                level=word_set.level,
+                image=word_set.image,
+                slug=new_slug,
+                is_public=False,
+                owner=request.user,
+                icon=word_set.icon,
+                icon_color=word_set.icon_color
+            )
+
+            Word.objects.bulk_create(
+                [
+                    Word(
+                        text_pl=word.text_pl,
+                        text_en=word.text_en,
+                        level=word.level,
+                        word_set=copied_set,
+                    )
+                    for word in word_set.words.all()
+                ]
+            )
+
+            word_set.share_token = None
+            word_set.share_expires_at = None
+            word_set.save(
+                update_fields=[
+                    "share_token",
+                    "share_expires_at",
+                ]
+            )
+        return redirect(
+            "my_set_detail",
+            slug=copied_set.slug,
+        )
 
     return render(
         request,
