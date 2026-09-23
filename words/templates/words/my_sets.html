@@ -255,6 +255,31 @@
                                 <i class="bi bi-trash action-icon"></i><span>Usuń</span>
                             </button>
                         </form>
+
+                        <div class="dropdown">
+                            <button
+                                    type="button"
+                                    class="btn my-set-edit-btn"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    title="Więcej opcji"
+                            >
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <form method="post" action="{% url 'share_set' item.set.slug %}">
+                                        {% csrf_token %}
+
+                                        <button type="submit" class="dropdown-item">
+                                            <i class="bi bi-share me-2"></i>
+                                            Udostępnij
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             {% empty %}
