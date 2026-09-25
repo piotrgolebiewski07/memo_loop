@@ -47,7 +47,7 @@
     font-size: 1.1rem;
     font-weight: 700;
     letter-spacing: 0.5px;
-    flex: 1;
+    flex: 0 1 auto;
     min-width: 0;
     overflow-wrap: anywhere;
 }
@@ -90,6 +90,48 @@
 
 .my-set-edit-btn:hover {
     background: #dbeafe;
+}
+
+.three-dots-btn {
+    appearance: none;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    margin: 0;
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #212529;
+    font-size: 22px;
+    cursor: pointer;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.three-dots-btn:hover,
+.three-dots-btn:focus,
+.three-dots-btn:active,
+.three-dots-btn.show {
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.share-dropdown-item {
+    font-size: 0.8rem;
+}
+
+.share-dropdown-menu {
+    min-width: auto;
+}
+
+.share-dropdown-item {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
 }
 
 .my-set-delete-btn {
