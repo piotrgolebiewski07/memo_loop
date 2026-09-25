@@ -28,6 +28,7 @@
 
                 <button
                         type="button"
+                        id="copy-button"
                         class="btn btn-dark"
                         onclick="copyShareLink()"
                 >
@@ -54,6 +55,9 @@
     function copyShareLink() {
         const shareLink = document.getElementById("share-link");
         navigator.clipboard.writeText(shareLink.value);
+        const copyButton = document.getElementById("copy-button")
+        copyButton.textContent = "Skopiowano!";
+        copyButton.disabled = true;
     }
 </script>
 
